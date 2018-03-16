@@ -16,21 +16,13 @@ define(['angular'], function() {
   var DashboardCtrl = function($rootScope, $scope, $window, $sce, $timeout, $q, $log, benchmarkServices) {
 
     $rootScope.includeHeader = maalkaIncludeHeader;
-    $rootScope.pageTitle = "2030 Baseline";
-    //The model that will be submitted for analysis
+    $rootScope.pageTitle = "ZNC Tool";
     $scope.auxModel = {};
-    //The table of energy information input by user, default to empty
     $scope.energies = [{}, {}];
-    $scope.sold = [{'renewableType': {id:"grid",name:"Sold"}}];
-
-    $scope.renewableEnergies = [{}, {}];
-    //For displaying user-input energy entries after having been saved
     $scope.propList = [];
 
     $scope.benchmarkResult = null;
-    $scope.lacksDD = false;
-    $scope.hasOnSite = false;
-    $scope.hasOffSite = false;
+
 
     $scope.propOutputList = [];
     $scope.tableEUIUnits = null;
@@ -39,10 +31,9 @@ define(['angular'], function() {
     $scope.propTypes = [];
     $scope.mainColumnWidth = "";
     $scope.propText = "Primary Building Use";
-    $scope.buildingZone = "commercial";
-    $scope.auxModel.buildingList = "commercial";
-    $scope.targetToggle = "percentReduction";
-    $scope.isResidential = false;
+    $scope.stories = null;
+
+
 
     if (window.matchMedia) {
 
@@ -84,18 +75,6 @@ define(['angular'], function() {
         });
     }
 
-    $scope.$watch("auxModel.buildingZone", function (v) {
-        if(v === "commercial"){
-            if($scope.propTypes.length !== 0) {
-                $scope.auxModel.buildingList = "parking";
-            }else {
-                $scope.auxModel.buildingList = "commercial";
-            }
-        }else{
-            $scope.auxModel.buildingList = "residential";
-        }
-    });
-
 
     $scope.$watch("auxModel.buildingType", function (v) {
         if (v === undefined || v === null) {
@@ -134,19 +113,6 @@ define(['angular'], function() {
                 }
             }
 
-
-
-            if($scope.auxModel.buildingZone === "commercial" || v.id === "MultiFamily"){
-
-                if($scope.auxModel.buildingType.id === "Parking"){
-                    $scope.auxModel.tempList = "parking";
-                }else{
-                    $scope.auxModel.tempList = "commercial";
-                }
-            }else{
-                $scope.auxModel.tempList = "residential";
-            }
-
             $scope.propTypes.push({
                 changeTo: v,
                 type: v.id,
@@ -154,21 +120,7 @@ define(['angular'], function() {
                 country:$scope.auxModel.country,
                 buildingZone: $scope.auxModel.buildingZone,
                 buildingList: $scope.auxModel.tempList,
-                toggleTarget: $scope.auxModel.targetToggle
             });
-
-           if($scope.auxModel.buildingZone === "commercial" || v.id === "MultiFamily"){
-                $scope.auxModel.buildingZone = "commercial";
-                if($scope.propTypes.length !== 0) {
-                    $scope.auxModel.buildingList = "parking";
-                }else{
-                    $scope.auxModel.buildingList = "commercial";
-                }
-            }else{
-                $scope.auxModel.buildingList = "residential";
-            }
-
-
 
 
             $scope.propText="Add Another Use";
@@ -185,7 +137,6 @@ define(['angular'], function() {
             country: $scope.propTypes[$index].country,
             buildingZone: $scope.propTypes[$index].buildingZone,
             buildingList: $scope.propTypes[$index].buildingList,
-            toggleTarget: $scope.propTypes[$index].toggleTarget,
             type: $scope.propTypes[$index].changeTo.id,
             name: $scope.propTypes[$index].changeTo.name
         };
@@ -196,25 +147,10 @@ define(['angular'], function() {
         $scope.clearGeography();
     });
 
-    $scope.$watch("auxModel.targetToggle", function (v) {
-        if(v === 'zeroScore'){
-        $scope.auxModel.is2030=false;
-    }
-    });
 
-    $scope.$watch("auxModel.newConstruction", function (v) {
-        if(v === true){
-            $scope.auxModel.percentBetterThanMedian = 70;
-            $scope.auxModel.targetToggle = "percentReduction";
-        }else{
-            $scope.auxModel.percentBetterThanMedian = 20;
-        }
-    });
 
     $scope.clearGeography = function () {
         $scope.auxModel.city = "";
-        $scope.auxModel.state = null;
-        //$scope.auxModel.postalCode = "";
         $scope.auxModel.buildingType = undefined;
         $scope.propTypes = [];
     };
@@ -236,23 +172,6 @@ define(['angular'], function() {
             $scope.addEnergiesRow();
         }
     };
-
-    $scope.addRenewableEnergiesRow = function(){
-        $scope.renewableEnergies.push({});
-    };
-
-    $scope.removeRenewableRow = function(index){
-        $scope.renewableEnergies.splice(index, 1);
-        if ($scope.renewableEnergies.length ===    1) {
-            $scope.addRenewableEnergiesRow();
-        }
-    };
-
-    $scope.removeSoldRow = function(){
-        $scope.sold.pop();
-        $scope.sold.push({'renewableType': {id:"grid",name:"Sold"}});
-    };
-
 
 
     $scope.removeProp = function(prop){
@@ -294,44 +213,11 @@ define(['angular'], function() {
         }
     };
 
-    $scope.postalCodeCheck = function() {
-        if($scope.auxModel.postalCode){
-            if($scope.auxModel.postalCode.length > 4){
-                $scope.temp = {"postalCode":$scope.auxModel.postalCode};
-                $scope.computeDegreeDays();
-            }else{
-                $scope.clearDegreeDays();
-            }
-        }else{
-            $scope.clearDegreeDays();
-         }
-    };
-
-    $scope.clearDegreeDays = function(){
-        $scope.auxModel.HDD = null;
-        $scope.auxModel.CDD = null;
-        $scope.lacksDD = true;
-    };
-
-    $scope.computeDegreeDays = function(){
-
-        $scope.futures = benchmarkServices.getDDMetrics($scope.temp);
-        $q.resolve($scope.futures).then(function (results) {
-            $scope.auxModel.CDD = $scope.getPropResponseField(results,"CDD");
-            $scope.auxModel.HDD = $scope.getPropResponseField(results,"HDD");
-            if (results.errors.length > 0){
-                $scope.lacksDD = true;
-            }
-        });
-    };
-
     $scope.computeBenchmarkResult = function(){
 
         $scope.propSubmit = [];
         for (var i = 0; i < $scope.propList.length; i++){
-            if($scope.propList[i].buildingType !== "Parking"){
                 $scope.propSubmit.push($scope.propList[i]);
-            }
         }
 
         $log.info($scope.propSubmit);
@@ -339,40 +225,14 @@ define(['angular'], function() {
         $scope.futures = benchmarkServices.getZEPIMetrics($scope.propSubmit);
 
         $q.resolve($scope.futures).then(function (results) {
-            $scope.baselineConstant = $scope.getBaselineConstant();
-            $scope.scoreText = "Zero Score";
             $scope.scoreGraph = "Rating";
             $scope.FFText = $sce.trustAsHtml('Site EUI');
-            $scope.scoreUnits = $scope.isResidential  ? "0-130" : "0-100";
 
             $scope.benchmarkResult = $scope.computeBenchmarkMix(results);
             $scope.benchmarkResult.city = $scope.auxModel.city;
-            $scope.benchmarkResult.state = $scope.auxModel.state;
-            $scope.benchmarkResult.postalCode = $scope.auxModel.postalCode;
-            //console.log($scope.benchmarkResult);
-            if ($scope.auxModel.targetToggle === "zeroScore") {
-                $scope.benchmarkResult.percentBetterThanMedian = $scope.getBaselineConstant() - $scope.auxModel.percentBetterThanMedian;
-            } else {
-                $scope.benchmarkResult.percentBetterThanMedian = $scope.auxModel.percentBetterThanMedian;
-            }
-
-            $scope.hasOnSite = ($scope.getPropResponseField(results,"onSiteRenewableTotal") > 0.01) ;
-            $scope.hasOffSite = ($scope.getPropResponseField(results,"offSitePurchasedTotal") > 0.01) ;
-            $scope.hasSiteEnergy = ($scope.getPropResponseField(results,"siteEUI") > 0.01) ;
-
-
-
-
         });
     };
 
-    $scope.getBaselineConstant = function(){
-        if ($scope.isResidential === true && $scope.auxModel.is2030 === true){
-            return 130;
-        } else {
-            return 100;
-        }
-    };
 
     $scope.getPropResponseField = function(propResponse,key){
         var returnValue;
@@ -392,65 +252,10 @@ define(['angular'], function() {
         $scope.percentBetterSiteEUI = Math.ceil($scope.getPropResponseField(results,"percentBetterSiteEUI"));
         $scope.siteEUI = Math.ceil($scope.getPropResponseField(results,"siteEUI"));
 
-        if($scope.siteEUI > $scope.percentBetterSiteEUI){
-            $scope.showPercentBetterTarget = 'decrease';
-            $scope.percentBetterGoal = Math.ceil($scope.getPropResponseField(results,"percentBetterActualtoGoal"));
-        }else if($scope.siteEUI < $scope.percentBetterSiteEUI){
-            $scope.showPercentBetterTarget = 'better';
-            $scope.percentBetterGoal = Math.ceil($scope.getPropResponseField(results,"actualGoalBetter"));
-        } else {
-            $scope.showPercentBetterTarget = undefined;
-        }
-
         var metricsTable = [
 
-              {"percentBetterMedian": Math.ceil($scope.getPropResponseField(results,"percentBetterMedian"))},
-              {"percentBetterTarget": Math.ceil($scope.getPropResponseField(results,"percentBetterTarget"))},
-              {"percentBetterActual": Math.ceil($scope.getPropResponseField(results,"percentBetterActual"))},
-              {"percentBetterActualwOnSite": Math.ceil($scope.getPropResponseField(results,"percentBetterActualwOnSite"))},
-              {"percentBetterActualwOffSite": Math.ceil($scope.getPropResponseField(results,"percentBetterActualwOffSite"))},
-              {"percentBetterActualwOnandOffSite": Math.ceil($scope.getPropResponseField(results,"percentBetterActualwOnandOffSite"))},
-
-
-              {"percentBetterActualtoGoal": Math.ceil($scope.getPropResponseField(results,"percentBetterActualtoGoal"))},
-              {"actualGoalBetter": Math.ceil($scope.getPropResponseField(results,"actualGoalBetter"))},
-
-              {"medianZEPI": $scope.getBaselineConstant()},
-              {"percentBetterZEPI": Math.floor($scope.getPropResponseField(results,"percentBetterZEPI"))},
-              {"actualZEPI": $scope.getBaselineConstant() - Math.floor($scope.getPropResponseField(results,"percentBetterActual"))},
-              {"actualZEPIwOnSite": $scope.getBaselineConstant() - Math.floor($scope.getPropResponseField(results,"percentBetterActualwOnSite"))},
-              {"actualZEPIwOffSite": $scope.getBaselineConstant() - Math.floor($scope.getPropResponseField(results,"percentBetterActualwOffSite"))},
-              {"actualZEPIwOnAndOffSite": $scope.getBaselineConstant() - Math.floor($scope.getPropResponseField(results,"percentBetterActualwOnandOffSite"))},
-
-              {"siteEUI": Math.ceil($scope.getPropResponseField(results,"siteEUI"))},
-              {"siteEUIwOnSite": Math.ceil($scope.getPropResponseField(results,"siteEUIwOnSite"))},
-              {"siteEUIwOffSite": Math.ceil($scope.getPropResponseField(results,"siteEUIwOffSite"))},
-              {"siteEUIwOnAndOffSite": Math.ceil($scope.getPropResponseField(results,"siteEUIwOnAndOffSite"))},
-
-              {"sourceEUI": Math.ceil($scope.getPropResponseField(results,"sourceEUI"))},
-              {"sourceEUIwOnSite": Math.ceil($scope.getPropResponseField(results,"sourceEUIwOnSite"))},
-              {"sourceEUIwOffSite": Math.ceil($scope.getPropResponseField(results,"sourceEUIwOffSite"))},
-              {"sourceEUIwOnAndOffSite": Math.ceil($scope.getPropResponseField(results,"sourceEUIwOnAndOffSite"))},
-
-
-              {"medianSiteEUI": Math.ceil($scope.getPropResponseField(results,"medianSiteEUI"))},
-              {"medianSourceEUI": Math.ceil($scope.getPropResponseField(results,"medianSourceEUI"))},
-
-              {"percentBetterSiteEUI": Math.ceil($scope.getPropResponseField(results,"percentBetterSiteEUI"))},
-              {"percentBetterSourceEUI": Math.ceil($scope.getPropResponseField(results,"percentBetterSourceEUI"))},
-
-
-              {"totalEmissions": Math.ceil($scope.getPropResponseField(results,"totalEmissions"))},
-              {"percentBetterEmissions": Math.ceil($scope.getPropResponseField(results,"percentBetterEmissions"))},
-              {"medianEmissions": Math.ceil($scope.getPropResponseField(results,"medianEmissions"))},
-
-              {"onSiteRenewableTotal": $scope.getPropResponseField(results,"onSiteRenewableTotal")},
-              {"offSitePurchasedTotal": $scope.getPropResponseField(results,"offSitePurchasedTotal")},
-              {"siteEnergyALL": $scope.getPropResponseField(results,"siteEnergyALL")},
-
-              {"parkingEnergy": $scope.getPropResponseField(results,"parkingEnergy")},
-              {"parkingArea": $scope.getPropResponseField(results,"parkingArea")}
-
+              {"test": $scope.getPropResponseField(results,"tester")},
+              {"test": $scope.getPropResponseField(results,"tester")}
 
         ];
         return metricsTable;
@@ -472,10 +277,6 @@ define(['angular'], function() {
         }
     });
 
-    $scope.degreeDaysCheck = function () {
-        $scope.computeDegreeDays();
-    };
-
     $scope.submit = function () {
         if($scope.forms.baselineForm === undefined) {
             return;
@@ -491,19 +292,11 @@ define(['angular'], function() {
             $scope.tableEUIUnits="(kWh/m²/yr)";
         }
 
-        if($scope.auxModel.CDD === undefined || $scope.auxModel.HDD === undefined ||
-        $scope.auxModel.HDD === null || $scope.auxModel.HDD === null){
-            $scope.lacksDD = true;
-        }
-
-
-
         var validEnergy = function(e) {
             return (e.energyType !== undefined &&
                     e.energyName !== undefined &&
-                    //e.energyName !== "Electric (renewable)" &&
                     e.energyUnits !== undefined &&
-                    e.energyUse !== undefined && $scope.auxModel.newConstruction === false);
+                    e.energyUse);
         };
 
         var mapEnergy = function (e) {
@@ -515,150 +308,30 @@ define(['angular'], function() {
                 'energyRate': null
             };
         };
-        var mapRenewableEnergy = function (e) {
-            return {
-                'energyType': (e.renewableType) ? e.renewableType.id : undefined,
-                'energyName': (e.renewableType) ? e.renewableType.name : undefined,
-                'energyUnits': e.renewableUnits,
-                'energyUse': Number(e.energyUse),
-                'energyRate': null
-            };
-        };
-
-        var validRenewableFromRegular = function(e) {
-            return (e.energyType !== undefined &&
-                    e.energyName !== undefined &&
-                    e.energyName === "Electric (renewable)" &&
-                    e.energyUnits !== undefined &&
-                    e.energyUse !== undefined && $scope.auxModel.newConstruction === false);
-        };
-
-        var getSoldEnergy = function () {
-
-            var soldEnergyList =[];
-            var soldEnergy = 0.0;
-            var renewableEnergy = 0.0;
-
-            for (var i = 0; i < $scope.sold.map(mapRenewableEnergy).filter(validEnergy).length; i++){
-                soldEnergy = soldEnergy + $scope.sold.map(mapRenewableEnergy).filter(validEnergy)[i].energyUse;
-            }
-            for (var j = 0; j < $scope.renewableEnergies.map(mapRenewableEnergy).filter(validEnergy).length; j++){
-                renewableEnergy = renewableEnergy + $scope.renewableEnergies.map(mapRenewableEnergy).filter(validEnergy)[j].energyUse;
-            }
-
-            if($scope.sold.map(mapRenewableEnergy).filter(validEnergy).length !== 0){
-                if(soldEnergy < renewableEnergy){
-                    soldEnergyList = $scope.sold.map(mapRenewableEnergy).filter(validEnergy);
-                }else{
-                    soldEnergyList = [{
-                    'energyType': "grid",
-                    'energyName': "Sold",
-                    'energyUnits': $scope.sold[0].renewableUnits,
-                    'energyUse': renewableEnergy
-                    }];
-                }
-            }
-
-            return soldEnergyList;
-        };
-
-
-        var getRenewableEnergyList = function () {
-
-            var renewableEnergyListFromRegular = $scope.energies.map(mapEnergy).filter(validRenewableFromRegular);
-            var renewableEnergyList = $scope.renewableEnergies.map(mapRenewableEnergy).filter(validEnergy);
-
-
-            renewableEnergyListFromRegular.push.apply(renewableEnergyListFromRegular,getSoldEnergy());
-            renewableEnergyList.push.apply(renewableEnergyList,renewableEnergyListFromRegular);
-
-            return renewableEnergyList;
-        };
 
         var getFullEnergyList = function () {
 
             var energyListFromRegular = $scope.energies.map(mapEnergy).filter(validEnergy);
-            var renewableEnergyList = $scope.renewableEnergies.map(mapRenewableEnergy).filter(validEnergy);
-            //var soldEnergyList = $scope.sold.map(mapRenewableEnergy).filter(validEnergy);
 
-            renewableEnergyList.push.apply(renewableEnergyList,getSoldEnergy());
-            energyListFromRegular.push.apply(energyListFromRegular,renewableEnergyList);
+            energyListFromRegular.push.apply(energyListFromRegular);
 
 
             return energyListFromRegular;
         };
 
         if($scope.forms.baselineForm.$valid){
-
-            $scope.hasParkingHeating = null;
-            $scope.openParkingArea = null;
-            $scope.partiallyEnclosedParkingArea = null;
-            $scope.fullyEnclosedParkingArea = null;
-            $scope.parkingAreaUnits = null;
-            $scope.totalParkingArea = null;
-
-            for (var j = 0; j < $scope.propTypes.length; j++){
-                if($scope.propTypes[j].valid === true){
-                    if($scope.propTypes[j].propertyModel.buildingType === "Parking"){
-                        $scope.hasParkingHeating = $scope.propTypes[j].propertyModel.hasParkingHeating ;
-                        $scope.openParkingArea = $scope.propTypes[j].propertyModel.openParkingArea;
-                        $scope.partiallyEnclosedParkingArea = $scope.propTypes[j].propertyModel.partiallyEnclosedParkingArea;
-                        $scope.fullyEnclosedParkingArea = $scope.propTypes[j].propertyModel.fullyEnclosedParkingArea;
-                        $scope.parkingAreaUnits = $scope.propTypes[j].propertyModel.areaUnits;
-                        $scope.totalParkingArea = $scope.propTypes[j].propertyModel.openParkingArea + $scope.propTypes[j].propertyModel.partiallyEnclosedParkingArea + $scope.propTypes[j].propertyModel.fullyEnclosedParkingArea;
-                    }
-                }
-            }
-        }
-
-
-        if($scope.forms.baselineForm.$valid){
             for (var i = 0; i < $scope.propTypes.length; i++){
                 if($scope.propTypes[i].valid === true){
 
-
-                    $scope.propTypes[i].propertyModel.hasParkingHeating = $scope.hasParkingHeating;
-                    $scope.propTypes[i].propertyModel.openParkingArea = $scope.openParkingArea;
-                    $scope.propTypes[i].propertyModel.partiallyEnclosedParkingArea = $scope.partiallyEnclosedParkingArea;
-                    $scope.propTypes[i].propertyModel.fullyEnclosedParkingArea = $scope.fullyEnclosedParkingArea;
-                    $scope.propTypes[i].propertyModel.parkingAreaUnits = $scope.parkingAreaUnits;
-                    $scope.propTypes[i].propertyModel.totalParkingArea = $scope.totalParkingArea;
-
-                    $scope.propTypes[i].propertyModel.baselineConstant = $scope.getBaselineConstant();
                     $scope.propTypes[i].propertyModel.country = $scope.auxModel.country;
-                    $scope.propTypes[i].propertyModel.targetToggle = $scope.auxModel.targetToggle;
                     $scope.propTypes[i].propertyModel.city = $scope.auxModel.city;
-                    $scope.propTypes[i].propertyModel.buildingName = ($scope.auxModel.buildingName) ? $scope.auxModel.buildingName : "Anonymous";
-                    $scope.propTypes[i].propertyModel.postalCode = $scope.auxModel.postalCode;
-                    $scope.propTypes[i].propertyModel.state = $scope.auxModel.state;
-                    $scope.propTypes[i].propertyModel.HDD = $scope.auxModel.HDD;
-                    $scope.propTypes[i].propertyModel.CDD = $scope.auxModel.CDD;
                     $scope.propTypes[i].propertyModel.reportingUnits = $scope.auxModel.reportingUnits;
-                    $scope.propTypes[i].propertyModel.targetScore = null;
-                    //$scope.propTypes[i].propertyModel.netMetered = $scope.auxModel.netMetered;
-                    $scope.propTypes[i].propertyModel.percentBetterThanMedian = $scope.auxModel.percentBetterThanMedian;
 
-
-                    if($scope.isResidential && !$scope.auxModel.is2030 && ($scope.propTypes[i].type !== "MultiFamily")){
-                        $scope.propTypes[i].propertyModel.target2030=true;
-                    } else {
-                        $scope.propTypes[i].propertyModel.target2030=false;
-                    }
-
-                    if($scope.renewableEnergies.map(mapRenewableEnergy).filter(validEnergy).length===0 &&
-                       $scope.energies.map(mapEnergy).filter(validEnergy).length===0){
+                    if($scope.energies.map(mapEnergy).filter(validEnergy).length===0){
                         $scope.propTypes[i].propertyModel.energies=null;
                     } else {
                         $scope.propTypes[i].propertyModel.energies = getFullEnergyList();
                     }
-
-                    if($scope.renewableEnergies.map(mapRenewableEnergy).filter(validEnergy).length===0 &&
-                       $scope.energies.map(mapEnergy).filter(validRenewableFromRegular).length ===0){
-                        $scope.propTypes[i].propertyModel.renewableEnergies=null;
-                    } else {
-                        $scope.propTypes[i].propertyModel.renewableEnergies = getRenewableEnergyList();
-                    }
-
 
                     $scope.propList.push($scope.propTypes[i].propertyModel);
 
@@ -839,116 +512,14 @@ define(['angular'], function() {
                     {id:"SingleFamilyAttached",name:"Single Family - Attached"},
                     {id:"MobileHome",name:"Mobile Home"},
                     {id:"MultiFamily",name:"Multifamily Housing"}
-                ],
-                parking: [
-                {id:"FinancialOffice",name:"Bank Branch"},
-                {id:"FinancialOffice",name:"Financial Office"},
-                {id:"AdultEducation",name:"Adult Education"},
-                {id:"College",name:"College / University"},
-                {id:"K12School",name:"K-12 School"},
-                {id:"PreSchool",name:"Pre-school / DayCare"},
-                {id:"VocationalSchool",name:"Vocational School"},
-                {id:"OtherEducation",name:"Other Education"},
-                {id:"ConventionCenter",name:"Convention Center"},
-                {id:"MovieTheater",name:"Movie Theater"},
-                {id:"Museum",name:"Museum"},
-                {id:"PerformingArts",name:"Performing Arts"},
-                {id:"BowlingAlley",name:"Bowling Alley"},
-                {id:"FitnessCenter",name:"Fitness Center"},
-                {id:"IceRink",name:"Ice / Curling Rink"},
-                {id:"RollerRink",name:"Roller Rink"},
-                {id:"SwimmingPool",name:"Swimming Pool"},
-                {id:"OtherRecreation",name:"Other Recreation"},
-                {id:"Stadium",name:"Stadium"},
-                {id:"IndoorArena",name:"Indoor Arena"},
-                {id:"RaceTrack",name:"Race Track"},
-                {id:"Aquarium",name:"Aquarium"},
-                {id:"Bar",name:"Bar"},
-                //{id:"Bar",name:"Nightclub"},
-                {id:"Casino",name:"Casino"},
-                {id:"Zoo",name:"Zoo"},
-                {id:"OtherEntertainment",name:"Other Entertainment"},
-                {id:"GasStation",name:"Convenience Store with Gas Station"},
-                {id:"ConvenienceStore",name:"Convenience Store without Gas Station"},
-                {id:"FastFoodRestaurant",name:"Fast Food Restaurant"},
-                {id:"Restaurant",name:"Restaurant"},
-                {id:"Supermarket",name:"Supermarket"},
-                {id:"Retail",name:"Wholesale Club"},
-                {id:"FoodSales",name:"Food Sales"},
-                {id:"FoodService",name:"Food Service"},
-                {id:"AmbulatorySurgicalCenter",name:"Ambulatory Surgical Center"},
-                {id:"Hospital",name:"Hospital"},
-                {id:"SpecialtyHospital",name:"Specialty Hospital"},
-                {id:"MedicalOffice",name:"Medical Office"},
-                {id:"OutpatientCenter",name:"Outpatient Rehabilitation Center"},
-                {id:"PhysicalTherapyCenter",name:"Physical Therapy Center"},
-                {id:"SeniorCare",name:"Senior Care Community"},
-                {id:"UrgentCareCenter",name:"Urgent Care Center"},
-                {id:"Barracks",name:"Barracks"},
-                {id:"Hotel",name:"Hotel"},
-                {id:"MultiFamily",name:"Multifamily Housing"},
-                {id:"Prison",name:"Prison / Incarceration"},
-                {id:"ResidenceHall",name:"Residence Hall"},
-                {id:"ResidentialLodging",name:"Other Residential Lodging"},
-                {id:"MixedUse",name:"Mixed Use Property"},
-                {id:"Office",name:"Office"},
-                {id:"VeterinaryOffice",name:"Veterinary Office"},
-                {id:"Courthouse",name:"Courthouse"},
-                {id:"DrinkingWaterTreatment",name:"Drinking Water Treatment Center"},
-                {id:"FireStation",name:"Fire Station"},
-                {id:"Library",name:"Library"},
-                {id:"PostOffice",name:"Post Office"},
-                {id:"PoliceStation",name:"Police Station"},
-                {id:"MeetingHall",name:"Meeting Hall"},
-                {id:"TransportationTerminal",name:"Transportation Terminal"},
-                {id:"WastewaterCenter",name:"Wastewater Treatment Center"},
-                {id:"OtherPublicServices",name:"Other Public Services"},
-                {id:"WorshipCenter",name:"Worship Facility"},
-                {id:"AutoDealership",name:"Automobile Dealership"},
-                {id:"EnclosedMall",name:"Enclosed Mall"},
-                {id:"StripMall",name:"Strip Mall"},
-                {id:"Retail",name:"Retail Store"},
-                {id:"DataCenter",name:"Data Center"}, //Data Centers behave very different and require custom script
-                {id:"PersonalServices",name:"Personal Services (Health/Beauty, Dry Cleaning, etc.)"},
-                {id:"RepairServices",name:"Repair Services (Vehicle, Shoe Locksmith, etc.)"},
-                {id:"OtherServices",name:"Other Services"},
-                {id:"PowerStation",name:"Energy / Power Station"},
-                {id:"OtherUtility",name:"Other Utility Station"},
-                {id:"SelfStorageFacility",name:"Self Storage Facility"},
-                {id:"Warehouse",name:"Warehouse - UnRefrigerated"},
-                {id:"RefrigeratedWarehouse",name:"Warehouse - Refrigerated"},
-                {id:"Warehouse",name:"Distribution Center"},
-                {id:"Parking",name:"Parking"}
                 ]
             }
         };
-
-        $scope.propsWithAlgorithms = [
-           "DataCenter",
-           "Hospital",
-           "Hotel",
-           "K12School",
-           "MedicalOffice",
-           "MultiFamily",
-           "Office",
-           "Parking",
-           "ResidenceHall",
-           "Retail",
-           "SeniorCare",
-           "Supermarket",
-           "Warehouse",
-           "RefrigeratedWarehouse",
-           "WastewaterCenter",
-           "WorshipCenter"
-       ];
 
         $scope.energyProperties = {
 
             energyType:[
                 {id:"grid",name:"Electric (Grid)"},
-                {id:"grid",name:"Electric (renewable)"},
-                //{id:"onSiteElectricity",name:"Electric (Solar)"},
-                //{id:"onSiteElectricity",name:"Electric (Wind)"},
                 {id:"naturalGas",name:"Natural Gas"},
                 {id:"fuelOil1",name:"Fuel Oil 1"},
                 {id:"fuelOil2",name:"Fuel Oil 2"},
@@ -970,27 +541,6 @@ define(['angular'], function() {
                 {id:"other",name:"Other"}
             ],
 
-            renewableType:[
-                {id:"grid",name:"On-Site Solar"},
-                {id:"grid",name:"On-Site Wind"},
-                {id:"grid",name:"On-Site Other"}
-            ],
-
-            soldType:[
-                {id:"soldGrid",name:"On-Site Solar"},
-                {id:"soldGrid",name:"On-Site Wind"},
-                {id:"soldGrid",name:"On-Site Other"}
-            ],
-
-            renewableUnits:[
-                {id:"KBtu",name:"kBtu",filter_id:"grid"},
-                {id:"MBtu",name:"MBtu",filter_id:"grid"},
-                {id:"kWh",name:"kWh",filter_id:"grid"},
-                {id:"MWh",name:"MWh",filter_id:"grid"},
-                {id:"GJ",name:"GJ",filter_id:"grid"},
-            ],
-
-
             energyUnits: [
                 //<!--Electricity - Grid -->
                 {id:"KBtu",name:"kBtu",filter_id:"grid"},
@@ -998,13 +548,6 @@ define(['angular'], function() {
                 {id:"kWh",name:"kWh",filter_id:"grid"},
                 {id:"MWh",name:"MWh",filter_id:"grid"},
                 {id:"GJ",name:"GJ",filter_id:"grid"},
-
-                //<!--Electricity - Onsite Renewable-->
-                {id:"KBtu",name:"kBtu",filter_id:"onSiteElectricity"},
-                {id:"MBtu",name:"MBtu",filter_id:"onSiteElectricity"},
-                {id:"kWh",name:"kWh",filter_id:"onSiteElectricity"},
-                {id:"MWh",name:"MWh",filter_id:"onSiteElectricity"},
-                {id:"GJ",name:"GJ",filter_id:"onSiteElectricity"},
 
                 //<!--Natural Gas -->
                 {id:"NGMcf",name:"MCF",filter_id:"naturalGas"},

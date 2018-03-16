@@ -16,6 +16,28 @@
         <div class="entry">
             <div class="ui segment about">
                 <div class="ui grid">
+                    <div class="inline fields">
+                        <div class="field">
+                            Code Pathway:
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" id="project-cb-new" ng-model="auxModel.newConstruction" ng-init="auxModel.newConstruction=false"
+                                       ng-value='true'>
+                                <label for='project-cb-new'>Prescriptive</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" id="project-cb-existing" ng-model="auxModel.newConstruction" ng-init="auxModel.newConstruction=false"
+                                       ng-value='false'>
+                                <label for="project-cb-existing">Performance</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sixteen wide column">
+                        <div class="ui divider"></div>
+                    </div>
                     <div class="five wide column">
                         <label class="design-label">Building Name</label>
                     </div>
@@ -44,20 +66,16 @@
                         </div>
                     </div>
                     <div class="five wide column">
-                        <label class="design-label">City | State/Prov.</label>
+                        <label class="design-label">City</label>
                     </div>
                     <div class="eleven wide column">
                         <div class="inline fields required">
-                            <div class="nine wide field">
-                                <input type="text" ng-model="auxModel.city"
-                                       required name="city" placeholder="City">
-                            </div>
-                            <div class="seven wide field">
+                            <div class="sixteen wide field">
                                 <select class="ui dropdown search"
-                                        ng-model="auxModel.state"
-                                        ng-options="item.id as item.name for item in geographicProperties.state | filter: {filter_id: auxModel.country}"
+                                        ng-model="auxModel.city"
+                                        ng-options="item.id as item.name for item in geographicProperties.country"
                                         required
-                                        name="state">
+                                        name="city">
                                     <option value="">Select</option>
                                 </select>
                             </div>
@@ -74,64 +92,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="five wide column"> <!-- ng-show="lacksDD" -->
-                        <div class="tooltip">Degree Days
-                            <div class="tooltip">
-                                <sup><i class="blue circle info icon"></i></sup>
-                                <span class="tooltiptext">
-                                    Degree days are calculated at the weather station closest to each zip code, but can be manually overridden if more accurate data is available. If no degree days
-                                    were found for your zip code, U.S. and Canadian degree days can be calculated
-                                    <a href="https://portfoliomanager.energystar.gov/pm/degreeDaysCalculator" target="_blank">here</a>.
-                                    Cities without zip codes in the Zero Tool can calculate degree days
-                                     <a href="http://www.degreedays.net/#" target="_blank">here</a>.
-                                    <br>
-                                    <br>
-                                    For more information on the relationship between degree days and building energy performance, start
-                                    <a href="http://www.degreedays.net/introduction" target="_blank">here</a>.
-
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="eleven wide column"> <!-- ng-show="lacksDD"-->
-                        <div class="inline fields">
-                            <div class="two wide field">
-                                <label>HDD</label>
-                            </div>
-                            <div class="five wide field required">
-                                <input type="number" ng-model="auxModel.HDD"
-                                       required name="HDD" min="0" placeholder="HDD">
-                            </div>
-                            <div class="two wide field">
-                                <label>CDD</label>
-                            </div>
-                            <div class="four wide field required">
-                                <input type="number" ng-model="auxModel.CDD"
-                                       required name="CDD" min="0">
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <div class="sixteen wide column">
-                    <div class="ui divider"></div>
-                </div>
-                <div class="inline fields">
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" id="project-cb-new" ng-model="auxModel.newConstruction" ng-init="auxModel.newConstruction=false"
-                                   ng-value='true'>
-                            <label for='project-cb-new'>New construction</label>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" id="project-cb-existing" ng-model="auxModel.newConstruction" ng-init="auxModel.newConstruction=false"
-                                   ng-value='false'>
-                            <label for="project-cb-existing">Existing Building</label>
-                        </div>
-                    </div>
-                </div>
-
             </div>
             <h3 class="ui header"><i class="building icon"></i>BUILDING USE DETAILS</h3>
             <div class="ui segment page-break-after" ng-class="{'disabled': !forms.baselineForm.country.$valid}">
@@ -236,103 +197,9 @@
                 </div>
 
             </div>
-            <h3 class="ui header"><i class="bullseye icon"></i>Energy Reduction Target</h3>
-            <div class="ui segment reduction page-break-after">
 
-                <div class="field">
-                    Enter your target expressed as either a percent
-                    reduction from baseline EUI, or as a Zero Score. A
-                    baseline represents a typical modern building.
-                    <div class="tooltip">
-                        <sup><i class="blue circle info icon"></i></sup>
-                        <span class="tooltiptext">A typical modern building represents an energy consumption profile that is based on data from the 2003 Commercial Building Energy Consumption Survey (CBECS) or the 2001 Residential Energy Consumption Survey (RECS). Baselines are normalized by climate, weather, space type, building size, occupancy, and schedule.</span>
-                    </div>
-                </div>
 
-                <div class="inline fields">
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" id="project-percentReduction" ng-model="auxModel.targetToggle" ng-init="auxModel.targetToggle='percentReduction'"
-                                   ng-value="'percentReduction'">
-                            <label for='project-percentReduction'>Percent Reduction
-                                <div class="tooltip">
-                                    <sup><i class="blue circle info icon"></i></sup>
-                                    <span class="tooltiptext">
-                                        2030 Challenge reduction targets for new construction and major renovations<sup>*</sup> are:
-                                        <ul>
-                                            <li>70% today</li>
-                                            <li>80% in 2020</li>
-                                            <li>90% in 2025</li>
-                                            <li>Carbon-neutral in 2030 (using no fossil fuel GHG emitting energy to operate)</li>
-                                        </ul>
-                                        2030 Challenge reduction targets for existing buildings are:
-                                        <ul>
-                                            <li>20% today</li>
-                                            <li>35% in 2025</li>
-                                            <li>50% in 2030</li>
-                                        </ul>
-                                        <sup>*</sup>A Major Renovation is any renovation of a building where (a) the total cost of the renovation related to the building envelope or the technical building systems is higher than 25 % of the value of the building, excluding the value of the land upon which the building is situated, or (b) more than 25 % of the surface of the building envelope undergoes renovation.
-                                    </span>
-                                </div>
-                            </label>
-
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" id="project-zeroScore" ng-model="auxModel.targetToggle" ng-init="auxModel.targetToggle='percentReduction'"
-                                   ng-value="'zeroScore'">
-                            <label for="project-zeroScore">Zero Score
-                                <div class="tooltip">
-                                    <sup><i class="blue circle info icon"></i></sup>
-                                    <span class="tooltiptext">A Zero Score is calculated on a linear scale, where a score of 100 represents the 2030 Challenge baseline (a typical modern building) and a score of 0 represents a zero net carbon building. Zero Scores are equivalent to the inverse of the Percent Reduction value.</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="inline fields" ng-if="auxModel.targetToggle==='percentReduction'">
-                    <div class="one wide field"></div>
-                    <div class="four wide required field">
-                        <div class="ui input">
-                            <input type="number" ng-model="auxModel.percentBetterThanMedian"
-                                   name="percentBetterThanMedian" placeholder="Target"
-                                   min="0" max="130">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label ng-show="!forms.baselineForm.percentBetterThanMedian.$valid"><font color="red">[Must Be Number Between 0-100]</font></label>
-                    </div>
-                </div>
-                <div class="inline fields" ng-if="auxModel.targetToggle==='zeroScore'">
-                    <div class="seven wide field"></div>
-                    <div class="four wide required field">
-                        <div class="ui input">
-                            <input type="number" ng-model="auxModel.percentBetterThanMedian"
-                                   name="percentBetterThanMedian" placeholder="Target"
-                                   min="0" max="130">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label ng-show="!forms.baselineForm.percentBetterThanMedian.$valid"><font color="red">[Must Be Number Between 0-100]</font></label>
-                    </div>
-                </div>
-                <div ng-if="auxModel.targetToggle==='percentReduction'">
-                    <div class="sixteen wide column">
-                        <div class="ui divider"></div>
-                    </div>
-                    <div class="ui fifteen wide column left aligned">
-                        <div checkbox class="ui checkbox checked" style="margin-top:.2em;margin-bottom:1em;">
-                            <input type="checkbox" id="is2030" ng-model="auxModel.is2030" ng-init="auxModel.is2030=false"
-                                   ng-true-value=true ng-false-value=false>
-                            <label for="is2030">Are you using the Zero Tool to meet 2030 Challenge Targets?</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <h3 class="ui header" ng-if="auxModel.newConstruction === false"><i class="lightning icon"></i>Annual Energy Purchased</h3>
+            <h3 class="ui header" ng-if="auxModel.newConstruction === false"><i class="lightning icon"></i>MODELED ANNUAL ENERGY CONSUMPTION</h3>
             <div class="ui segment energy-entry" ng-if="auxModel.newConstruction === false">
                 <div class="field">
                     Enter the total annual energy purchased for your building
@@ -407,111 +274,6 @@
                         <div class="one wide column">
                             <div class="ui large labeled button" ng-click="addEnergiesRow()" style="margin-top:.4em;">
                                 <i class="add green circle icon"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <h3 class="ui header" ng-if="auxModel.newConstruction === false"><i class="fa fa-sun-o icon" aria-hidden="true">
-            </i>Annual Energy Generated</h3>
-            <div class="ui segment energy-entry" ng-if="auxModel.newConstruction === false">
-                <p>
-                    Enter the total annual energy generated by your building below.
-                    For the most accurate results, enter all types of energy
-                    generated. If some of your generated energy was sold back to
-                    the grid, enter that amount in the field provided.
-                </p>
-
-                <div>
-                    <div class="ui grid">
-                        <div class="five wide column">
-                            Energy Type
-                        </div>
-                        <div class="five wide column">
-                            Units
-                        </div>
-                        <div class="five wide column">
-                            Total Annual<br />
-                            Energy Generated
-                        </div>
-                        <div ng-repeat-start="energyEntry in renewableEnergies" class="five wide column">
-                            <div class="field">
-                                <select class="ui dropdown"
-                                        ng-model="energyEntry.renewableType"
-                                        ng-options="item as item.name for item in energyProperties.renewableType track by item.name">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="five wide column">
-                            <div class="field">
-                                <select class="ui dropdown"
-                                        ng-model="energyEntry.renewableUnits"
-                                        ng-options="item.id as item.name for item in energyProperties.renewableUnits | filter: {filter_id: grid}">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="five wide column">
-                            <div class="ui input">
-                                <input type="number" ng-model="energyEntry.energyUse" value ="{{energyEntry.energyUse}}">
-                            </div>
-                        </div>
-                        <div ng-repeat-end class="one wide column">
-                            <div class="ui large labeled button"
-                                 ng-click="removeRenewableRow($index)"
-                                 style="margin-top:.4em;">
-                                <i class="minus red circle icon"></i>
-                            </div>
-                        </div>
-                        <div class="ui fifteen wide column right aligned">
-                            <label class="design-label">add another entry</label>
-                        </div>
-                        <div class="one wide column">
-                            <div class="ui large labeled button" ng-click="addRenewableEnergiesRow()" style="margin-top:.4em;">
-                                <i class="add green circle icon"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="sixteen wide column">
-                        <div class="ui divider"></div>
-                    </div>
-
-                    <div class="ui grid">
-                        <div class="five wide column">
-                        </div>
-                        <div class="five wide column">
-                            Units
-                        </div>
-                        <div class="five wide column">
-                            Total Annual Energy<br />
-                            Sold
-                        </div>
-                        <div ng-repeat-start="soldEntry in sold" class="five wide column">
-                            <div class="field">
-
-                            </div>
-                        </div>
-                        <div class="five wide column">
-                            <div class="field">
-                                <select class="ui dropdown"
-                                        ng-model="soldEntry.renewableUnits"
-                                        ng-options="item.id as item.name for item in energyProperties.renewableUnits | filter: {filter_id: grid}">
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="five wide column">
-                            <div class="ui input">
-                                <input type="number" ng-model="soldEntry.energyUse" value ="{{soldEntry.energyUse}}">
-                            </div>
-                        </div>
-                        <div ng-repeat-end class="one wide column">
-                            <div class="ui large labeled button"
-                                 ng-click="removeSoldRow()"
-                                 style="margin-top:.4em;">
-                                <i class="minus red circle icon"></i>
                             </div>
                         </div>
                     </div>
