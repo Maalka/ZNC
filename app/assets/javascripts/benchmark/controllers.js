@@ -83,43 +83,13 @@ define(['angular'], function() {
 
         if(($scope.auxModel.country) && (v)){
 
-            $scope.isResidential = false;
-
-            for(var i = 0; i < $scope.buildingProperties.buildingType.residential.length; i++ ) {
-                if( $scope.buildingProperties.buildingType.residential[i].id === v.id){
-                    if (v.id === "MultiFamily"){
-                        $scope.isResidential = false;
-                    } else {
-                        $scope.isResidential = true;
-                    }
-                   if ($scope.isResidential === true && v.id !== "MultiFamily"){
-                       $scope.propTypes = [];
-                   }
-
-                   // $scope.propTypes = [];
-                    break;
-                }
-            }
-
-
-
-            for(var j = 0; j < $scope.propTypes.length; j++ ) {
-                for(var k = 0; k < $scope.buildingProperties.buildingType.residential.length; k++ ) {
-                    if( $scope.propTypes[j].type === $scope.buildingProperties.buildingType.residential[k].id &&
-                    $scope.propTypes[j].type !== "MultiFamily"){
-                        $scope.clearProp($scope.propTypes[j]);
-                        break;
-                    }
-                }
-            }
-
             $scope.propTypes.push({
                 changeTo: v,
                 type: v.id,
                 name: v.name,
+                approach: $scope.auxModel.approach,
                 country:$scope.auxModel.country,
                 buildingZone: $scope.auxModel.buildingZone,
-                buildingList: $scope.auxModel.tempList,
             });
 
 
@@ -136,7 +106,6 @@ define(['angular'], function() {
             changeTo: $scope.propTypes[$index].changeTo,
             country: $scope.propTypes[$index].country,
             buildingZone: $scope.propTypes[$index].buildingZone,
-            buildingList: $scope.propTypes[$index].buildingList,
             type: $scope.propTypes[$index].changeTo.id,
             name: $scope.propTypes[$index].changeTo.name
         };
@@ -185,15 +154,6 @@ define(['angular'], function() {
         }
 
         $scope.propTypes.splice(index, 1);
-
-        if($scope.propTypes.length === 0){
-            $scope.propText="Primary Building Use";
-            if($scope.auxModel.buildingZone === "commercial"){
-                 $scope.auxModel.buildingList = "commercial";
-            }else{
-                $scope.auxModel.buildingList = "residential";
-            }
-        }
 
     };
 

@@ -22,32 +22,21 @@
                         </div>
                         <div class="field">
                             <div class="ui radio checkbox">
-                                <input type="radio" id="project-cb-new" ng-model="auxModel.newConstruction" ng-init="auxModel.newConstruction=false"
-                                       ng-value='true'>
-                                <label for='project-cb-new'>Prescriptive</label>
+                                <input type="radio" id="prescriptive" ng-model="auxModel.approach" ng-init="auxModel.approach=false"
+                                       ng-value='false'>
+                                <label for='prescriptive'>Prescriptive</label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui radio checkbox">
-                                <input type="radio" id="project-cb-existing" ng-model="auxModel.newConstruction" ng-init="auxModel.newConstruction=false"
-                                       ng-value='false'>
-                                <label for="project-cb-existing">Performance</label>
+                                <input type="radio" id="performance" ng-model="auxModel.approach" ng-init="auxModel.approach=false"
+                                       ng-value='true'>
+                                <label for="performance">Performance</label>
                             </div>
                         </div>
                     </div>
                     <div class="sixteen wide column">
                         <div class="ui divider"></div>
-                    </div>
-                    <div class="five wide column">
-                        <label class="design-label">Building Name</label>
-                    </div>
-                    <div class="eleven wide column">
-                        <div class="inline fields">
-                            <div class="fifteen wide field">
-                                <input type="text" ng-model="auxModel.buildingName"
-                                       name="buildingName" min="0" placeholder="Building Name">
-                            </div>
-                        </div>
                     </div>
                     <div class="five wide column">
                         <label class="design-label">Country</label>
@@ -97,44 +86,14 @@
             <h3 class="ui header"><i class="building icon"></i>BUILDING USE DETAILS</h3>
             <div class="ui segment page-break-after" ng-class="{'disabled': !forms.baselineForm.country.$valid}">
 
-                <div class="field">
-                    In order to provide you with an appropriate comparison
-                    for your building, we need to know how spaces in this
-                    building will be used. If your building has multiple uses,
-                    add them below.
-
-                    <div class="tooltip">
-                        <sup><i class="blue circle info icon"></i></sup>
-                        <span class="tooltiptext">The total area of all space uses should equal the gross floor area of the building. For a description of each use type and associated space use characteristic inputs, refer to the <a href="https://portfoliomanager.energystar.gov/pm/glossary" target="_blank">ENERGY STAR Portfolio Manager Glossary</a>.</span>
-                    </div>
-                </div>
-
                 <div class="inline fields">
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" id="project-commercial" ng-model="auxModel.buildingZone" ng-init="auxModel.buildingZone='commercial'"
-                                   ng-value="'commercial'">
-                            <label for='project-commercial'>Commercial</label>
-
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" id="project-residential" ng-model="auxModel.buildingZone" ng-init="auxModel.buildingZone='commercial'"
-                                   ng-value="'residential'">
-                            <label for="project-residential">Residential</label>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="inline fields" ng-if="!(propTypes.length > 0 && propTypes[0].buildingList === 'residential' && auxModel.buildingZone == 'residential')">
                     <div class="sixteen wide field">
                         <label>{{propText}}</label>
                         <select class="ui dropdown search"
                                 dropdown
                                 reset = "auxModel.resetBuildingType"
                                 ng-model="auxModel.buildingType"
-                                ng-options="item as item.name for item in buildingProperties.buildingType[auxModel.buildingList] | orderBy : 'name'"
+                                ng-options="item as item.name for item in buildingProperties.buildingType['commercial'] | orderBy : 'name'"
                                 name="buildingType">
                             <option value="">Select</option>
                         </select>
@@ -154,7 +113,7 @@
                             dropdown
                             ng-model="prop.changeTo"
                             ng-change="updatePropType($index)"
-                            ng-options="item as item.name for item in buildingProperties.buildingType[prop.buildingList] | orderBy : 'name' track by item.name ">
+                            ng-options="item as item.name for item in buildingProperties.buildingType['commercial'] | orderBy : 'name' track by item.name ">
                         <option value="">Select</option>
                     </select>
                 </div>
@@ -199,8 +158,8 @@
             </div>
 
 
-            <h3 class="ui header" ng-if="auxModel.newConstruction === false"><i class="lightning icon"></i>MODELED ANNUAL ENERGY CONSUMPTION</h3>
-            <div class="ui segment energy-entry" ng-if="auxModel.newConstruction === false">
+            <h3 class="ui header" ng-if="auxModel.approach === true"><i class="lightning icon"></i>MODELED ANNUAL ENERGY CONSUMPTION</h3>
+            <div class="ui segment energy-entry" ng-if="auxModel.approach === true">
                 <div class="field">
                     Enter the total annual energy purchased for your building
                     below. For the most accurate results, enter all types of energy
