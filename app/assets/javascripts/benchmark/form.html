@@ -124,15 +124,14 @@
                     </select>
                 </div>
             </div>
+
             <div ng-repeat="prop in propTypes" ng-class="{'page-break-after': ($index + 1) % 3 == 0}">
                 <div class="ui segment building">
-
-                    <div building-Info forms='forms' type='Generic' model="prop">
-                    </div>
-
+                    <div building-Info forms='forms' type='Generic' model="prop"></div>
                 </div>
-
             </div>
+
+
 
 
             <h3 class="ui header" ng-if="auxModel.approach === true"><i class="lightning icon"></i>MODELED ANNUAL ENERGY CONSUMPTION</h3>
@@ -195,6 +194,17 @@
                     </div>
                 </div>
             </div>
+
+            <h3 class="ui header"><i class="fa fa-sun-o icon" aria-hidden="true">
+            </i>ON-SITE PV SYSTEMS</h3>
+            <div ng-repeat="pvSystem in pvList" ng-class="{'page-break-after': ($index + 1) % 3 == 0}">
+                <div class="ui segment">
+                    <div system-Info forms='forms' model="pvSystem"></div>
+                </div>
+            </div>
+
+
+
         </div>
     </form>
 </div>

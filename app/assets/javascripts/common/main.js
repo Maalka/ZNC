@@ -5,6 +5,7 @@ define(['angular', './services/helper', './services/playRoutes', './filters', '.
     'angular-file-upload',
 	'./directives/benchmark_result_row',
 	'./directives/building_info',
+	'./directives/system_info',
 	'./directives/graph',
 	'./directives/required',
 	'./directives/files'

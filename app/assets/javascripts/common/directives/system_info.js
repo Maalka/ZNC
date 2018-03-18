@@ -1,14 +1,13 @@
 /**
- * A building property directive
- * changes form inputs based on property type
- * and supports multiple property types
+ * A systen property directive
+ * changes form inputs based on pv system
  */
 define(['angular','./main'], function(angular) {
   'use strict';
 
   var mod = angular.module('common.directives');
 
-    mod.directive('pvInfo', [function() {
+    mod.directive('systemInfo', [function() {
         return {
             restrict: 'A',
             scope: {
@@ -17,7 +16,7 @@ define(['angular','./main'], function(angular) {
             },
 
             templateUrl: function(){
-                   return 'javascripts/common/partials/property_fields.html';
+                   return 'javascripts/common/partials/pv_fields.html';
             },
 
             controller: ["$scope", function ($scope) {
@@ -26,68 +25,46 @@ define(['angular','./main'], function(angular) {
                 $scope.propFieldsRequired = false;
                 $scope.propertyModel = {};
                 $scope.model.propertyModel = $scope.propertyModel ;
-                $scope.model.propertyModel.buildingType = $scope.model.type;
-
                 $scope.model.valid = false;
 
                 $scope.$watch("forms.baselineForm.$valid", function (validity) {
                     $scope.model.valid = validity;
                 });
 
-                $scope.round = function(value, decimals) {
-                    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+                $scope.clearParams = function(){
+
+                    $scope.propertyModel.module_type=null;
+                    $scope.propertyModel.losses=null;
+                    $scope.propertyModel.array_type=null;
+                    $scope.propertyModel.tilt=null;
+                    $scope.propertyModel.azimuth=null;
+                    $scope.propertyModel.inv_eff=null;
                 };
 
-                //auto-populate default parameters by building type and country
                 $scope.$watch("propertyModel.defaultValues", function () {
                     if($scope.propertyModel.defaultValues){
-                            $scope.setDefaults();
+                        $scope.setDefaults();
                     } else {
                         $scope.clearParams();
                     }
-
-                });
-                // if the building type changes.  then 
-                $scope.$watch('model.propertyModel.buildingType', function (propertyType, lastValue) { 
-                    if (propertyType !== undefined && lastValue !== undefined){
-                        setPropertyModelFields();
-                    }
                 });
 
-                $scope.removeProp = function() { 
+                $scope.removeProp = function() {
                     $scope.$parent.removeProp(this);
                 };
                 $scope.isRequired = function(field) {
                     if (field.required === undefined) {
                         return false;
-                    } else if (field.required === $scope.model.country) {
-                        return true;
                     } else if (field.required === "all") {
                         return true;
                     } else {
                         return false;
                     }
                 };
-                $scope.isShown = function (field) {
-                    if (field.required === undefined) {
-                        return true;
-                    } else if (field.required === $scope.model.country) {
-                        return true;
-                    } else if (field.required === "all") {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                };
+
                 $scope.required = function(field) {
                     return $scope.isRequired(field) ? "required" : "";
                 };
-
-                $scope.$watch("propertyModel.areaUnits", function () {
-                    if($scope.propertyModel.GFA && $scope.propertyModel.areaUnits){
-                        if($scope.propertyModel.defaultValues===true){$scope.setDefaults();}
-                    }
-                });
 
                 $scope.$watch("forms.baselineForm.$valid", function () {
                     if($scope.forms.baselineForm.$valid){
@@ -102,6 +79,7 @@ define(['angular','./main'], function(angular) {
                             {id:"ftSQ",name:"sq.ft"},
                             {id:"mSQ",name:"sq.m"}
                     ],
+
                     arrayType: [
                             {id:0,name:"0 Fixed - Open Rack"},
                             {id:1,name:"1 Fixed - Roof Mounted"},
@@ -118,10 +96,10 @@ define(['angular','./main'], function(angular) {
 
                 var setPropertyModelFields = function()  {
                     $scope.propertyModelFields = {
-                        Hospital    : [
+                        pvSystem    : [
                             {
                                 name: "module_type",
-                                default: $scope.pvProperties.module_type[0].id,
+                                default: $scope.pvProperties.moduleType[0].id,
                                 type: "select",
                                 title: "Module Type",
                                 required: 'all'
@@ -135,9 +113,9 @@ define(['angular','./main'], function(angular) {
                             },
                             {
                                 name: "array_type",
-                                default: $scope.pvProperties.array_type[0].id,
-                                type: "number",
-                                title: "Number of Full Time Workers",
+                                default: $scope.pvProperties.arrayType[0].id,
+                                type: "select",
+                                title: "Array Type",
                                 required: 'all'
                             },
                             {
@@ -160,44 +138,25 @@ define(['angular','./main'], function(angular) {
                                 type: "number",
                                 title: "Inverter Efficiency (Degrees)",
                                 required: 'all'
-                            },
-                            {
-                                name: "pv_area_units",
-                                default:  $scope.buildingProperties.areaHVAC[10].id,
-                                type: "select",
-                                fields: $scope.buildingProperties.areaHVAC,
-                                title: "Percent Cooled",
-                                required: 'all'
                             }
                         ]
                     };
                 };
                 setPropertyModelFields();
 
+
                 //for setting defaults based on building Type, Country does not matter here due to unused parameters upon analysis
                 $scope.setDefaults = function() {
-
-                        var prop = $scope.model.type;
 
                         setPropertyModelFields();
 
                         // set the defaults
-                        $scope.propertyModelFields[prop].forEach(function (v){
+                        $scope.propertyModelFields.pvSystem.forEach(function (v){
                             $scope.propertyModel[v.name] = v.default;
-
                         });
                 };
 
 
-                $scope.clearParams = function(){
-
-                    $scope.propertyModel.module_type=null;
-                    $scope.propertyModel.losses=null;
-                    $scope.propertyModel.array_type=null;
-                    $scope.propertyModel.tilt=null;
-                    $scope.propertyModel.azimuth=null;
-                    $scope.propertyModel.inv_eff=null;
-                };
             }]
         };
     }]);
