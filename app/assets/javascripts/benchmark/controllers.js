@@ -20,6 +20,7 @@ define(['angular'], function() {
     $scope.auxModel = {};
     $scope.energies = [{}, {}];
     $scope.propList = [];
+    $scope.pvList = [{}];
 
     $scope.benchmarkResult = null;
 
@@ -89,12 +90,10 @@ define(['angular'], function() {
                 name: v.name,
                 approach: $scope.auxModel.approach,
                 country:$scope.auxModel.country,
-                buildingZone: $scope.auxModel.buildingZone,
+                stories:$scope.auxModel.stories,
             });
 
-
             $scope.propText="Add Another Use";
-            // there seems to be a $digest issue where undefined isn't carried through to the dropdown directive
             $scope.auxModel.resetBuildingType = true;
             $scope.auxModel.buildingType = undefined;
         }
@@ -105,9 +104,9 @@ define(['angular'], function() {
         $scope.propTypes[$index] = {
             changeTo: $scope.propTypes[$index].changeTo,
             country: $scope.propTypes[$index].country,
-            buildingZone: $scope.propTypes[$index].buildingZone,
             type: $scope.propTypes[$index].changeTo.id,
-            name: $scope.propTypes[$index].changeTo.name
+            name: $scope.propTypes[$index].changeTo.name,
+            stories:$scope.auxModel.stories
         };
     };
 
@@ -116,10 +115,8 @@ define(['angular'], function() {
         $scope.clearGeography();
     });
 
-
-
     $scope.clearGeography = function () {
-        $scope.auxModel.city = "";
+        $scope.auxModel.city = undefined;
         $scope.auxModel.buildingType = undefined;
         $scope.propTypes = [];
     };
@@ -314,6 +311,13 @@ define(['angular'], function() {
     };
 
         $scope.geographicProperties = {
+                city:
+                    [
+                    {id:"Chicago",name:"Chicago",filter_id:"USA"},
+                    {id:"New York City",name:"New York City",filter_id:"USA"},
+                    {id:"Toronto",name:"Toronto",filter_id:"Canada"},
+                    {id:"Vancouver",name:"Vancouver",filter_id:"Canada"}
+                    ],
                 country:
                     [{id:"USA",name:"United States"},
                     {id:"Canada",name:"Canada"}],

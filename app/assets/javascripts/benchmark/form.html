@@ -16,25 +16,27 @@
         <div class="entry">
             <div class="ui segment about">
                 <div class="ui grid">
-                    <div class="inline fields">
+
+                    <div class="five wide column">
                         <div class="field">
                             Code Pathway:
                         </div>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" id="prescriptive" ng-model="auxModel.approach" ng-init="auxModel.approach=false"
-                                       ng-value='false'>
-                                <label for='prescriptive'>Prescriptive</label>
-                            </div>
+                    </div>
+                    <div class="right aligned eleven wide column">
+                        <div class="ui radio checkbox">
+                            <input type="radio" id="prescriptive" ng-model="auxModel.approach" ng-init="auxModel.approach=false"
+                                   ng-value='false'>
+                            <label for='prescriptive'>Prescriptive</label>
                         </div>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" id="performance" ng-model="auxModel.approach" ng-init="auxModel.approach=false"
-                                       ng-value='true'>
-                                <label for="performance">Performance</label>
-                            </div>
+
+
+                        <div class="ui radio checkbox">
+                            <input type="radio" id="performance" ng-model="auxModel.approach" ng-init="auxModel.approach=false"
+                                   ng-value='true'>
+                            <label for="performance">Performance</label>
                         </div>
                     </div>
+
                     <div class="sixteen wide column">
                         <div class="ui divider"></div>
                     </div>
@@ -55,14 +57,19 @@
                         </div>
                     </div>
                     <div class="five wide column">
-                        <label class="design-label">City</label>
+                        <label class="design-label">City
+                            <div class="tooltip">
+                                <sup><i class="blue circle info icon"></i></sup>
+                                <span class="tooltiptext">Select a city from the list.</span>
+                            </div>
+                        </label>
                     </div>
                     <div class="eleven wide column">
                         <div class="inline fields required">
                             <div class="sixteen wide field">
                                 <select class="ui dropdown search"
                                         ng-model="auxModel.city"
-                                        ng-options="item.id as item.name for item in geographicProperties.country"
+                                        ng-options="item.id as item.name for item in geographicProperties.city | filter: {filter_id: auxModel.country}"
                                         required
                                         name="city">
                                     <option value="">Select</option>
@@ -71,40 +78,39 @@
                         </div>
                     </div>
                     <div class="five wide column">
-                        <label class="design-label">Postal Code</label>
+                        <label class="design-label">Number of Stories</label>
                     </div>
                     <div class="eleven wide column">
                         <div class="inline fields">
                             <div class="sixteen wide field required">
-                                <input type="text" ng-model="auxModel.postalCode" ng-blur="postalCodeCheck()"
-                                       required name="postalCode" placeholder="Postal Code">
+                                <input type="text" ng-model="auxModel.stories"
+                                       required name="stories" placeholder="Enter Number">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="five wide column">
+                        <label>{{propText}}</label>
+                    </div>
+                    <div class="eleven wide column">
+                        <div class="inline fields required">
+                            <div class="sixteen wide field">
+                                <select class="ui dropdown search"
+                                        dropdown
+                                        reset = "auxModel.resetBuildingType"
+                                        ng-model="auxModel.buildingType"
+                                        ng-options="item as item.name for item in buildingProperties.buildingType['commercial'] | orderBy : 'name'"
+                                        name="buildingType">
+                                    <option value="">Select</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <h3 class="ui header"><i class="building icon"></i>BUILDING USE DETAILS</h3>
-            <div class="ui segment page-break-after" ng-class="{'disabled': !forms.baselineForm.country.$valid}">
 
-                <div class="inline fields">
-                    <div class="sixteen wide field">
-                        <label>{{propText}}</label>
-                        <select class="ui dropdown search"
-                                dropdown
-                                reset = "auxModel.resetBuildingType"
-                                ng-model="auxModel.buildingType"
-                                ng-options="item as item.name for item in buildingProperties.buildingType['commercial'] | orderBy : 'name'"
-                                name="buildingType">
-                            <option value="">Select</option>
-                        </select>
-                    </div>
-                </div>
                 <div ng-if="propTypes.length > 0">
                     <div class="ui divider "></div>
                     <div class="field">
-                        
-
-
                         <label >Selected Use Type(s):</label>
                     </div>
                 </div>
@@ -120,37 +126,8 @@
             </div>
             <div ng-repeat="prop in propTypes" ng-class="{'page-break-after': ($index + 1) % 3 == 0}">
                 <div class="ui segment building">
-                    <div ng-if="prop.type=='DataCenter' && prop.country=='USA'" building-Info forms='forms' type='DataCenter' model="prop"></div>
-                    <div ng-if="prop.type=='Hospital' && prop.country=='USA'" building-Info forms='forms' type='Hospital' model="prop"></div>
-                    <div ng-if="prop.type=='Hotel' && prop.country=='USA'" building-Info forms='forms' type='Hotel' model="prop"></div>
-                    <div ng-if="prop.type=='K12School' && prop.country=='USA'" building-Info forms='forms' type='K12School' model="prop"></div>
-                    <div ng-if="prop.type=='MedicalOffice' && prop.country=='USA'" building-Info forms='forms' type='MedicalOffice' model="prop"></div>
-                    <div ng-if="prop.type=='Office' && prop.country=='USA'" building-Info forms='forms' type='Office' model="prop"></div>
-                    <div ng-if="prop.type=='ResidenceHall' && prop.country=='USA'" building-Info forms='forms' type='ResidenceHall' model="prop"></div>
-                    <div ng-if="prop.type=='Retail' && prop.country=='USA'" building-Info forms='forms' type='Retail' model="prop"></div>
-                    <div ng-if="prop.type=='SeniorCare' && prop.country=='USA'" building-Info forms='forms' type='SeniorCare' model="prop"></div>
-                    <div ng-if="prop.type=='Supermarket' && prop.country=='USA'" building-Info forms='forms' type='Supermarket' model="prop"></div>
-                    <div ng-if="prop.type=='Warehouse' && prop.country=='USA'" building-Info forms='forms' type='Warehouse' model="prop"></div>
-                    <div ng-if="prop.type=='RefrigeratedWarehouse' && prop.country=='USA'" building-Info forms='forms' type='RefrigeratedWarehouse' model="prop"></div>
-                    <div ng-if="prop.type=='WastewaterCenter' && prop.country=='USA'" building-Info forms='forms' type='WastewaterCenter' model="prop"></div>
-                    <div ng-if="prop.type=='WorshipCenter' && prop.country=='USA'" building-Info forms='forms' type='WorshipCenter' model="prop"></div>
-                    <div ng-if="prop.type=='MultiFamily' && prop.country=='USA'" building-Info forms='forms' type='MultiFamily' model="prop"></div>
 
-                    <div ng-if="prop.type=='Hospital' && prop.country=='Canada'" building-Info forms='forms' type='HospitalCanada' model="prop"></div>
-                    <div ng-if="prop.type=='K12School' && prop.country=='Canada'" building-Info forms='forms' type='K12SchoolCanada' model="prop"></div>
-                    <div ng-if="prop.type=='MedicalOffice' && prop.country=='Canada'" building-Info forms='forms' type='MedicalOfficeCanada' model="prop"></div>
-                    <div ng-if="prop.type=='Office' && prop.country=='Canada'" building-Info forms='forms' type='OfficeCanada' model="prop"></div>
-                    <div ng-if="prop.type=='Supermarket' && prop.country=='Canada'" building-Info forms='forms' type='SupermarketCanada' model="prop"></div>
-
-                    <div ng-if="prop.country=='USA' && prop.type!='DataCenter' && prop.type!='Hospital' &&
-                        prop.type!='Hotel' && prop.type!='K12School' && prop.type!='MedicalOffice' &&
-                        prop.type!='Office' && prop.type!='ResidenceHall' && prop.type!='Retail' &&
-                        prop.type!='SeniorCare' && prop.type!='Supermarket' && prop.type!='RefrigeratedWarehouse' && prop.type!='Warehouse' &&
-                        prop.type!='WastewaterCenter' && prop.type!='MultiFamily' &&
-                        prop.type!='WorshipCenter'" building-Info forms='forms' type='Generic' model="prop">
-                    </div>
-                    <div ng-if="prop.country=='Canada' && prop.type!='Hospital' && prop.type!='K12School' &&
-                        prop.type!='MedicalOffice' && prop.type!='Office' && prop.type!='Supermarket'" building-Info forms='forms' type='Generic' model="prop">
+                    <div building-Info forms='forms' type='Generic' model="prop">
                     </div>
 
                 </div>
@@ -161,40 +138,20 @@
             <h3 class="ui header" ng-if="auxModel.approach === true"><i class="lightning icon"></i>MODELED ANNUAL ENERGY CONSUMPTION</h3>
             <div class="ui segment energy-entry" ng-if="auxModel.approach === true">
                 <div class="field">
-                    Enter the total annual energy purchased for your building
-                    below. For the most accurate results, enter all types of energy
-                    purchased including from utilities and off-site renewable energy
-                    sources.
-                    <div class="tooltip">
-                        <sup><i class="blue circle info icon"></i></sup>
-                        <span class="tooltiptext">For the purposes of this calculation, all utility-provided energy consumption data should be considered fossil fuel-based, unless a project-specific contract for green power procurement is in place.</span>
-                    </div>
+                    Enter the modeled total annual energy consumption, by fuel type, below.
                 </div>
                 </p>
                 <div>
                     <div class="ui grid">
-<!--                        <div class="ui fifteen wide column left aligned">
-                            <div checkbox class="ui checkbox checked" style="margin-top:.2em;margin-bottom:1em;">
-                                <input type="checkbox" id="netMetered" ng-model="auxModel.netMetered" ng-init="auxModel.netMetered=false"
-                                       ng-true-value=true ng-false-value=false>
-                                <label for="netMetered">Net Metered?
-                                    <div class="tooltip">
-                                        <sup><i class="blue circle info icon"></i></sup>
-                                        <span class="tooltiptext">Check this box if your utility bills aggregate on-site energy consumption and on-
-                                            site energy generation. Leave the box unchecked if you have separate consumption and generation data. Either way, enter energy generation data below.</span>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>-->
                         <div class="five wide column">
-                            Energy Type
+                            <br />Energy Type
                         </div>
                         <div class="five wide column">
-                            Units
+                            <br />Units
                         </div>
-                        <div class="five wide column">
-                            Total Annual<br />
-                            Energy Purchased
+                        <div class="six wide column">
+                            Modeled Total Annual<br />
+                            Energy Consumption
                         </div>
                         <div ng-repeat-start="energyEntry in energies" class="five wide column">
                             <div class="field">
