@@ -12,7 +12,8 @@ define(['angular','./main'], function(angular) {
             restrict: 'A',
             scope: {
                 model: '=model',
-                forms: '=forms'
+                forms: '=forms',
+                index: '=idx',
             },
 
             templateUrl: function(){
@@ -23,9 +24,11 @@ define(['angular','./main'], function(angular) {
 
                 $scope.benchmark = $scope.$parent;
                 $scope.propFieldsRequired = false;
-                $scope.propertyModel = {};
-                $scope.model.propertyModel = $scope.propertyModel ;
+                $scope.pvModel = {};
+                $scope.model.pvModel = $scope.pvModel ;
                 $scope.model.valid = false;
+                $scope.name = $scope.model.name;
+                $scope.showDivider = $scope.model.showDivider;
 
                 $scope.$watch("forms.baselineForm.$valid", function (validity) {
                     $scope.model.valid = validity;
@@ -33,25 +36,31 @@ define(['angular','./main'], function(angular) {
 
                 $scope.clearParams = function(){
 
-                    $scope.propertyModel.module_type=null;
-                    $scope.propertyModel.losses=null;
-                    $scope.propertyModel.array_type=null;
-                    $scope.propertyModel.tilt=null;
-                    $scope.propertyModel.azimuth=null;
-                    $scope.propertyModel.inv_eff=null;
+                    $scope.pvModel.module_type=null;
+                    $scope.pvModel.losses=null;
+                    $scope.pvModel.array_type=null;
+                    $scope.pvModel.tilt=null;
+                    $scope.pvModel.azimuth=null;
+                    $scope.pvModel.inv_eff=null;
                 };
 
-                $scope.$watch("propertyModel.defaultValues", function () {
-                    if($scope.propertyModel.defaultValues){
+                $scope.$watch("pvModel.defaultValues", function () {
+                    if($scope.pvModel.defaultValues){
                         $scope.setDefaults();
                     } else {
                         $scope.clearParams();
                     }
                 });
 
-                $scope.removeProp = function() {
-                    $scope.$parent.removeProp(this);
+                $scope.removePV = function() {
+                    $scope.$parent.removePV(this);
                 };
+
+                $scope.addPV = function() {
+                    $scope.$parent.addPV();
+                };
+
+
                 $scope.isRequired = function(field) {
                     if (field.required === undefined) {
                         return false;
@@ -94,8 +103,8 @@ define(['angular','./main'], function(angular) {
                            ]
                };
 
-                var setPropertyModelFields = function()  {
-                    $scope.propertyModelFields = {
+                var setpvModelFields = function()  {
+                    $scope.pvModelFields = {
                         pvSystem    : [
                             {
                                 name: "module_type",
@@ -142,17 +151,17 @@ define(['angular','./main'], function(angular) {
                         ]
                     };
                 };
-                setPropertyModelFields();
+                setpvModelFields();
 
 
                 //for setting defaults based on building Type, Country does not matter here due to unused parameters upon analysis
                 $scope.setDefaults = function() {
 
-                        setPropertyModelFields();
+                        setpvModelFields();
 
                         // set the defaults
-                        $scope.propertyModelFields.pvSystem.forEach(function (v){
-                            $scope.propertyModel[v.name] = v.default;
+                        $scope.pvModelFields.pvSystem.forEach(function (v){
+                            $scope.pvModel[v.name] = v.default;
                         });
                 };
 

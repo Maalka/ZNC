@@ -9,14 +9,8 @@ define(['angular', 'common'], function(angular) {
 					return response.data;
 				});
 			},
-			'getZEPIMetrics': function(model) {
-				return playRoutes.controllers.BaselineController.getZEPIMetrics().post(model).then(function (response)  {
-					/// handle errors (500 etc)
-					return response.data;
-				});
-			},
-			'getDDMetrics': function(model) {
-				return playRoutes.controllers.DegreeDaysController.getDDMetrics().post(model).then(function (response)  {
+			'getZNCMetrics': function(model) {
+				return playRoutes.controllers.BaselineController.getZNCMetrics().post(model).then(function (response)  {
 					/// handle errors (500 etc)
 					return response.data;
 				});

@@ -17,13 +17,13 @@ define(['angular'], function() {
 
     $rootScope.includeHeader = maalkaIncludeHeader;
     $rootScope.pageTitle = "ZNC Tool";
+
     $scope.auxModel = {};
     $scope.energies = [{}, {}];
-    $scope.propList = [];
-    $scope.pvList = [{}];
+    $scope.pvList = [{id:0,name:"PV SYSTEM",showDivider:false}];
+    $scope.pvCounter = 1;
 
     $scope.benchmarkResult = null;
-
 
     $scope.propOutputList = [];
     $scope.tableEUIUnits = null;
@@ -32,8 +32,6 @@ define(['angular'], function() {
     $scope.propTypes = [];
     $scope.mainColumnWidth = "";
     $scope.propText = "Primary Building Use";
-    $scope.stories = null;
-
 
 
     if (window.matchMedia) {
@@ -82,15 +80,12 @@ define(['angular'], function() {
             return; 
         }
 
-        if(($scope.auxModel.country) && (v)){
+        if(v){
 
             $scope.propTypes.push({
                 changeTo: v,
                 type: v.id,
                 name: v.name,
-                approach: $scope.auxModel.approach,
-                country:$scope.auxModel.country,
-                stories:$scope.auxModel.stories,
             });
 
             $scope.propText="Add Another Use";
@@ -103,10 +98,8 @@ define(['angular'], function() {
 
         $scope.propTypes[$index] = {
             changeTo: $scope.propTypes[$index].changeTo,
-            country: $scope.propTypes[$index].country,
             type: $scope.propTypes[$index].changeTo.id,
             name: $scope.propTypes[$index].changeTo.name,
-            stories:$scope.auxModel.stories
         };
     };
 
@@ -117,8 +110,6 @@ define(['angular'], function() {
 
     $scope.clearGeography = function () {
         $scope.auxModel.city = undefined;
-        $scope.auxModel.buildingType = undefined;
-        $scope.propTypes = [];
     };
 
 
@@ -141,24 +132,55 @@ define(['angular'], function() {
 
 
     $scope.removeProp = function(prop){
-
         var index;
         for(var i = 0; i < $scope.propTypes.length; i++ ) {
-            if($scope.propTypes[i].name === prop.model.name && $scope.propTypes[i].country === prop.model.country) {
+            if($scope.propTypes[i].name === prop.model.name) {
+                index = i;
+                break;
+            }
+        }
+        $scope.propTypes.splice(index, 1);
+    };
+
+    $scope.showDivider = function() {
+        if($scope.pvList.length > 1){
+            return true;
+            }else {
+            return false;
+                }
+    };
+
+    $scope.addPV = function(){
+        var divider = true;
+        if ($scope.pvList.length ===  0) {
+            divider = false;
+        }
+        $scope.pvList.push({id:$scope.pvCounter,name:"PV SYSTEM",showDivider:divider});
+        $scope.pvCounter = $scope.pvCounter + 1;
+    };
+
+    $scope.removePV = function(pv){
+        var index;
+        for(var i = 0; i < $scope.pvList.length; i++ ) {
+            if($scope.pvList[i].id === pv.model.id) {
                 index = i;
                 break;
             }
         }
 
-        $scope.propTypes.splice(index, 1);
+        $scope.pvList.splice(index, 1);
 
+        if ($scope.pvList.length ===  0) {
+            $scope.addPV();
+        }
     };
+
 
     $scope.clearProp = function(prop){
         var index;
 
         for(var i = 0; i < $scope.propTypes.length; i++ ) {
-            if($scope.propTypes[i].name === prop.name && $scope.propTypes[i].country === prop.country) {
+            if($scope.propTypes[i].name === prop.name) {
                 index = i;
                 break;
             }
@@ -172,14 +194,10 @@ define(['angular'], function() {
 
     $scope.computeBenchmarkResult = function(){
 
-        $scope.propSubmit = [];
-        for (var i = 0; i < $scope.propList.length; i++){
-                $scope.propSubmit.push($scope.propList[i]);
-        }
 
-        $log.info($scope.propSubmit);
+        $log.info($scope.auxModel);
 
-        $scope.futures = benchmarkServices.getZEPIMetrics($scope.propSubmit);
+        $scope.futures = benchmarkServices.getZNCMetrics($scope.auxModel);
 
         $q.resolve($scope.futures).then(function (results) {
             $scope.scoreGraph = "Rating";
@@ -239,7 +257,6 @@ define(['angular'], function() {
             return;
         }
         $scope.forms.hasValidated = true; /// only check the field errors if this form has attempted to validate.
-        $scope.propList = [];
 
         if($scope.auxModel.reportingUnits==="us"){
             $scope.tableEnergyUnits="(kBtu/yr)";
@@ -272,41 +289,48 @@ define(['angular'], function() {
 
             energyListFromRegular.push.apply(energyListFromRegular);
 
-
             return energyListFromRegular;
         };
 
-        if($scope.forms.baselineForm.$valid){
-            for (var i = 0; i < $scope.propTypes.length; i++){
-                if($scope.propTypes[i].valid === true){
+        var getPropTypes = function () {
 
-                    $scope.propTypes[i].propertyModel.country = $scope.auxModel.country;
-                    $scope.propTypes[i].propertyModel.city = $scope.auxModel.city;
-                    $scope.propTypes[i].propertyModel.reportingUnits = $scope.auxModel.reportingUnits;
-
-                    if($scope.energies.map(mapEnergy).filter(validEnergy).length===0){
-                        $scope.propTypes[i].propertyModel.energies=null;
-                    } else {
-                        $scope.propTypes[i].propertyModel.energies = getFullEnergyList();
-                    }
-
-                    $scope.propList.push($scope.propTypes[i].propertyModel);
-
-                } else {
-                    $log.info('Error in ' + $scope.propTypes[i].type);
+            var props = [];
+            for (var i =0; i < $scope.propTypes.length; i ++) {
+                props.push($scope.propTypes[i].propertyModel);
                 }
+
+            return props;
+        };
+
+        var getPVData = function () {
+
+            var pv_data = [];
+            for (var i =0; i < $scope.pvList.length; i ++) {
+                pv_data.push($scope.pvList[i].pvModel);
+                }
+
+            return pv_data;
+        };
+
+
+
+        if($scope.forms.baselineForm.$valid){
+
+            if($scope.energies.map(mapEnergy).filter(validEnergy).length===0){
+                $scope.auxModel.energies=null;
+            } else {
+                $scope.auxModel.energies = getFullEnergyList();
             }
+
+            $scope.auxModel.prop_types = getPropTypes();
+            $scope.auxModel.pv_data = getPVData();
+
+            $scope.computeBenchmarkResult();
+
         }else {
             $scope.submitErrors();
+            $scope.benchmarkResult = null;
         }
-
-
-
-        if ($scope.propList.length !== 0){
-                $scope.computeBenchmarkResult();
-            }else{
-                $scope.benchmarkResult = null;
-            }
 
     };
 
@@ -321,161 +345,36 @@ define(['angular'], function() {
                 country:
                     [{id:"USA",name:"United States"},
                     {id:"Canada",name:"Canada"}],
-                state:
-                    [
-                    {id:"AL",name:"Alabama",filter_id:"USA"},
-                    {id:"AK",name:"Alaska",filter_id:"USA"},
-                    {id:"AZ",name:"Arizona",filter_id:"USA"},
-                    {id:"AR",name:"Arkansas",filter_id:"USA"},
-                    {id:"CA",name:"California",filter_id:"USA"},
-                    {id:"CO",name:"Colorado",filter_id:"USA"},
-                    {id:"CT",name:"Connecticut",filter_id:"USA"},
-                    {id:"DE",name:"Delaware",filter_id:"USA"},
-                    {id:"DC",name:"District Of Columbia",filter_id:"USA"},
-                    {id:"FL",name:"Florida",filter_id:"USA"},
-                    {id:"GA",name:"Georgia",filter_id:"USA"},
-                    {id:"HI",name:"Hawaii",filter_id:"USA"},
-                    {id:"ID",name:"Idaho",filter_id:"USA"},
-                    {id:"IL",name:"Illinois",filter_id:"USA"},
-                    {id:"IN",name:"Indiana",filter_id:"USA"},
-                    {id:"IA",name:"Iowa",filter_id:"USA"},
-                    {id:"KS",name:"Kansas",filter_id:"USA"},
-                    {id:"KY",name:"Kentucky",filter_id:"USA"},
-                    {id:"LA",name:"Louisiana",filter_id:"USA"},
-                    {id:"ME",name:"Maine",filter_id:"USA"},
-                    {id:"MD",name:"Maryland",filter_id:"USA"},
-                    {id:"MA",name:"Massachusetts",filter_id:"USA"},
-                    {id:"MI",name:"Michigan",filter_id:"USA"},
-                    {id:"MN",name:"Minnesota",filter_id:"USA"},
-                    {id:"MS",name:"Mississippi",filter_id:"USA"},
-                    {id:"MO",name:"Missouri",filter_id:"USA"},
-                    {id:"MT",name:"Montana",filter_id:"USA"},
-                    {id:"NE",name:"Nebraska",filter_id:"USA"},
-                    {id:"NV",name:"Nevada",filter_id:"USA"},
-                    {id:"NH",name:"New Hampshire",filter_id:"USA"},
-                    {id:"NJ",name:"New Jersey",filter_id:"USA"},
-                    {id:"NM",name:"New Mexico",filter_id:"USA"},
-                    {id:"NY",name:"New York",filter_id:"USA"},
-                    {id:"NC",name:"North Carolina",filter_id:"USA"},
-                    {id:"ND",name:"North Dakota",filter_id:"USA"},
-                    {id:"OH",name:"Ohio",filter_id:"USA"},
-                    {id:"OK",name:"Oklahoma",filter_id:"USA"},
-                    {id:"OR",name:"Oregon",filter_id:"USA"},
-                    {id:"PA",name:"Pennsylvania",filter_id:"USA"},
-                    {id:"RI",name:"Rhode Island",filter_id:"USA"},
-                    {id:"SC",name:"South Carolina",filter_id:"USA"},
-                    {id:"SD",name:"South Dakota",filter_id:"USA"},
-                    {id:"TN",name:"Tennessee",filter_id:"USA"},
-                    {id:"TX",name:"Texas",filter_id:"USA"},
-                    {id:"UT",name:"Utah",filter_id:"USA"},
-                    {id:"VT",name:"Vermont",filter_id:"USA"},
-                    {id:"VA",name:"Virginia",filter_id:"USA"},
-                    {id:"WA",name:"Washington",filter_id:"USA"},
-                    {id:"WV",name:"West Virginia",filter_id:"USA"},
-                    {id:"WI",name:"Wisconsin",filter_id:"USA"},
-                    {id:"WY",name:"Wyoming",filter_id:"USA"},
-                    {id:"AB",name:"Alberta",filter_id:"Canada"},
-                    {id:"BC",name:"British Columbia",filter_id:"Canada"},
-                    {id:"MB",name:"Manitoba",filter_id:"Canada"},
-                    {id:"NB",name:"New Brunswick",filter_id:"Canada"},
-                    {id:"NL",name:"Newfoundland",filter_id:"Canada"},
-                    {id:"NS",name:"Nova Scotia",filter_id:"Canada"},
-                    {id:"NT",name:"Northwest Territories",filter_id:"Canada"},
-                    {id:"NU",name:"Nunavut",filter_id:"Canada"},
-                    {id:"ON",name:"Ontario",filter_id:"Canada"},
-                    {id:"PE",name:"Prince Edward Island",filter_id:"Canada"},
-                    {id:"QC",name:"Quebec",filter_id:"Canada"},
-                    {id:"SK",name:"Saskatchewan",filter_id:"Canada"},
-                    {id:"YT",name:"Yukon",filter_id:"Canada"}]
             };
 
         $scope.buildingProperties = {
 
             buildingType: {
                 commercial: [
-                    {id:"FinancialOffice",name:"Bank Branch"},
-                    {id:"FinancialOffice",name:"Financial Office"},
-                    {id:"AdultEducation",name:"Adult Education"},
-                    {id:"College",name:"College / University"},
-                    {id:"K12School",name:"K-12 School"},
-                    {id:"PreSchool",name:"Pre-school / DayCare"},
-                    {id:"VocationalSchool",name:"Vocational School"},
-                    {id:"OtherEducation",name:"Other Education"},
-                    {id:"ConventionCenter",name:"Convention Center"},
-                    {id:"MovieTheater",name:"Movie Theater"},
-                    {id:"Museum",name:"Museum"},
-                    {id:"PerformingArts",name:"Performing Arts"},
-                    {id:"BowlingAlley",name:"Bowling Alley"},
-                    {id:"FitnessCenter",name:"Fitness Center"},
-                    {id:"IceRink",name:"Ice / Curling Rink"},
-                    {id:"RollerRink",name:"Roller Rink"},
-                    {id:"SwimmingPool",name:"Swimming Pool"},
-                    {id:"OtherRecreation",name:"Other Recreation"},
-                    {id:"Stadium",name:"Stadium"},
-                    {id:"IndoorArena",name:"Indoor Arena"},
-                    {id:"RaceTrack",name:"Race Track"},
-                    {id:"Aquarium",name:"Aquarium"},
-                    {id:"Bar",name:"Bar"},
-                    //{id:"Bar",name:"Nightclub"},
-                    {id:"Casino",name:"Casino"},
-                    {id:"Zoo",name:"Zoo"},
-                    {id:"OtherEntertainment",name:"Other Entertainment"},
-                    {id:"GasStation",name:"Convenience Store with Gas Station"},
-                    {id:"ConvenienceStore",name:"Convenience Store without Gas Station"},
-                    {id:"FastFoodRestaurant",name:"Fast Food Restaurant"},
-                    {id:"Restaurant",name:"Restaurant"},
-                    {id:"Supermarket",name:"Supermarket"},
-                    {id:"Retail",name:"Wholesale Club"},
-                    {id:"FoodSales",name:"Food Sales"},
-                    {id:"FoodService",name:"Food Service"},
-                    {id:"AmbulatorySurgicalCenter",name:"Ambulatory Surgical Center"},
+                    {id:"OfficeLarge",name:"Office - Large"},
+                    {id:"OfficeMedium",name:"Office - Medium"},
+                    {id:"OfficeSmall",name:"Office - Small"},
+                    {id:"Office",name:"Office - Other"},
+                    {id:"RetailStandalone",name:"Retail - Standalone"},
+                    {id:"RetailStripmall",name:"Retail - Stripmall"},
+                    {id:"Retail",name:"Retail - Other"},
+                    {id:"SchoolPrimary",name:"School - Primary"},
+                    {id:"SchoolSecondary",name:"School - Secondary"},
+                    {id:"School",name:"School - Other"},
                     {id:"Hospital",name:"Hospital"},
-                    {id:"SpecialtyHospital",name:"Specialty Hospital"},
-                    {id:"MedicalOffice",name:"Medical Office"},
-                    {id:"OutpatientCenter",name:"Outpatient Rehabilitation Center"},
-                    {id:"PhysicalTherapyCenter",name:"Physical Therapy Center"},
-                    {id:"SeniorCare",name:"Senior Care Community"},
-                    {id:"UrgentCareCenter",name:"Urgent Care Center"},
-                    {id:"Barracks",name:"Barracks"},
-                    {id:"Hotel",name:"Hotel"},
-                    {id:"MultiFamily",name:"Multifamily Housing"},
-                    {id:"Prison",name:"Prison / Incarceration"},
-                    {id:"ResidenceHall",name:"Residence Hall"},
-                    {id:"ResidentialLodging",name:"Other Residential Lodging"},
-                    {id:"MixedUse",name:"Mixed Use Property"},
-                    {id:"Office",name:"Office"},
-                    {id:"VeterinaryOffice",name:"Veterinary Office"},
-                    {id:"Courthouse",name:"Courthouse"},
-                    {id:"DrinkingWaterTreatment",name:"Drinking Water Treatment Center"},
-                    {id:"FireStation",name:"Fire Station"},
-                    {id:"Library",name:"Library"},
-                    {id:"PostOffice",name:"Post Office"},
-                    {id:"PoliceStation",name:"Police Station"},
-                    {id:"MeetingHall",name:"Meeting Hall"},
-                    {id:"TransportationTerminal",name:"Transportation Terminal"},
-                    {id:"WastewaterCenter",name:"Wastewater Treatment Center"},
-                    {id:"OtherPublicServices",name:"Other Public Services"},
-                    {id:"WorshipCenter",name:"Worship Facility"},
-                    {id:"AutoDealership",name:"Automobile Dealership"},
-                    {id:"EnclosedMall",name:"Enclosed Mall"},
-                    {id:"StripMall",name:"Strip Mall"},
-                    {id:"Retail",name:"Retail Store"},
-                    {id:"DataCenter",name:"Data Center"}, //Data Centers behave very different and require custom script
-                    {id:"PersonalServices",name:"Personal Services (Health/Beauty, Dry Cleaning, etc.)"},
-                    {id:"RepairServices",name:"Repair Services (Vehicle, Shoe Locksmith, etc.)"},
-                    {id:"OtherServices",name:"Other Services"},
-                    {id:"PowerStation",name:"Energy / Power Station"},
-                    {id:"OtherUtility",name:"Other Utility Station"},
-                    {id:"SelfStorageFacility",name:"Self Storage Facility"},
-                    {id:"Warehouse",name:"Warehouse - UnRefrigerated"},
-                    {id:"RefrigeratedWarehouse",name:"Warehouse - Refrigerated"},
-                    {id:"Warehouse",name:"Distribution Center"}
-                ],
-                residential: [
-                    {id:"SingleFamilyDetached",name:"Single Family - Detached"},
-                    {id:"SingleFamilyAttached",name:"Single Family - Attached"},
-                    {id:"MobileHome",name:"Mobile Home"},
-                    {id:"MultiFamily",name:"Multifamily Housing"}
+                    {id:"OutPatientHealthCare",name:"Healthcare - Outpatient"},
+                    {id:"Healthcare",name:"Healthcare - Other"},
+                    {id:"RestaurantSitDown",name:"Restaurant - Sit Down"},
+                    {id:"RestaurantFastFood",name:"Restaurant - Fast Food"},
+                    {id:"Restaurant",name:"Restaurant - Other"},
+                    {id:"HotelLarge",name:"Hotel - Large"},
+                    {id:"HotelSmall",name:"Hotel - Small"},
+                    {id:"Hotel",name:"Hotel - Other"},
+                    {id:"Warehouse",name:"Warehouse"},
+                    {id:"ApartmentHighRise",name:"Apartment - High Rise"},
+                    {id:"ApartmentMidRise",name:"Apartment - Mid Rise"} ,
+                    {id:"Apartment",name:"Apartment - Other"},
+                    {id:"AllOthers",name:"Other"}
                 ]
             }
         };

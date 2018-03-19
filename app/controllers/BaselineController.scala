@@ -434,7 +434,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
         ]
       }""".stripMargin)).get
 
-  def getZEPIMetrics() = Action.async(parse.json) { implicit request =>
+  def getZNCMetrics() = Action.async(parse.json) { implicit request =>
 
     val Baseline: EUIMetrics = EUIMetrics(request.body, nrel_client)
 

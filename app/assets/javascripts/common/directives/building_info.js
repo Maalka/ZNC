@@ -28,8 +28,15 @@ define(['angular','./main'], function(angular) {
                 $scope.propFieldsRequired = false;
                 $scope.propertyModel = {};
                 $scope.model.propertyModel = $scope.propertyModel ;
-                $scope.model.propertyModel.buildingType = $scope.model.type;
+                $scope.model.propertyModel.building_type = $scope.model.type;
                 $scope.model.valid = false;
+
+                $scope.buildingProperties = {
+                    areaUnits: [
+                            {id:"ftSQ",name:"sq.ft"},
+                            {id:"mSQ",name:"sq.m"}
+                    ]
+                };
 
                 $scope.$watch("forms.baselineForm.$valid", function (validity) {
                     $scope.model.valid = validity;

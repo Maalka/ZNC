@@ -37,7 +37,7 @@
                         </div>
                     </div>
 
-                    <div class="sixteen wide column">
+                    <div class="sixteen wide column" style="margin-top:-10px;">
                         <div class="ui divider"></div>
                     </div>
                     <div class="five wide column">
@@ -184,10 +184,10 @@
                         </div>
 
                         <div class="ui fifteen wide column right aligned">
-                            <label class="design-label">add another entry</label>
+                            <label class="design-label">Add another entry</label>
                         </div>
                         <div class="one wide column">
-                            <div class="ui large labeled button" ng-click="addEnergiesRow()" style="margin-top:.4em;">
+                            <div class="ui large labeled button" ng-click="addPV()" style="margin-top:.4em;">
                                 <i class="add green circle icon"></i>
                             </div>
                         </div>
@@ -197,9 +197,34 @@
 
             <h3 class="ui header"><i class="fa fa-sun-o icon" aria-hidden="true">
             </i>ON-SITE PV SYSTEMS</h3>
-            <div ng-repeat="pvSystem in pvList" ng-class="{'page-break-after': ($index + 1) % 3 == 0}">
-                <div class="ui segment">
-                    <div system-Info forms='forms' model="pvSystem"></div>
+
+            <div class="ui segment">
+                <div class ="field">
+                Uncheck Use Default Values to enter custom inputs. If
+                    your building has multiple PV systems, add them below.
+                    <div class="tooltip">
+                        <sup><i class="blue circle info icon"></i></sup>
+                        <span class="tooltiptext">Acceptable PV parameter ranges:
+                            <br />          Losses (%): -5 to 99
+                            <br />      Tilt (Degrees):  0 to 90
+                            <br />   Azimuth (Degrees):  0 to 360
+                            <br /> Inverter Efficiency:  90 to 99.5
+                        </span>
+                    </div>
+                </div>
+                <div ng-repeat="pvSystem in pvList" ng-class="{'page-break-after': ($index + 1) % 3 == 0}">
+                    <div system-Info forms='forms' idx="$index" model="pvSystem"></div>
+
+                </div>
+                <div class="inline fields" style="margin-top:10px;">
+                    <div class="field">
+                        <div class="ui large labeled button" ng-click="addPV()">
+                            <i class="add green circle icon"></i>
+                        </div>
+                    </div>
+                    <div class="field" style="margin-left:-18px;">
+                        <label class="design-label">Add another PV System</label>
+                    </div>
                 </div>
             </div>
 
