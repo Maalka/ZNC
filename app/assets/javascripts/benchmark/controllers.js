@@ -19,6 +19,7 @@ define(['angular'], function() {
     $rootScope.pageTitle = "ZNC Tool";
 
     $scope.auxModel = {};
+    $scope.tempModel = {};
     $scope.energies = [{}, {}];
     $scope.pvList = [{id:0,name:"PV SYSTEM",showDivider:false}];
     $scope.pvCounter = 1;
@@ -75,7 +76,7 @@ define(['angular'], function() {
     }
 
 
-    $scope.$watch("auxModel.buildingType", function (v) {
+    $scope.$watch("tempModel.buildingType", function (v) {
         if (v === undefined || v === null) {
             return; 
         }
@@ -89,8 +90,8 @@ define(['angular'], function() {
             });
 
             $scope.propText="Add Another Use";
-            $scope.auxModel.resetBuildingType = true;
-            $scope.auxModel.buildingType = undefined;
+            $scope.tempModel.resetBuildingType = true;
+            $scope.tempModel.buildingType = undefined;
         }
     });
 
