@@ -18,6 +18,7 @@ define(['angular'], function() {
     $rootScope.includeHeader = maalkaIncludeHeader;
     $rootScope.pageTitle = "ZNC Tool";
 
+    $scope.submitArray=[];
     $scope.auxModel = {};
     $scope.tempModel = {};
     $scope.energies = [{}, {}];
@@ -74,7 +75,6 @@ define(['angular'], function() {
             printQueryList.removeListener(updateMatchMedia);
         });
     }
-
 
     $scope.$watch("tempModel.buildingType", function (v) {
         if (v === undefined || v === null) {
@@ -196,9 +196,9 @@ define(['angular'], function() {
     $scope.computeBenchmarkResult = function(){
 
 
-        $log.info($scope.auxModel);
+        $log.info($scope.submitArray);
 
-        $scope.futures = benchmarkServices.getZNCMetrics($scope.auxModel);
+        $scope.futures = benchmarkServices.getZNCMetrics($scope.submitArray);
 
         $q.resolve($scope.futures).then(function (results) {
             $scope.scoreGraph = "Rating";
@@ -259,7 +259,7 @@ define(['angular'], function() {
         }
         $scope.forms.hasValidated = true; /// only check the field errors if this form has attempted to validate.
 
-        if($scope.auxModel.reportingUnits==="us"){
+        if($scope.auxModel.reportingUnits==="imperial"){
             $scope.tableEnergyUnits="(kBtu/yr)";
             $scope.tableEUIUnits="(kBtu/ft²/yr)";
         }else {
@@ -268,19 +268,17 @@ define(['angular'], function() {
         }
 
         var validEnergy = function(e) {
-            return (e.energyType !== undefined &&
-                    e.energyName !== undefined &&
+            return (e.energy_type !== undefined &&
                     e.energyUnits !== undefined &&
                     e.energyUse);
         };
 
         var mapEnergy = function (e) {
             return {
-                'energyType': (e.energyType) ? e.energyType.id : undefined,
-                'energyName': (e.energyType) ? e.energyType.name : undefined,
-                'energyUnits': e.energyUnits,
-                'energyUse': Number(e.energyUse),
-                'energyRate': null
+                'energy_type': (e.energyType) ? e.energyType.id : undefined,
+                'energy_name': (e.energyType) ? e.energyType.name : null,
+                'energy_units': e.energyUnits,
+                'energy_use': Number(e.energyUse)
             };
         };
 
@@ -299,7 +297,6 @@ define(['angular'], function() {
             for (var i =0; i < $scope.propTypes.length; i ++) {
                 props.push($scope.propTypes[i].propertyModel);
                 }
-
             return props;
         };
 
@@ -309,13 +306,23 @@ define(['angular'], function() {
             for (var i =0; i < $scope.pvList.length; i ++) {
                 pv_data.push($scope.pvList[i].pvModel);
                 }
-
             return pv_data;
         };
 
+        var getCityValue = function (value) {
+
+            for (var i =0; i < $scope.geographicProperties.city.length; i ++) {
+                if($scope.geographicProperties.city[i].id === $scope.auxModel.city){
+                    return $scope.geographicProperties.city[i][value];
+                }
+            }
+        };
 
 
         if($scope.forms.baselineForm.$valid){
+
+            $scope.auxModel.climate_zone = getCityValue("climate_zone");
+            $scope.auxModel.file_id = getCityValue("file_id");
 
             if($scope.energies.map(mapEnergy).filter(validEnergy).length===0){
                 $scope.auxModel.energies=null;
@@ -326,6 +333,7 @@ define(['angular'], function() {
             $scope.auxModel.prop_types = getPropTypes();
             $scope.auxModel.pv_data = getPVData();
 
+            $scope.submitArray.push($scope.auxModel);
             $scope.computeBenchmarkResult();
 
         }else {
@@ -336,16 +344,16 @@ define(['angular'], function() {
     };
 
         $scope.geographicProperties = {
-                city:
-                    [
-                    {id:"Chicago",name:"Chicago",filter_id:"USA"},
-                    {id:"New York City",name:"New York City",filter_id:"USA"},
-                    {id:"Toronto",name:"Toronto",filter_id:"Canada"},
-                    {id:"Vancouver",name:"Vancouver",filter_id:"Canada"}
-                    ],
                 country:
                     [{id:"USA",name:"United States"},
                     {id:"Canada",name:"Canada"}],
+                city:
+                    [
+                    {id:"Chicago",name:"Chicago",climate_zone:"1A",file_id:"0-93738",filter_id:"USA"},
+                    {id:"New York City",name:"New York City",climate_zone:"1A",file_id:"0-93738",filter_id:"USA"},
+                    {id:"Toronto",name:"Toronto",climate_zone:"1A",file_id:"0-93738",filter_id:"Canada"},
+                    {id:"Vancouver",name:"Vancouver",climate_zone:"1A",file_id:"0-93738",filter_id:"Canada"}
+                    ]
             };
 
         $scope.buildingProperties = {
@@ -383,94 +391,43 @@ define(['angular'], function() {
         $scope.energyProperties = {
 
             energyType:[
-                {id:"grid",name:"Electric (Grid)"},
-                {id:"naturalGas",name:"Natural Gas"},
-                {id:"fuelOil1",name:"Fuel Oil 1"},
-                {id:"fuelOil2",name:"Fuel Oil 2"},
-                {id:"fuelOil4",name:"Fuel Oil 4"},
-                {id:"fuelOil6",name:"Fuel Oil 5,6"},
+                {id:"electricity",name:"Electricity"},
+                {id:"natural_gas",name:"Natural Gas"},
+                {id:"fuel_oil",name:"Fuel Oil"},
                 {id:"propane",name:"Propane"},
-                {id:"kerosene",name:"Kerosene"},
                 {id:"steam",name:"District Steam"},
-                {id:"hotWater",name:"District Hot Water"},
-                {id:"chilledWater",name:"District Chilled Water (Absorption)"},
-                {id:"chilledWater",name:"District Chilled Water (Electric)"},
-                {id:"chilledWater",name:"District Chilled Water (Engine)"},
-                {id:"chilledWater",name:"District Chilled Water (Other)"},
-                {id:"wood",name:"Wood"},
-                {id:"coke",name:"Coke"},
-                {id:"coalA",name:"Coal (Anthracite)"},
-                {id:"coalB",name:"Coal (Bituminous) "},
-                {id:"diesel",name:"Diesel"},
+                {id:"hot_water",name:"District Hot Water"},
+                {id:"chilled_water",name:"District Chilled Water"},
+                {id:"coal",name:"Coal"},
+                {id:"other",name:"Diesel"},
+                {id:"other",name:"Wood"},
+                {id:"other",name:"Coke"},
                 {id:"other",name:"Other"}
             ],
 
             energyUnits: [
                 //<!--Electricity - Grid -->
-                {id:"KBtu",name:"kBtu",filter_id:"grid"},
-                {id:"MBtu",name:"MBtu",filter_id:"grid"},
-                {id:"kWh",name:"kWh",filter_id:"grid"},
-                {id:"MWh",name:"MWh",filter_id:"grid"},
-                {id:"GJ",name:"GJ",filter_id:"grid"},
+                {id:"KBtu",name:"kBtu",filter_id:"electricity"},
+                {id:"MBtu",name:"MBtu",filter_id:"electricity"},
+                {id:"kWh",name:"kWh",filter_id:"electricity"},
+                {id:"MWh",name:"MWh",filter_id:"electricity"},
+                {id:"GJ",name:"GJ",filter_id:"electricity"},
 
                 //<!--Natural Gas -->
-                {id:"NGMcf",name:"MCF",filter_id:"naturalGas"},
-                {id:"NGKcf",name:"kcf",filter_id:"naturalGas"},
-                {id:"NGCcf",name:"ccf",filter_id:"naturalGas"},
-                {id:"NGcf",name:"cf",filter_id:"naturalGas"},
-                {id:"NGm3",name:"Cubic Meters",filter_id:"naturalGas"},
-                {id:"GJ",name:"GJ",filter_id:"naturalGas"},
-                {id:"KBtu",name:"kBtu",filter_id:"naturalGas"},
-                {id:"MBtu",name:"MBtu",filter_id:"naturalGas"},
-                {id:"therms",name:"Therms",filter_id:"naturalGas"},
+                {id:"NGMcf",name:"MCF",filter_id:"natural_gas"},
+                {id:"NGKcf",name:"kcf",filter_id:"natural_gas"},
+                {id:"NGCcf",name:"ccf",filter_id:"natural_gas"},
+                {id:"NGcf",name:"cf",filter_id:"natural_gas"},
+                {id:"NGm3",name:"Cubic Meters",filter_id:"natural_gas"},
+                {id:"GJ",name:"GJ",filter_id:"natural_gas"},
+                {id:"KBtu",name:"kBtu",filter_id:"natural_gas"},
+                {id:"MBtu",name:"MBtu",filter_id:"natural_gas"},
+                {id:"therms",name:"Therms",filter_id:"natural_gas"},
 
                 //<!--Fuel Oil No. 1 -->
-                {id:"KBtu",name:"kBtu",filter_id:"fueloil1Unit"},
-                {id:"MBtu",name:"MBtu ",filter_id:"fueloil1Unit"},
-                {id:"GJ",name:"GJ",filter_id:"fueloil1Unit"},
-                {id:"No1UKG",name:"Gallons (UK)",filter_id:"fueloil1Unit"},
-                {id:"No1USG",name:"Gallons",filter_id:"fueloil1Unit"},
-                {id:"No1L",name:"Liters",filter_id:"fueloil1Unit"},
-
-                //<!--Fuel Oil No. 2 -->
-                {id:"KBtu",name:"kBtu",filter_id:"fueloil2Unit"},
-                {id:"MBtu",name:"MBtu",filter_id:"fueloil2Unit"},
-                {id:"GJ",name:"GJ",filter_id:"fueloil2Unit"},
-                {id:"No2UKG",name:"Gallons (UK)",filter_id:"fueloil2Unit"},
-                {id:"No2USG",name:"Gallons",filter_id:"fueloil2Unit"},
-                {id:"No2L",name:"Liters",filter_id:"fueloil2Unit"},
-
-                //<!--Fuel Oil No. 4 -->
-                {id:"KBtu",name:"kBtu",filter_id:"fueloil4Unit"},
-                {id:"MBtu",name:"MBtu",filter_id:"fueloil4Unit"},
-                {id:"GJ",name:"GJ",filter_id:"fueloil4Unit"},
-                {id:"No4UKG",name:"Gallons (UK)",filter_id:"fueloil4Unit"},
-                {id:"No4USG",name:"Gallons",filter_id:"fueloil4Unit"},
-                {id:"No4L",name:"Liters",filter_id:"fueloil4Unit"},
-
-                //<!--Fuel Oil No. 5,6 -->
-                {id:"KBtu",name:"kBtu",filter_id:"fueloil6Unit"},
-                {id:"MBtu",name:"MBtu",filter_id:"fueloil6Unit"},
-                {id:"GJ",name:"GJ",filter_id:"fueloil6Unit"},
-                {id:"No6UKG",name:"Gallons (UK)",filter_id:"fueloil6Unit"},
-                {id:"No6USG",name:"Gallons",filter_id:"fueloil6Unit"},
-                {id:"No6L",name:"Liters",filter_id:"fueloil6Unit"},
-
-                //<!--Diesel-->
-                {id:"KBtu",name:"kBtu",filter_id:"diesel"},
-                {id:"MBtu",name:"MBtu",filter_id:"diesel"},
-                {id:"GJ",name:"GJ",filter_id:"diesel"},
-                {id:"DieselUKG",name:"Gallons (UK)",filter_id:"diesel"},
-                {id:"DieselUSG",name:"Gallons",filter_id:"diesel"},
-                {id:"DieselL",name:"Liters",filter_id:"diesel"},
-
-                //<!--Kerosene-->
-                {id:"KBtu",name:"kBtu",filter_id:"kerosene"},
-                {id:"MBtu",name:"MBtu",filter_id:"kerosene"},
-                {id:"GJ",name:"GJ",filter_id:"kerosene"},
-                {id:"KeroseneUKG",name:"Gallons (UK)",filter_id:"kerosene"},
-                {id:"KeroseneUSG",name:"Gallons",filter_id:"kerosene"},
-                {id:"KeroseneL",name:"Liters",filter_id:"kerosene"},
+                {id:"KBtu",name:"kBtu",filter_id:"fuel_oil"},
+                {id:"MBtu",name:"MBtu ",filter_id:"fuel_oil"},
+                {id:"GJ",name:"GJ",filter_id:"fuel_oil"},
 
                 //<!--Propane-->
                 {id:"GJ",name:"GJ",filter_id:"propane"},
@@ -493,56 +450,27 @@ define(['angular'], function() {
                 {id:"SteamMLb",name:"Million pounds",filter_id:"steam"},
 
                 //<!--District Hot Water-->
-                {id:"KBtu",name:"kBtu",filter_id:"hotWater"},
-                {id:"MBtu",name:"MBtu",filter_id:"hotWater"},
-                {id:"GJ",name:"GJ",filter_id:"hotWater"},
-                {id:"therms",name:"Therms",filter_id:"hotWater"},
+                {id:"KBtu",name:"kBtu",filter_id:"hot_water"},
+                {id:"MBtu",name:"MBtu",filter_id:"hot_water"},
+                {id:"GJ",name:"GJ",filter_id:"hot_water"},
+                {id:"therms",name:"Therms",filter_id:"hot_water"},
 
                 //<!--District Chilled Water-->
-                {id:"KBtu",name:"kBtu",filter_id:"chilledWater"},
-                {id:"MBtu",name:"MBtu",filter_id:"chilledWater"},
-                {id:"GJ",name:"GJ",filter_id:"chilledWater"},
-                {id:"CHWTonH",name:"Ton Hours",filter_id:"chilledWater"},
+                {id:"KBtu",name:"kBtu",filter_id:"chilled_water"},
+                {id:"MBtu",name:"MBtu",filter_id:"chilled_water"},
+                {id:"GJ",name:"GJ",filter_id:"chilled_water"},
+                {id:"CHWTonH",name:"Ton Hours",filter_id:"chilled_water"},
 
-                //<!--Coal (Anthracite)-->
-                {id:"KBtu",name:"kBtu",filter_id:"coalA"},
-                {id:"MBtu",name:"MBtu",filter_id:"coalA"},
-                {id:"GJ",name:"GJ",filter_id:"coalA"},
-                {id:"CoalATon",name:"Tons",filter_id:"coalA"},
-                {id:"CoalATonne",name:"Tonnes (Metric)",filter_id:"coalA"},
-                {id:"CoalALb",name:"Pounds",filter_id:"coalA"},
-                {id:"CoalAKLb",name:"Thousand Pounds",filter_id:"coalA"},
-                {id:"CoalAMLb",name:"Million Pounds",filter_id:"coalA"},
-
-                //<!--Coal (Bituminous)-->
-                {id:"KBtu",name:"kBtu",filter_id:"coalB"},
-                {id:"MBtu",name:"MBtu",filter_id:"coalB"},
-                {id:"GJ",name:"GJ",filter_id:"coalB"},
-                {id:"CoalBitTon",name:"Tons",filter_id:"coalB"},
-                {id:"CoalBitTonne",name:"Tonnes (Metric)",filter_id:"coalB"},
-                {id:"CoalBitLb",name:"Pounds",filter_id:"coalB"},
-                {id:"CoalBitKLb",name:"Thousand Pounds",filter_id:"coalB"},
-                {id:"CoalBitMLb",name:"Million Pounds",filter_id:"coalB"},
-
-                //<!--Coke-->
-                {id:"KBtu",name:"kBtu",filter_id:"coke"},
-                {id:"MBtu",name:"MBtu",filter_id:"coke"},
-                {id:"GJ",name:"GJ",filter_id:"coke"},
-                {id:"CokeTon",name:"Tons",filter_id:"coke"},
-                {id:"CokeTonne",name:"Tonnes (Metric)",filter_id:"coke"},
-                {id:"CokeLb",name:"Pounds",filter_id:"coke"},
-                {id:"CokeKLb",name:"Thousand Pounds",filter_id:"coke"},
-                {id:"CokeMLb",name:"Million Pounds",filter_id:"coke"},
-
-                //<!--Wood-->
-                {id:"KBtu",name:"kBtu",filter_id:"wood"},
-                {id:"MBtu",name:"MBtu",filter_id:"wood"},
-                {id:"GJ",name:"GJ",filter_id:"wood"},
-                {id:"WoodTon",name:"Tons",filter_id:"wood"},
-                {id:"WoodTonne",name:"Tonnes (Metric)",filter_id:"wood"},
+                //<!--Coal-->
+                {id:"KBtu",name:"kBtu",filter_id:"coal"},
+                {id:"MBtu",name:"MBtu",filter_id:"coal"},
+                {id:"GJ",name:"GJ",filter_id:"coal"},
 
                 //<!--Other-->
                 {id:"KBtu",name:"kBtu",filter_id:"other"},
+                {id:"MBtu",name:"MBtu",filter_id:"other"},
+                {id:"kWh",name:"kWh",filter_id:"other"},
+                {id:"MWh",name:"MWh",filter_id:"other"},
                 {id:"GJ",name:"GJ",filter_id:"other"}
                 ]
         };

@@ -44,8 +44,8 @@ define(['angular','./main'], function(angular) {
                     $scope.pvModel.inv_eff=null;
                 };
 
-                $scope.$watch("pvModel.defaultValues", function () {
-                    if($scope.pvModel.defaultValues){
+                $scope.$watch("defaultValues", function () {
+                    if($scope.defaultValues){
                         $scope.setDefaults();
                     } else {
                         $scope.clearParams();

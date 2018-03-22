@@ -235,14 +235,14 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
               "required":true
             },
             "prescriptive_resource": {
-              "type": "integer"
+              "type": ["integer","null"]
             },
             "reporting_units": {
               "type": "string",
               "enum": ["imperial", "metric"]
             },
             "pv_resource": {
-              "type": "integer"
+              "type": ["integer","null"]
             },
             "approach": {
               "type": "string",
@@ -250,7 +250,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
             },
             "metric": {
               "id": "/items/properties/metric",
-              "type": "object",
+              "type": ["object","null"],
               "properties": {
                 "metric_type": {
                   "type": "string",
@@ -397,34 +397,31 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
             },
             "energies": {
               "id": "/items/properties/energies",
-              "type": "array",
+              "type": ["array","null"],
               "items": {
                   "type": "object",
                   "properties": {
-                    "energyName": {
-                      "type": "string"
+                    "energy_name": {
+                      "type": ["string","null"]
                     },
-                    "energyType": {
+                    "energy_type": {
                       "type": "string",
                       "enum": ["electricity","natural_gas","fuel_oil","propane","steam","hot_water","chilled_water","coal","other"]
                     },
-                    "energyUnits": {
+                    "energy_units": {
                       "type": "string",
-                       "enum": ["KBtu","MBtu","kWh","MWh","GJ","NGMcf","NGKcf","NGCcf","NGcf", "NGm3","Therms","No1UKG","No1USG",
-                             "No1L","No2UKG","No2USG","No2L","No4UKG","No4USG","No4L","No6UKG","No6USG","No6L","PropaneUKG","PropaneUSG","PropaneCf","PropaneCCf",
-                             "PropaneKCf","PropaneL","SteamLb","SteamKLb","SteamMLb","CHWTonH","CoalATon","CoalATonne","CoalALb",
-                             "CoalBitTon","CoalBitTonne","CoalBitLb","CokeTon","CokeTonne","CokeLb","WoodTon","WoodTonne"]
+                       "enum": ["KBtu","MBtu","kWh","MWh","GJ","NGMcf","NGKcf","NGCcf","NGcf", "NGm3","Therms","PropaneUKG","PropaneUSG","PropaneCf","PropaneCCf",
+                             "PropaneKCf","PropaneL","SteamLb","SteamKLb","SteamMLb","CHWTonH"]
                     },
-                    "energyUse": {
+                    "energy_use": {
                       "type": "number",
                       "minimum": 0
                     }
                   },
                   "required": [
-                    "energyName",
-                    "energyType",
-                    "energyUnits",
-                    "energyUse"
+                    "energy_type",
+                    "energy_units",
+                    "energy_use"
                   ]
               }
             }
@@ -436,9 +433,8 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
 
   def getZNCMetrics() = Action.async(parse.json) { implicit request =>
 
-    val Baseline: EUIMetrics = EUIMetrics(request.body, nrel_client)
-
     val json: JsValue = request.body
+    println(json)
     val result = validator.validate(schema, json)
 
     result.fold(
@@ -448,6 +444,8 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
         }
       },
       valid = { post =>
+
+        val Baseline: EUIMetrics = EUIMetrics(request.body, nrel_client)
 
         val f1: Future[Either[String, JsValue]] = Baseline.getPV.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
 

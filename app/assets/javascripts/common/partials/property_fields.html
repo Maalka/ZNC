@@ -20,16 +20,16 @@
     <div class="inline fields">
         <div class="sixteen wide field">
             <label style="width: 200px">Gross Floor Area</label>
-            <div class="ten wide field required" ng-class="{error: !propertyModel.GFA && forms.hasValidated}">
-              <input type="number" ng-model="propertyModel.GFA"
+            <div class="ten wide field required" ng-class="{error: !propertyModel.floor_area && forms.hasValidated}">
+              <input type="number" ng-model="propertyModel.floor_area"
                    required
                    min="0"
                    placeholder="GFA">
             </div>
-            <div class="six wide field required" ng-class="{error: !propertyModel.areaUnits && forms.hasValidated}">
+            <div class="six wide field required" ng-class="{error: !propertyModel.floor_area_units && forms.hasValidated}">
               <select class="ui dropdown"
                   dropdown
-                  ng-model="propertyModel.areaUnits"
+                  ng-model="propertyModel.floor_area_units"
                   ng-options="item.id as item.name for item in buildingProperties.areaUnits"
                   required>
                 <option value="">Select</option>

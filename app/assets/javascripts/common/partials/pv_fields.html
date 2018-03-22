@@ -11,7 +11,7 @@
         <div class="right floated right aligned seven wide column"
              ng-class="{'disabled': !pvModel.estimated_area || !pvModel.areaUnits}">
             <div checkbox class="ui checkbox checked">
-                <input type="checkbox" id="cb-default" ng-model="pvModel.defaultValues" ng-init="pvModel.defaultValues=true"
+                <input type="checkbox" id="cb-default" ng-model="defaultValues" ng-init="defaultValues=true"
                        ng-true-value=true ng-false-value=false>
                 <label for="cb-default">Use Default Values?</label>
             </div>
@@ -44,10 +44,10 @@
                            min="0"
                            placeholder="Enter Number">
                     </div>
-                    <div class="four wide field required" ng-class="{error: !pvModel.areaUnits && forms.hasValidated}">
+                    <div class="four wide field required" ng-class="{error: !pvModel.pv_area_units && forms.hasValidated}">
                       <select class="ui dropdown"
                           dropdown
-                          ng-model="pvModel.areaUnits"
+                          ng-model="pvModel.pv_area_units"
                           ng-options="item.id as item.name for item in pvProperties.areaUnits"
                           required>
                         <option value="">Select</option>
