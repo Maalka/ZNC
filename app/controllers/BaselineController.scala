@@ -631,7 +631,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
         val fieldNames = Seq(
 
           "performance_requirements",
-          "prescriptive_Requirements",
+          "prescriptive_requirements",
 
           "performance_metrics",
           "prescriptive_metrics",

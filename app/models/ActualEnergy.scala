@@ -58,7 +58,7 @@ case class EUICalculator(parameters: JsValue) {
       case _ => throw new Exception("Unidentified energy entry in array!")
     }
   }
-  
+
   def mapEnergy(units:String,value:Double):Energy = {
     units match {
       case "KBtu" => KBtus(value)
@@ -114,10 +114,10 @@ case class EUICalculator(parameters: JsValue) {
 case class EnergyMetrics(energyType:String,energyName:String,energyUnits:String,energyUse:Double)
 object EnergyMetrics {
   implicit val energyReads: Reads[EnergyMetrics] = (
-    (JsPath \ "energyType").read[String] and
-    (JsPath \ "energyName").read[String] and
-    (JsPath \ "energyUnits").read[String] and
-    (JsPath \ "energyUse").read[Double](min(0.0))
+    (JsPath \ "energy_type").read[String] and
+    (JsPath \ "energy_name").read[String] and
+    (JsPath \ "energy_units").read[String] and
+    (JsPath \ "energy_use").read[Double](min(0.0))
     )(EnergyMetrics.apply _)
 }
 

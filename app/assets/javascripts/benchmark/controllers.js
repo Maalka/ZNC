@@ -269,16 +269,17 @@ define(['angular'], function() {
 
         var validEnergy = function(e) {
             return (e.energy_type !== undefined &&
-                    e.energyUnits !== undefined &&
-                    e.energyUse);
+                    e.energy_name !== undefined &&
+                    e.energy_units !== undefined &&
+                    e.energy_use);
         };
 
         var mapEnergy = function (e) {
             return {
-                'energy_type': (e.energyType) ? e.energyType.id : undefined,
-                'energy_name': (e.energyType) ? e.energyType.name : null,
-                'energy_units': e.energyUnits,
-                'energy_use': Number(e.energyUse)
+                'energy_type': (e.energy_type) ? e.energy_type.id : undefined,
+                'energy_name': (e.energy_type) ? e.energy_type.name : null,
+                'energy_units': e.energy_units,
+                'energy_use': Number(e.energy_use)
             };
         };
 

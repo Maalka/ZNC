@@ -10,7 +10,7 @@
             </ul>
         </div>
         <h3 class="ui header">
-            <i class="globe icon"></i>ABOUT YOUR BUILDING  
+            <i class="building icon"></i>ABOUT YOUR BUILDING
         </h3>
 
         <div class="entry">
@@ -24,17 +24,16 @@
                     </div>
                     <div class="right aligned eleven wide column">
                         <div class="ui radio checkbox">
-                            <input type="radio" id="prescriptive" ng-model="auxModel.approach" ng-init="auxModel.approach=false"
-                                   ng-value='false'>
+                            <input type="radio" id="prescriptive" ng-model="auxModel.approach" ng-init="auxModel.approach='prescriptive'"
+                                   value='prescriptive'>
                             <label for='prescriptive'>Prescriptive</label>
                         </div>
-
-
                         <div class="ui radio checkbox">
-                            <input type="radio" id="performance" ng-model="auxModel.approach" ng-init="auxModel.approach=false"
-                                   ng-value='true'>
-                            <label for="performance">Performance</label>
+                            <input type="radio" id="performance" ng-model="auxModel.approach"
+                                   value='performance'>
+                            <label for='performance'>Performance</label>
                         </div>
+
                     </div>
 
                     <div class="sixteen wide column" style="margin-top:-10px;">
@@ -83,7 +82,7 @@
                     <div class="eleven wide column">
                         <div class="inline fields">
                             <div class="sixteen wide field required">
-                                <input type="text" ng-model="auxModel.stories"
+                                <input type="number" ng-model="auxModel.stories"
                                        required name="stories" placeholder="Enter Number">
                             </div>
                         </div>
@@ -134,8 +133,8 @@
 
 
 
-            <h3 class="ui header" ng-if="auxModel.approach === true"><i class="lightning icon"></i>MODELED ANNUAL ENERGY CONSUMPTION</h3>
-            <div class="ui segment energy-entry" ng-if="auxModel.approach === true">
+            <h3 class="ui header" ng-if="auxModel.approach === 'performance'"><i class="lightning icon"></i>MODELED ANNUAL ENERGY CONSUMPTION</h3>
+            <div class="ui segment energy-entry" ng-if="auxModel.approach === 'performance'">
                 <div class="field">
                     Enter the modeled total annual energy consumption, by fuel type, below.
                 </div>
@@ -155,7 +154,7 @@
                         <div ng-repeat-start="energyEntry in energies" class="five wide column">
                             <div class="field">
                                 <select class="ui dropdown"
-                                        ng-model="energyEntry.energyType"
+                                        ng-model="energyEntry.energy_type"
                                         ng-options="item as item.name for item in energyProperties.energyType track by item.name">
                                     <option value="">Select</option>
                                 </select>
@@ -164,7 +163,7 @@
                         <div class="five wide column">
                             <div class="field">
                                 <select class="ui dropdown"
-                                        ng-model="energyEntry.energyUnits"
+                                        ng-model="energyEntry.energy_units"
                                         ng-options="item.id as item.name for item in energyProperties.energyUnits | filter: {filter_id: energyEntry.energyType.id}">
                                     <option value="">Select</option>
                                 </select>
@@ -172,7 +171,7 @@
                         </div>
                         <div class="five wide column">
                             <div class="ui input">
-                                <input type="number" ng-model="energyEntry.energyUse" value ="{{energyEntry.energyUse}}">
+                                <input type="number" ng-model="energyEntry.energy_use" value ="{{energyEntry.energyUse}}">
                             </div>
                         </div>
                         <div ng-repeat-end class="one wide column">
