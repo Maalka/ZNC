@@ -89,11 +89,11 @@ case class SolarProperties(parameters: JsValue) {
       case _ => throw new Exception("No w_per_meter2 value for Module Type. ")
     }
 
-    val pv_area = metrics.estimated_area match {
+    val pv_area:Double = metrics.estimated_area match {
       case Some(a: Double) => {
         area_units match {
-          case "mSQ" => (Area((a, "mSQ")).get to SquareMeters)
-          case "ftSQ" => (Area((a, "ftSQ")).get to SquareMeters)
+          case "mSQ" => SquareMeters(a).value
+          case "ftSQ" => SquareFeet(a) to SquareMeters
           case _ => throw new Exception("If PV Area is supplied, pv_area_units must be mSQ or ftSQ! ")
         }
       }
@@ -141,7 +141,7 @@ case class SolarProperties(parameters: JsValue) {
       case _ => throw new Exception("Prescriptive Resouce not Supported! ")
     }
 
-    val floorArea = (Area((building_size, "ftSQ")).get to SquareMeters)
+    val floorArea = SquareFeet(building_size) to SquareMeters
 
 
     val stories = solarResources.stories match {
