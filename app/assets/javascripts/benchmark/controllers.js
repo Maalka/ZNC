@@ -18,7 +18,7 @@ define(['angular'], function() {
     $rootScope.includeHeader = maalkaIncludeHeader;
     $rootScope.pageTitle = "ZNC Tool";
 
-    $scope.submitArray=[];
+
     $scope.auxModel = {};
     $scope.tempModel = {};
     $scope.energies = [{}, {}];
@@ -95,7 +95,7 @@ define(['angular'], function() {
         }
     });
 
-    $scope.updatePropType = function($index) { 
+    $scope.updatePropType = function($index) {
 
         $scope.propTypes[$index] = {
             changeTo: $scope.propTypes[$index].changeTo,
@@ -321,6 +321,8 @@ define(['angular'], function() {
 
 
         if($scope.forms.baselineForm.$valid){
+
+            $scope.submitArray = [];
 
             $scope.auxModel.climate_zone = getCityValue("climate_zone");
             $scope.auxModel.file_id = getCityValue("file_id");

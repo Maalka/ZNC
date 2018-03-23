@@ -164,7 +164,7 @@
                             <div class="field">
                                 <select class="ui dropdown"
                                         ng-model="energyEntry.energy_units"
-                                        ng-options="item.id as item.name for item in energyProperties.energyUnits | filter: {filter_id: energyEntry.energyType.id}">
+                                        ng-options="item.id as item.name for item in energyProperties.energyUnits | filter: {filter_id: energyEntry.energy_type.id}">
                                     <option value="">Select</option>
                                 </select>
                             </div>
