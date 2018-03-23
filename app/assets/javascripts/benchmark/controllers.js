@@ -447,7 +447,7 @@ define(['angular'], function() {
                 {id:"GJ",name:"GJ",filter_id:"steam"},
                 {id:"KBtu",name:"kBtu",filter_id:"steam"},
                 {id:"MBtu",name:"MBtu",filter_id:"steam"},
-                {id:"therms",name:"Therms",filter_id:"steam"},
+                {id:"Therms",name:"Therms",filter_id:"steam"},
                 {id:"SteamLb",name:"Pounds",filter_id:"steam"},
                 {id:"SteamKLb",name:"Thousand pounds",filter_id:"steam"},
                 {id:"SteamMLb",name:"Million pounds",filter_id:"steam"},
@@ -456,7 +456,7 @@ define(['angular'], function() {
                 {id:"KBtu",name:"kBtu",filter_id:"hot_water"},
                 {id:"MBtu",name:"MBtu",filter_id:"hot_water"},
                 {id:"GJ",name:"GJ",filter_id:"hot_water"},
-                {id:"therms",name:"Therms",filter_id:"hot_water"},
+                {id:"Therms",name:"Therms",filter_id:"hot_water"},
 
                 //<!--District Chilled Water-->
                 {id:"KBtu",name:"kBtu",filter_id:"chilled_water"},
