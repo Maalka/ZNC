@@ -423,7 +423,7 @@ define(['angular'], function() {
                 {id:"GJ",name:"GJ",filter_id:"natural_gas"},
                 {id:"KBtu",name:"kBtu",filter_id:"natural_gas"},
                 {id:"MBtu",name:"MBtu",filter_id:"natural_gas"},
-                {id:"therms",name:"Therms",filter_id:"natural_gas"},
+                {id:"Therms",name:"Therms",filter_id:"natural_gas"},
 
                 //<!--Fuel Oil No. 1 -->
                 {id:"KBtu",name:"kBtu",filter_id:"fuel_oil"},
