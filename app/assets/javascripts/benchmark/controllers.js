@@ -193,20 +193,100 @@ define(['angular'], function() {
         }
     };
 
+    $scope.sample = [
+      {
+        "prescriptive_resource": 0,
+        "pv_defaults_resource": 0,
+        "approach": "performance",
+        "metric":
+          {
+            "metric_type": "carbon",
+            "conversion_resource": 0,
+            "source_natural_gas": 2.1,
+            "carbon_natural_gas": 0.61
+          },
+        "climate_zone": "1A",
+        "file_id": "0-93738",
+        "reporting_units": "metric",
+        "prop_types": [
+            {
+            "building_type": "OfficeLarge",
+            "floor_area": 100000,
+            "floor_area_units": "ftSQ"
+            }
+        ],
+        "stories": 6.0,
+        "pv_data": [
+          {
+            "estimated_area": 100,
+            "module_type": 0,
+            "losses": 20.0,
+            "array_type": 0,
+            "tilt": 20,
+            "azimuth": 45,
+            "inv_eff": 93.0,
+            "access_perimeter": 6,
+            "pv_area_units": "mSQ"
+          },
+          {
+            "module_type": 0,
+            "losses": 20.0,
+            "array_type": 0,
+            "tilt": 20,
+            "azimuth": 45,
+            "inv_eff": 93.0,
+            "access_perimeter": 6,
+            "pv_area_units": "mSQ"
+          },
+          {
+            "w_per_meter2": 150,
+            "module_type": 0,
+            "losses": 2.0,
+            "inv_eff": 91.0
+            }
+          ],
+        "energies": [
+          {
+            "energy_name": "Electric (Grid)",
+            "energy_type": "electricity",
+            "energy_units": "kWh",
+            "energy_use": 1500000
+          },
+          {
+            "energy_name": "Natural Gas",
+            "energy_type": "natural_gas",
+            "energy_units": "therms",
+            "energy_use": 20000
+          }
+        ]
+      }
+    ];
+
+
+
     $scope.computeBenchmarkResult = function(){
 
 
         $log.info($scope.submitArray);
 
-        $scope.futures = benchmarkServices.getZNCMetrics($scope.submitArray);
+        $scope.futures = benchmarkServices.getZNCMetrics($scope.sample);
 
         $q.resolve($scope.futures).then(function (results) {
-            $scope.scoreGraph = "Rating";
-            $scope.FFText = $sce.trustAsHtml('Site EUI');
 
-            $scope.benchmarkResult = $scope.computeBenchmarkMix(results);
-            $scope.benchmarkResult.city = $scope.auxModel.city;
+            $scope.buildingRequirements = $scope.setBuildingRequirements(results);
+
+            console.log($scope.buildingRequirements);
         });
+    };
+
+    $scope.setBuildingRequirements = function(results){
+
+        if($scope.auxModel.approach === "performance"){
+                return $scope.computePerformanceRequirements(results);
+            } else {
+                return $scope.computePrescriptiveRequirements(results);
+            }
+
     };
 
 
@@ -222,19 +302,35 @@ define(['angular'], function() {
         return returnValue;
     };
 
-    $scope.computeBenchmarkMix = function(results){
+    $scope.computePerformanceRequirements = function(results){
 
-        $scope.propOutputList = $scope.getPropResponseField(results,"propOutputList");
-        $scope.percentBetterSiteEUI = Math.ceil($scope.getPropResponseField(results,"percentBetterSiteEUI"));
-        $scope.siteEUI = Math.ceil($scope.getPropResponseField(results,"siteEUI"));
+        var performance_requirements = $scope.getPropResponseField(results,"performance_requirements");
 
-        var metricsTable = [
 
-              {"test": $scope.getPropResponseField(results,"tester")},
-              {"test": $scope.getPropResponseField(results,"tester")}
+        var performanceTable = {
+              "pv_area": Math.ceil($scope.getPropResponseField(results,"pv_area")),
+              "pv_capacity": Math.ceil($scope.getPropResponseField(results,"pv_capacity")),
+              "building_energy": Math.ceil(performance_requirements.building_energy),
+              "required": Math.ceil(performance_requirements.re_total_needed),
+              "pv_potential": Math.ceil(performance_requirements.re_rec_onsite_pv),
+              "procured": Math.ceil(performance_requirements.re_procured)
+        };
+        return performanceTable;
+    };
 
-        ];
-        return metricsTable;
+    $scope.computePrescriptiveRequirements = function(results){
+
+        var prescriptive_requirements = $scope.getPropResponseField(results,"prescriptive_requirements");
+
+        var prescriptiveTable = {
+              "pv_area": Math.ceil($scope.getPropResponseField(results,"pv_area")),
+              "pv_capacity": Math.ceil($scope.getPropResponseField(results,"pv_capacity")),
+              "building_energy": Math.ceil(prescriptive_requirements.prescriptive_building_energy),
+              "required": Math.ceil(prescriptive_requirements.prescriptive_re_total_needed),
+              "pv_potential": Math.ceil(prescriptive_requirements.re_rec_onsite_pv),
+              "procured": Math.ceil(prescriptive_requirements.prescriptive_re_procured)
+        };
+        return prescriptiveTable;
     };
 
     $scope.submitErrors = function () {
@@ -262,9 +358,11 @@ define(['angular'], function() {
         if($scope.auxModel.reportingUnits==="imperial"){
             $scope.tableEnergyUnits="(kBtu/yr)";
             $scope.tableEUIUnits="(kBtu/ft²/yr)";
+            $scope.tableAreaUnits="(ft²)";
         }else {
             $scope.tableEnergyUnits="(kWh/yr)";
             $scope.tableEUIUnits="(kWh/m²/yr)";
+            $scope.tableAreaUnits="(m²)";
         }
 
         var validEnergy = function(e) {
@@ -342,6 +440,8 @@ define(['angular'], function() {
         }else {
             $scope.submitErrors();
             $scope.benchmarkResult = null;
+            $scope.buildingRequirements = null;
+            $scope.computeBenchmarkResult();
         }
 
     };
@@ -410,67 +510,67 @@ define(['angular'], function() {
 
             energyUnits: [
                 //<!--Electricity - Grid -->
-                {id:"KBtu",name:"kBtu",filter_id:"electricity"},
+                {id:"kBtu",name:"kBtu",filter_id:"electricity"},
                 {id:"MBtu",name:"MBtu",filter_id:"electricity"},
                 {id:"kWh",name:"kWh",filter_id:"electricity"},
                 {id:"MWh",name:"MWh",filter_id:"electricity"},
                 {id:"GJ",name:"GJ",filter_id:"electricity"},
 
                 //<!--Natural Gas -->
-                {id:"NGMcf",name:"MCF",filter_id:"natural_gas"},
-                {id:"NGKcf",name:"kcf",filter_id:"natural_gas"},
-                {id:"NGCcf",name:"ccf",filter_id:"natural_gas"},
-                {id:"NGcf",name:"cf",filter_id:"natural_gas"},
-                {id:"NGm3",name:"Cubic Meters",filter_id:"natural_gas"},
+                {id:"NG Mcf",name:"Mcf",filter_id:"natural_gas"},
+                {id:"NG kcf",name:"kcf",filter_id:"natural_gas"},
+                {id:"NG ccf",name:"ccf",filter_id:"natural_gas"},
+                {id:"NG cf",name:"cf",filter_id:"natural_gas"},
+                {id:"NGm3",name:"m³",filter_id:"natural_gas"},
                 {id:"GJ",name:"GJ",filter_id:"natural_gas"},
-                {id:"KBtu",name:"kBtu",filter_id:"natural_gas"},
+                {id:"kBtu",name:"kBtu",filter_id:"natural_gas"},
                 {id:"MBtu",name:"MBtu",filter_id:"natural_gas"},
-                {id:"Therms",name:"Therms",filter_id:"natural_gas"},
+                {id:"therms",name:"Therms",filter_id:"natural_gas"},
 
                 //<!--Fuel Oil No. 1 -->
-                {id:"KBtu",name:"kBtu",filter_id:"fuel_oil"},
+                {id:"kBtu",name:"kBtu",filter_id:"fuel_oil"},
                 {id:"MBtu",name:"MBtu ",filter_id:"fuel_oil"},
                 {id:"GJ",name:"GJ",filter_id:"fuel_oil"},
 
                 //<!--Propane-->
                 {id:"GJ",name:"GJ",filter_id:"propane"},
-                {id:"KBtu",name:"kBtu",filter_id:"propane"},
+                {id:"kBtu",name:"kBtu",filter_id:"propane"},
                 {id:"MBtu",name:"MBtu",filter_id:"propane"},
-                {id:"PropaneUKG",name:"Gallons (UK)",filter_id:"propane"},
-                {id:"PropaneUSG",name:"Gallons",filter_id:"propane"},
-                {id:"PropaneCf",name:"kcf",filter_id:"propane"},
-                {id:"PropaneCCf",name:"ccf",filter_id:"propane"},
-                {id:"PropaneKCf",name:"cf",filter_id:"propane"},
-                {id:"PropaneL",name:"Liters",filter_id:"propane"},
+                {id:"Propane cf",name:"kcf",filter_id:"propane"},
+                {id:"Propane ccf",name:"ccf",filter_id:"propane"},
+                {id:"Propane kcf",name:"cf",filter_id:"propane"},
+                {id:"Propane L",name:"L",filter_id:"propane"},
+                {id:"Propane igal",name:"Gallons (Imperial)",filter_id:"propane"},
+                {id:"Propane gal",name:"Gallons",filter_id:"propane"},
 
                 //<!--District Steam-->
                 {id:"GJ",name:"GJ",filter_id:"steam"},
-                {id:"KBtu",name:"kBtu",filter_id:"steam"},
+                {id:"kBtu",name:"kBtu",filter_id:"steam"},
                 {id:"MBtu",name:"MBtu",filter_id:"steam"},
-                {id:"Therms",name:"Therms",filter_id:"steam"},
-                {id:"SteamLb",name:"Pounds",filter_id:"steam"},
-                {id:"SteamKLb",name:"Thousand pounds",filter_id:"steam"},
-                {id:"SteamMLb",name:"Million pounds",filter_id:"steam"},
+                {id:"therms",name:"Therms",filter_id:"steam"},
+                {id:"Steam lb",name:"Pounds",filter_id:"steam"},
+                {id:"Steam klb",name:"k lbs",filter_id:"steam"},
+                {id:"Steam Mlb",name:"M lbs",filter_id:"steam"},
 
                 //<!--District Hot Water-->
-                {id:"KBtu",name:"kBtu",filter_id:"hot_water"},
+                {id:"kBtu",name:"kBtu",filter_id:"hot_water"},
                 {id:"MBtu",name:"MBtu",filter_id:"hot_water"},
                 {id:"GJ",name:"GJ",filter_id:"hot_water"},
-                {id:"Therms",name:"Therms",filter_id:"hot_water"},
+                {id:"therms",name:"Therms",filter_id:"hot_water"},
 
                 //<!--District Chilled Water-->
-                {id:"KBtu",name:"kBtu",filter_id:"chilled_water"},
+                {id:"kBtu",name:"kBtu",filter_id:"chilled_water"},
                 {id:"MBtu",name:"MBtu",filter_id:"chilled_water"},
                 {id:"GJ",name:"GJ",filter_id:"chilled_water"},
-                {id:"CHWTonH",name:"Ton Hours",filter_id:"chilled_water"},
+                {id:"CHW TonH",name:"Ton Hours",filter_id:"chilled_water"},
 
                 //<!--Coal-->
-                {id:"KBtu",name:"kBtu",filter_id:"coal"},
+                {id:"kBtu",name:"kBtu",filter_id:"coal"},
                 {id:"MBtu",name:"MBtu",filter_id:"coal"},
                 {id:"GJ",name:"GJ",filter_id:"coal"},
 
                 //<!--Other-->
-                {id:"KBtu",name:"kBtu",filter_id:"other"},
+                {id:"kBtu",name:"kBtu",filter_id:"other"},
                 {id:"MBtu",name:"MBtu",filter_id:"other"},
                 {id:"kWh",name:"kWh",filter_id:"other"},
                 {id:"MWh",name:"MWh",filter_id:"other"},

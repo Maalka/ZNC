@@ -108,7 +108,7 @@ case class SolarProperties(parameters: JsValue) {
       case _ => throw new Exception("System Capacity must be positive! No Defaults Set. ")
     }
 
-    ValidatedSolarMetrics(module_type, array_type, losses, tilt, azimuth, inv_eff, system_capacity, solarResources.file_id)
+    ValidatedSolarMetrics(module_type, array_type, losses, tilt, azimuth, inv_eff, system_capacity, pv_area, solarResources.file_id)
 
   }
 
@@ -230,6 +230,7 @@ case class ValidatedSolarMetrics(
                               azimuth: Double,
                               inv_eff: Double,
                               system_capacity: Double,
+                              pv_area:Double,
                               file_id: String
                             )
 case class ValidatedSolarResources(

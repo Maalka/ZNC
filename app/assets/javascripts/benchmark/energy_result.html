@@ -1,0 +1,48 @@
+<div style="padding-top: 10px;">
+    <b style="padding-left: 0.5em;">On-Site PV System</b>
+</div>
+
+<table class="ui basic inverted white table unstackable">
+
+
+    <tbody>
+    <tr>
+        <td class="twelve wide" style="font-weight: 900; padding-left:50px"> Rated Capacity (kW) </td>
+        <td class="three wide left aligned"> {{buildingRequirements.pv_capacity || "N/A"}} </td>
+    </tr>
+    <tr>
+        <td class="twelve wide" style="font-weight: 900; padding-left:50px"> Estimated Area for Collections {{tableAreaUnits}} </td>
+        <td class="three wide left aligned"> {{buildingRequirements.pv_area || "N/A"}} </td>
+    </tr>
+
+    </tbody>
+
+</table>
+
+<div style="padding-top: 10px;">
+    <b style="padding-left: 0.5em;">Annual Energy Consumption & Generation (MWh/yr)</b>
+</div>
+
+<table class="ui basic inverted white table unstackable">
+
+
+    <tbody>
+    <tr>
+        <td class="twelve wide" style="font-weight: 900; padding-left:50px"> Building Energy Consumption </td>
+        <td class="three wide left aligned">{{buildingRequirements.building_energy || "N/A"}} </td>
+    </tr>
+    <tr>
+        <td class="twelve wide" style="font-weight: 900; padding-left:50px"> Total Renewable Energy Required </td>
+        <td class="three wide left aligned">{{buildingRequirements.required || "N/A"}} </td>
+    </tr>
+    <tr>
+        <td class="twelve wide" style="padding-left:80px"> On-Site PV Generation Potential </td>
+        <td class="three wide left aligned">{{buildingRequirements.pv_potential || "N/A"}} </td>
+    </tr>
+        <td class="twelve wide" style="padding-left:80px"> Remaining Off-Site Procured Renewable Energy </td>
+        <td class="three wide left aligned">{{buildingRequirements.procured || "N/A"}} </td>
+    </tr>
+
+    </tbody>
+
+</table>

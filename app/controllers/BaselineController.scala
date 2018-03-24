@@ -16,7 +16,7 @@ import play.api.libs.json._
 import play.api.mvc._
 
 import scala.concurrent.{Await, Future}
-import squants.energy.Energy
+import squants.energy.{Energy, MegawattHours}
 
 import scala.util.control.NonFatal
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -410,8 +410,8 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
                     },
                     "energy_units": {
                       "type": "string",
-                       "enum": ["KBtu","MBtu","kWh","MWh","GJ","NGMcf","NGKcf","NGCcf","NGcf", "NGm3","Therms","PropaneUKG","PropaneUSG","PropaneCf","PropaneCCf",
-                             "PropaneKCf","PropaneL","SteamLb","SteamKLb","SteamMLb","CHWTonH"]
+                       "enum": ["kBtu","MBtu","kWh","MWh","GJ","NG Mcf","NG kcf","NG ccf","NG cf", "NGm3","therms","Propane igal","Propane gal","Propane cf","Propane ccf",
+                             "Propane kcf","Propane L","Steam lb","Steam klb","Steam Mlb","CHW TonH"]
                     },
                     "energy_use": {
                       "type": "number",
@@ -434,7 +434,6 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
   def getZNCMetrics() = Action.async(parse.json) { implicit request =>
 
     val json: JsValue = request.body
-    println(json)
     val result = validator.validate(schema, json)
 
     result.fold(
@@ -548,10 +547,10 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
             pvTotal <- solarTotal(cc_energy, cc_intensity)
           } yield {
             Map(
-              "re_rec_onsite_pv" -> pvTotal,
-              "building_energy" -> totalSite.value,
-              "re_total_needed" -> totalSite.value,
-              "re_procured" -> Math.max(totalSite.value - pvTotal,0.0)
+              "re_rec_onsite_pv" -> pvTotal / 1000,
+              "building_energy" -> MegawattHours(totalSite to MegawattHours).value,
+              "re_total_needed" -> MegawattHours(totalSite to MegawattHours).value,
+              "re_procured" -> Math.max(MegawattHours(totalSite to MegawattHours).value - (pvTotal/1000),0.0)
             )
           }
         }
@@ -564,10 +563,10 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
             pvTotal <- solarTotal(cc_energy, cc_intensity)
           } yield {
             Map(
-              "re_rec_onsite_pv" -> pvTotal,
-              "prescriptive_building_energy" -> totalPrescriptive.value,
-              "prescriptive_re_total_needed" -> totalPrescriptive.value,
-              "prescriptive_re_procured" -> Math.max(totalPrescriptive.value - pvTotal,0.0)
+              "re_rec_onsite_pv" -> pvTotal / 1000,
+              "prescriptive_building_energy" -> MegawattHours(totalPrescriptive to MegawattHours).value,
+              "prescriptive_re_total_needed" -> MegawattHours(totalPrescriptive to MegawattHours).value,
+              "prescriptive_re_procured" -> Math.max(MegawattHours(totalPrescriptive to MegawattHours).value - (pvTotal/1000),0.0)
               )
           }
         }
@@ -619,6 +618,8 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
           Baseline.getPrescriptiveMetrics.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
 
           Baseline.getPV.map(api(_)).recover { case NonFatal(th) => apiRecover(th) } ,
+          Baseline.getPVarea.map(api(_)).recover { case NonFatal(th) => apiRecover(th) } ,
+          Baseline.getPVcapacity.map(api(_)).recover { case NonFatal(th) => apiRecover(th) } ,
           solar_errors.recover { case NonFatal(th) => apiRecover(th) } ,
           solar_warnings.recover { case NonFatal(th) => apiRecover(th) } ,
           merged.recover { case NonFatal(th) => apiRecover(th) },
@@ -637,6 +638,8 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
           "prescriptive_metrics",
 
           "pv_array",
+          "pv_area",
+          "pv_capacity",
           "pvwatts_errors",
           "pvwatts_warnings",
           "pvwatts_system_details",

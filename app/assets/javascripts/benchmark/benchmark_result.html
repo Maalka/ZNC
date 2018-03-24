@@ -1,19 +1,56 @@
 <div>
-	<h3 class="ui header"><i class="bar chart icon"></i>RESULTS</h3>
+
+
+	<div class="ui grid" style="margin-bottom:7px;margin-top:5px;">
+		<div class="five wide column">
+			<div class="field">
+				<h3 class="ui header"><i class="bar chart icon"></i>RESULTS</h3>
+			</div>
+		</div>
+
+		<div class="right aligned eleven wide column">
+			<form class="ui form " ng-class="{'error': !forms.baselineForm.$valid}">
+				<div class="ui radio checkbox">
+					<input type="radio" id="project-reporting-metric" ng-model="auxModel.reportingUnits"
+						   value='metric'>
+					<label for="project-reporting-metric">metric</label>
+				</div>
+				<div class="ui radio checkbox">
+					<input type="radio" id="project-reporting-imperial" ng-model="auxModel.reportingUnits" ng-init="auxModel.reportingUnits='imperial'"
+						   value='imperial'>
+					<label for='project-reporting-imperial'>imperial</label>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
 	<div class="ui padded sixteen column grid">
-	    <div class=" sixteen wide column page-break-after" style="padding:0px" ng-if="benchmarkResult"  >
+		<div class=" teal sixteen wide column" ng-if="buildingRequirements && auxModel.approach === 'performance'">
+			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
+		</div>
+		<!--<div class=" sixteen wide column page-break-after" style="padding:0px" ng-if="buildingRequirements"  >
 	       <div graph benchmark-result="benchmarkResult" baseline-constant="baselineConstant" score-Graph="scoreGraph" style="width: 100%; height:400px'"></div>
-	    </div>
-	    <div class=" teal sixteen wide column" ng-if="benchmarkResult">
-	        <div ng-include src="'javascripts/benchmark/proplist_result.html'">Not Defined</div>
-	    </div>
-	    <div class="one wide column" ng-if="!benchmarkResult">
+	    </div>-->
+		<div class=" teal sixteen wide column" ng-if="buildingRequirements && auxModel.approach === 'prescriptive'">
+			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
+		</div>
+		<div class=" teal sixteen wide column" ng-if="prescriptiveRequirements">
+			<div ng-include src="'javascripts/benchmark/pv_result.html'">Not Defined</div>
+		</div>
+	    <div class="one wide column" ng-if="!buildingRequirements">
 	    	<i class="arrow left icon" style="padding-top: 1px;"></i>
 	    </div>
-	    <div class="fifteen wide column" ng-if="!benchmarkResult">
+	    <div class="fifteen wide column" ng-if="!buildingRequirements">
     		<h3 class="ui header">Enter building information to the left to calculate your baseline and target</h3>
 	    </div>
 	</div>
-	<div ng-include ng-show="benchmarkResult"
-		src="'javascripts/common/partials/reportingUnitsSubmit.html'">Not Defined</div>
+	<div ng-include ng-show="benchmarkResult">
+		<div class="ui basic horizontal segments">
+			<div class="ui basic segment right aligned">
+				<a href ng-click="print()">print <i class="print icon"></i></a>
+			</div>
+		</div>
+	</div>
 </div>

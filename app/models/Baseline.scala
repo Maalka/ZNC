@@ -29,7 +29,6 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
   val submittedEnergy: EUICalculator = EUICalculator(result.head)
   val prescriptiveEUI = PrescriptiveValues(result.head)
 
-
   def getPV = pvSystems.setPVDefaults
   def pVWattsResponse: Future[JsValue] = nrel_client.makeWsRequest(Seq.empty[(String, String)])
 
@@ -37,11 +36,24 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
   def getBuildingData: Future[List[ValidatedPropTypes]] = prescriptiveEUI.getValidatedPropList
   def getMetrics: Future[ValidatedConversionDetails] = metricConversion.getConversionMetrics(None)
 
+  def getPVarea:Future[Double] = {
+    for {
+      systems <- getPV
+      convertedSize <- convertSize(systems.map(_.pv_area).sum,"metric")
+    } yield convertedSize
+  }
+  def getPVcapacity:Future[Double] = {
+    for {
+      systems <- getPV
+      convertedSize <- convertSize(systems.map(_.system_capacity).sum,"metric")
+    } yield convertedSize
+  }
+
   def getSiteMetrics:Future[Map[String,Any]] = {
     //Site EUI and Energy have to be converted to reportingUnits for output as last step, carbon and source are already converted
       for {
       buildingSize <- prescriptiveEUI.getBuildingSize
-      convertedBuildingSize <- convertSize(buildingSize)
+      convertedBuildingSize <- convertSize(buildingSize,"imperial")
 
       totalSite <- submittedEnergy.getTotalSiteEnergy
       totalCarbon <- getTotalActualCarbon
@@ -69,7 +81,7 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
 
       for {
       buildingSize <- prescriptiveEUI.getBuildingSize
-      convertedBuildingSize <- convertSize(buildingSize)
+      convertedBuildingSize <- convertSize(buildingSize, "imperial")
 
       totalCarbon <- getPrescriptiveTotalCarbon
       totalSource <- getPrescriptiveTotalSource
@@ -290,6 +302,7 @@ case class ReportingUnits(reporting_units:String)
   def energyMetricConstant:Double = KBtus(1) to KilowattHours //interpret as kwh per kbtu
 
   def areaMetricUnit(areaEntry:Double):Double = SquareFeet(areaEntry) to SquareMeters
+  def areaImperialUnit(areaEntry:Double):Double = SquareMeters(areaEntry) to SquareFeet
   def areaMetricConstant:Double = SquareFeet(1) to SquareMeters//interpret as sq meters per sq ft
 
   def solarConversionEnergy: Future[Double] = Future{
@@ -327,10 +340,20 @@ case class ReportingUnits(reporting_units:String)
     }
   }
 
-  def convertSize(areaEntry:Double):Future[Double] = Future{
-    reportingUnits match {
-      case "imperial" => areaEntry
-      case "metric" => areaMetricUnit(areaEntry)
+  def convertSize(areaEntry:Double, startingUnits:String):Future[Double] = Future{
+    startingUnits match {
+      case "imperial" => {
+        reportingUnits match {
+          case "imperial" => areaEntry
+          case "metric" => areaMetricUnit(areaEntry)
+        }
+      }
+      case "metric" => {
+        reportingUnits match {
+          case "imperial" => areaImperialUnit(areaEntry)
+          case "metric" => areaEntry
+        }
+      }
     }
   }
 
