@@ -277,6 +277,8 @@ define(['angular'], function() {
 
         $q.resolve($scope.futures).then(function (results) {
 
+            $scope.solarResults = null;
+
             $scope.buildingRequirements = $scope.setBuildingRequirements(results);
             $scope.solarResults = $scope.computeSolarResults(results);
             console.log($scope.solarResults);
@@ -338,7 +340,7 @@ define(['angular'], function() {
     };
     $scope.computeSolarResults = function(results){
 
-
+        var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
         var solarTable = {} ;
         solarTable.monthly = [] ;
@@ -350,11 +352,13 @@ define(['angular'], function() {
         solarTable.city = solarResponse.station_info.city;
         solarTable.state = solarResponse.station_info.state;
 
-        solarTable.solar_hours = solarResults.ac_monthly.reduce(add, 0);
+        solarTable.ac_hours = solarResults.ac_monthly.reduce(add, 0);
+        solarTable.dc_hours = solarResults.dc_monthly.reduce(add, 0);
 
         for (var i =0; i < solarResults.ac_monthly.length; i ++) {
-            solarTable.monthly.push([solarResults.ac_monthly[i],solarResults.dc_monthly[i]]);
+            solarTable.monthly.push([months[i],solarResults.ac_monthly[i],solarResults.dc_monthly[i]]);
         }
+        solarTable.monthly.push(["Total",solarTable.ac_hours,solarTable.dc_hours]);
 
         console.log(solarTable);
         return solarTable;

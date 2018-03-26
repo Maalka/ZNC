@@ -30,20 +30,20 @@
 		<div class=" teal sixteen wide column" ng-if="buildingRequirements && auxModel.approach === 'performance'">
 			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
 		</div>
-		<!--<div class=" sixteen wide column page-break-after" style="padding:0px" ng-if="buildingRequirements"  >
-	       <div graph benchmark-result="benchmarkResult" baseline-constant="baselineConstant" score-Graph="scoreGraph" style="width: 100%; height:400px'"></div>
-	    </div>-->
 		<div class=" teal sixteen wide column" ng-if="buildingRequirements && auxModel.approach === 'prescriptive'">
 			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
 		</div>
-		<div class=" teal sixteen wide column" ng-if="prescriptiveRequirements">
-			<div ng-include src="'javascripts/benchmark/pv_result.html'">Not Defined</div>
+		<div class="sixteen wide column" style="margin-top:-10px;">
+		</div>
+		<div class=" teal sixteen wide column" ng-if="solarResults">
+			<div ng-include src="'javascripts/benchmark/solar_result.html'">Not Defined</div>
 		</div>
 	    <div class="one wide column" ng-if="!buildingRequirements">
 	    	<i class="arrow left icon" style="padding-top: 1px;"></i>
 	    </div>
 	    <div class="fifteen wide column" ng-if="!buildingRequirements">
-    		<h3 class="ui header">Enter building information to the left to calculate your baseline and target</h3>
+    		<h3 class="ui header">ENTER BUILDING AND PV INFORMATION TO THE LEFT TO GENERATE
+				REQUIREMENTS FOR REACHING ZERO NET CARBON</h3>
 	    </div>
 	</div>
 	<div ng-include ng-show="benchmarkResult">
