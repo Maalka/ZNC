@@ -471,7 +471,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
 
         def f2(ccEnergy:Double, ccIntensity:Double) = multipleFutures.map { r =>
 
-          val stationInfo = (r.head \ "station_info").get
+          val station_info = (r.head \ "station_info").get
           val version = (r.head \ "version").get
           val ac_annual: Double = r.map{a => (a \ "outputs" \ "ac_annual").as[Double]}.sum * ccEnergy
           val capacity_factor = r.map{a => (a \ "outputs" \ "capacity_factor").as[Double]}.sum / r.map{a => (a \ "outputs" \ "capacity_factor").as[Double]}.length
@@ -511,7 +511,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
               "poa_monthly" -> poa_monthly,
               "solrad_monthly" -> solrad_monthly
             ),
-            "stationInfo" -> stationInfo,
+            "station_info" -> station_info,
             "version" -> version
           )
           Right(a)

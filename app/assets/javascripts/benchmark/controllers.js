@@ -76,6 +76,10 @@ define(['angular'], function() {
         });
     }
 
+    function add(a, b) {
+        return a + b;
+    }
+
     $scope.$watch("tempModel.buildingType", function (v) {
         if (v === undefined || v === null) {
             return; 
@@ -274,8 +278,8 @@ define(['angular'], function() {
         $q.resolve($scope.futures).then(function (results) {
 
             $scope.buildingRequirements = $scope.setBuildingRequirements(results);
-
-            console.log($scope.buildingRequirements);
+            $scope.solarResults = $scope.computeSolarResults(results);
+            console.log($scope.solarResults);
         });
     };
 
@@ -331,6 +335,30 @@ define(['angular'], function() {
               "procured": Math.ceil(prescriptive_requirements.prescriptive_re_procured)
         };
         return prescriptiveTable;
+    };
+    $scope.computeSolarResults = function(results){
+
+
+
+        var solarTable = {} ;
+        solarTable.monthly = [] ;
+
+        var solarResponse = $scope.getPropResponseField(results,"pvwatts_system_details");
+        var solarResults = solarResponse.outputs;
+
+        solarTable.file_id = solarResponse.station_info.solar_resource_file;
+        solarTable.city = solarResponse.station_info.city;
+        solarTable.state = solarResponse.station_info.state;
+
+        solarTable.solar_hours = solarResults.ac_monthly.reduce(add, 0);
+
+        for (var i =0; i < solarResults.ac_monthly.length; i ++) {
+            solarTable.monthly.push([solarResults.ac_monthly[i],solarResults.dc_monthly[i]]);
+        }
+
+        console.log(solarTable);
+        return solarTable;
+
     };
 
     $scope.submitErrors = function () {
