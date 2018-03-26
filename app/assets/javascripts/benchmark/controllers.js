@@ -204,14 +204,13 @@ define(['angular'], function() {
         "approach": "performance",
         "metric":
           {
-            "metric_type": "carbon",
             "conversion_resource": 0,
             "source_natural_gas": 2.1,
             "carbon_natural_gas": 0.61
           },
         "climate_zone": "1A",
         "file_id": "0-93738",
-        "reporting_units": "metric",
+        "reporting_units": "imperial",
         "prop_types": [
             {
             "building_type": "OfficeLarge",
@@ -280,8 +279,11 @@ define(['angular'], function() {
             $scope.solarResults = null;
 
             $scope.buildingRequirements = $scope.setBuildingRequirements(results);
+            console.log($scope.buildingRequirements);
+
             $scope.solarResults = $scope.computeSolarResults(results);
-            console.log($scope.solarResults);
+            $scope.endUses = $scope.computeEndUses(results);
+
         });
     };
 
@@ -308,18 +310,34 @@ define(['angular'], function() {
         return returnValue;
     };
 
+    $scope.getPropSize = function(building_sub_types){
+
+        var size = [];
+        for (var i =0; i < building_sub_types.length; i ++) {
+            size.push(building_sub_types[i].floor_area);
+        }
+        return size.reduce(add, 0);
+    };
+
     $scope.computePerformanceRequirements = function(results){
 
         var performance_requirements = $scope.getPropResponseField(results,"performance_requirements");
+        var building_sub_types = $scope.getPropResponseField(results,"building_sub_types");
 
+        var building_size = $scope.getPropSize(building_sub_types);
 
         var performanceTable = {
-              "pv_area": Math.ceil($scope.getPropResponseField(results,"pv_area")),
-              "pv_capacity": Math.ceil($scope.getPropResponseField(results,"pv_capacity")),
-              "building_energy": Math.ceil(performance_requirements.building_energy),
-              "required": Math.ceil(performance_requirements.re_total_needed),
-              "pv_potential": Math.ceil(performance_requirements.re_rec_onsite_pv),
-              "procured": Math.ceil(performance_requirements.re_procured)
+              "pv_area": ($scope.getPropResponseField(results,"pv_area")),
+              "pv_capacity": ($scope.getPropResponseField(results,"pv_capacity")),
+              "building_energy": (performance_requirements.building_energy),
+              "required": (performance_requirements.re_total_needed),
+              "pv_potential": (performance_requirements.re_rec_onsite_pv),
+              "procured": (performance_requirements.re_procured),
+
+              "building_energy_norm": (performance_requirements.building_energy / building_size * 1000),
+              "required_norm": (performance_requirements.re_total_needed / building_size * 1000),
+              "pv_potential_norm": (performance_requirements.re_rec_onsite_pv / building_size * 1000),
+              "procured_norm": (performance_requirements.re_procured / building_size * 1000)
         };
         return performanceTable;
     };
@@ -327,14 +345,22 @@ define(['angular'], function() {
     $scope.computePrescriptiveRequirements = function(results){
 
         var prescriptive_requirements = $scope.getPropResponseField(results,"prescriptive_requirements");
+        var building_sub_types = $scope.getPropResponseField(results,"building_sub_types");
+
+        var building_size = $scope.getPropSize(building_sub_types);
 
         var prescriptiveTable = {
-              "pv_area": Math.ceil($scope.getPropResponseField(results,"pv_area")),
-              "pv_capacity": Math.ceil($scope.getPropResponseField(results,"pv_capacity")),
-              "building_energy": Math.ceil(prescriptive_requirements.prescriptive_building_energy),
-              "required": Math.ceil(prescriptive_requirements.prescriptive_re_total_needed),
-              "pv_potential": Math.ceil(prescriptive_requirements.re_rec_onsite_pv),
-              "procured": Math.ceil(prescriptive_requirements.prescriptive_re_procured)
+              "pv_area": ($scope.getPropResponseField(results,"pv_area")),
+              "pv_capacity": ($scope.getPropResponseField(results,"pv_capacity")),
+              "building_energy": (prescriptive_requirements.prescriptive_building_energy),
+              "required": (prescriptive_requirements.prescriptive_re_total_needed),
+              "pv_potential": (prescriptive_requirements.re_rec_onsite_pv),
+              "procured": (prescriptive_requirements.prescriptive_re_procured),
+
+              "building_energy_norm": (prescriptive_requirements.prescriptive_building_energy / building_size * 1000),
+              "required_norm": (prescriptive_requirements.prescriptive_re_total_needed / building_size * 1000),
+              "pv_potential_norm": (prescriptive_requirements.re_rec_onsite_pv / building_size * 1000),
+              "procured_norm": (prescriptive_requirements.prescriptive_re_procured / building_size * 1000)
         };
         return prescriptiveTable;
     };
@@ -352,8 +378,8 @@ define(['angular'], function() {
         solarTable.city = solarResponse.station_info.city;
         solarTable.state = solarResponse.station_info.state;
 
-        solarTable.ac_hours = solarResults.ac_monthly.reduce(add, 0);
         solarTable.dc_hours = solarResults.dc_monthly.reduce(add, 0);
+        solarTable.ac_hours = solarResults.ac_monthly.reduce(add, 0);
 
         for (var i =0; i < solarResults.ac_monthly.length; i ++) {
             solarTable.monthly.push([months[i],solarResults.ac_monthly[i],solarResults.dc_monthly[i]]);
@@ -362,6 +388,70 @@ define(['angular'], function() {
 
         console.log(solarTable);
         return solarTable;
+
+    };
+
+    $scope.computeEndUses = function(results){
+
+        function nullZero(a) {
+            if(a===0){
+                return null;
+            } else {
+            return a;
+            }
+        }
+
+        var endUses = ["Heating", "Cooling", "Interior Lighting", "Plug Loads", "Service Hot Water", "Fans"];
+        var shortNames = ["htg", "clg", "intLgt", "intEqp", "swh", "fans"];
+        var othersEndUses = ["Exterior Equipment","Exterior Light","Generators","Heat Recovery","Heat Rejection","Humidity Control","Pumps","Refrigeration"];
+        var othersNames = ["extEqp","extLgt","gentor","heatRec","heatRej","humid","pumps","refrg"];
+
+
+        var endUsesTable = {} ;
+        endUsesTable.endUses = [] ;
+        endUsesTable.endUsesOther = [] ;
+        endUsesTable.endUsesTotal = [] ;
+
+
+        var endUseResponse = $scope.getPropResponseField(results,"prescriptive_metrics");
+
+        endUsesTable.eui = endUseResponse.site_eui;
+        endUsesTable.energy = endUseResponse.site_energy / 1000; // this will be either MBtu or MWh
+
+
+
+        for (var i =0; i < endUses.length; i ++) {
+
+            endUsesTable.endUses.push([
+                endUses[i],
+                nullZero(endUseResponse.prescriptive_electricity_metric_data[shortNames[i]]),
+                nullZero(endUseResponse.prescriptive_natural_gas_metric_data[shortNames[i]]),
+                nullZero(endUseResponse.prescriptive_end_use_metric_data[shortNames[i]]),
+                endUseResponse.prescriptive_end_use_metric_percents[shortNames[i]]*100
+            ]);
+        }
+
+        for (var j =0; j < othersEndUses.length; j ++) {
+
+            endUsesTable.endUsesOther.push([
+                othersEndUses[j],
+                nullZero(endUseResponse.prescriptive_electricity_metric_data[othersNames[j]]),
+                nullZero(endUseResponse.prescriptive_natural_gas_metric_data[othersNames[j]]),
+                nullZero(endUseResponse.prescriptive_end_use_metric_data[othersNames[j]]),
+                endUseResponse.prescriptive_end_use_metric_percents[othersNames[j]]*100
+            ]);
+        }
+
+        endUsesTable.endUsesTotal.push([
+            "Total",
+            endUseResponse.prescriptive_electricity_metric_data.net,
+            endUseResponse.prescriptive_natural_gas_metric_data.net,
+            endUseResponse.prescriptive_end_use_metric_data.net,
+            100,
+        ]);
+
+        console.log(endUsesTable);
+        return endUsesTable;
 
     };
 
@@ -388,12 +478,14 @@ define(['angular'], function() {
         $scope.forms.hasValidated = true; /// only check the field errors if this form has attempted to validate.
 
         if($scope.auxModel.reportingUnits==="imperial"){
-            $scope.tableEnergyUnits="(kBtu/yr)";
-            $scope.tableEUIUnits="(kBtu/ft²/yr)";
+            $scope.tableEnergyUnits="(kBtu)";
+            $scope.tableBigEnergyUnits="MBtu/yr";
+            $scope.tableEUIUnits="kBtu/ft²-yr";
             $scope.tableAreaUnits="(ft²)";
         }else {
-            $scope.tableEnergyUnits="(kWh/yr)";
-            $scope.tableEUIUnits="(kWh/m²/yr)";
+            $scope.tableEnergyUnits="(kWh)";
+            $scope.tableBigEnergyUnits="MWh/yr";
+            $scope.tableEUIUnits="kWh/m²-yr";
             $scope.tableAreaUnits="(m²)";
         }
 

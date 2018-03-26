@@ -1,47 +1,62 @@
-<div style="padding-top: 10px;">
-    <b style="padding-left: 0.5em;">On-Site PV System</b>
-</div>
+<table class="ui basic inverted white table unstackable" style="padding-left: 0.5em;">
 
-<table class="ui basic inverted white table unstackable">
+    <tbody style="font-family: 'Open Sans', sans-serif; font-size: 13px">
+
+        <tr class="bottom aligned">
+            <td class="twelve wide"></td>
+            <td class = "center aligned three wide"></td>
+            <td class = "center aligned two wide"></td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><b style="font-size: 15px">On-Site PV System</b></td>
+        </tr>
+
+        <tr>
+            <td class="nine wide" style="font-weight: 700; padding-left:20px"> Rated Capacity (kW) </td>
+            <td class="center aligned four wide"><b> {{buildingRequirements.pv_capacity | number: 0}} </b></td>
+            <td class="center aligned three wide"></td>
+        </tr>
+        <tr>
+            <td class="nine wide" style="font-weight: 700; padding-left:20px"> Estimated Area for Collections {{tableAreaUnits}} </td>
+            <td class="center aligned four wide"><b> {{buildingRequirements.pv_area | number: 0}} </b></td>
+            <td class="center aligned three wide"></td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><b style="font-size: 15px">Annual Energy Consumption & Generation</b></td>
+
+        </tr>
 
 
-    <tbody style="font-family: 'Open Sans', sans-serif;">
-    <tr>
-        <td class="twelve wide" style="font-weight: 700; padding-left:50px"> Rated Capacity (kW) </td>
-        <td class="three wide left aligned"> {{buildingRequirements.pv_capacity || "N/A"}} </td>
-    </tr>
-    <tr>
-        <td class="twelve wide" style="font-weight: 700; padding-left:50px"> Estimated Area for Collections {{tableAreaUnits}} </td>
-        <td class="three wide left aligned"> {{buildingRequirements.pv_area || "N/A"}} </td>
-    </tr>
+        <tr class="top aligned">
+            <td></td>
+            <td class = "center aligned ">{{tableEUIUnits}}</td>
+            <td class = "center aligned ">{{tableBigEnergyUnits}}</td>
+        </tr>
 
-    </tbody>
+        <tr class="top aligned">
+            <td style="font-weight: 700; padding-left:20px">  Building Energy Consumption  </td>
+            <td class = "center aligned "> {{buildingRequirements.building_energy_norm | number: 1}} </td>
+            <td class = "center aligned ">{{buildingRequirements.building_energy | number: 1}}</td>
+        </tr>
 
-</table>
+        <tr class="top aligned">
+            <td style="font-weight: 700; padding-left:20px">  Total Renewable Energy Required  </td>
+            <td class = "center aligned "> {{buildingRequirements.required_norm | number: 1}} </td>
+            <td class = "center aligned ">{{buildingRequirements.required | number: 1}}</td>
+        </tr>
+        <tr class="top aligned">
+            <td style="padding-left:40px">  On-Site PV Generation Potential   </td>
+            <td class = "center aligned "> {{buildingRequirements.pv_potential_norm | number: 1}} </td>
+            <td class = "center aligned ">{{buildingRequirements.pv_potential | number: 1}}</td>
+        </tr>
+        <tr class="top aligned">
+            <td style="padding-left:40px;">  Remaining Off-Site Procured Renewable Energy  </td>
+            <td class = "center aligned "> {{buildingRequirements.procured_norm | number: 1}} </td>
+            <td class = "center aligned ">{{buildingRequirements.procured | number: 1}}</td>
+        </tr>
 
-<div style="padding-top: 10px;">
-    <b style="padding-left: 0.5em;">Annual Energy Consumption & Generation</b> (MWh/yr)
-</div>
-
-<table class="ui basic inverted white table unstackable">
-
-
-    <tbody style="font-family: 'Open Sans', sans-serif;">
-    <tr>
-        <td class="twelve wide" style="font-weight: 700; padding-left:50px"> Building Energy Consumption </td>
-        <td class="three wide left aligned">{{buildingRequirements.building_energy || "N/A"}} </td>
-    </tr>
-    <tr>
-        <td class="twelve wide" style="font-weight: 700; padding-left:50px"> Total Renewable Energy Required </td>
-        <td class="three wide left aligned">{{buildingRequirements.required || "N/A"}} </td>
-    </tr>
-    <tr>
-        <td class="twelve wide" style="padding-left:80px"> On-Site PV Generation Potential </td>
-        <td class="three wide left aligned">{{buildingRequirements.pv_potential || "N/A"}} </td>
-    </tr>
-        <td class="twelve wide" style="padding-left:80px"> Remaining Off-Site Procured Renewable Energy </td>
-        <td class="three wide left aligned">{{buildingRequirements.procured || "N/A"}} </td>
-    </tr>
 
     </tbody>
 

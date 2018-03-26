@@ -26,13 +26,18 @@
 
 
 
-	<div class="ui padded sixteen column grid">
+	<div class="ui padded sixteen column grid" style="margin-bottom:10px;">
+		<div class=" teal sixteen wide column" ng-if="buildingRequirements">
+			<div ng-include src="'javascripts/benchmark/prescriptive_result.html'">Not Defined</div>
+		</div>
+		-------
 		<div class=" teal sixteen wide column" ng-if="buildingRequirements && auxModel.approach === 'performance'">
 			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
 		</div>
 		<div class=" teal sixteen wide column" ng-if="buildingRequirements && auxModel.approach === 'prescriptive'">
 			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
 		</div>
+		-------
 		<div class="sixteen wide column" style="margin-top:-10px;">
 		</div>
 		<div class=" teal sixteen wide column" ng-if="solarResults">
@@ -46,7 +51,7 @@
 				REQUIREMENTS FOR REACHING ZERO NET CARBON</h3>
 	    </div>
 	</div>
-	<div ng-include ng-show="benchmarkResult">
+	<div ng-if="buildingRequirements">
 		<div class="ui basic horizontal segments">
 			<div class="ui basic segment right aligned">
 				<a href ng-click="print()">print <i class="print icon"></i></a>

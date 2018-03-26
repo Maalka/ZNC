@@ -150,6 +150,7 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
       prescriptiveElectricityWeighted <- prescriptiveEUI.lookupPrescriptiveElectricityWeighted(None)
       converted <- convertPrescriptive(prescriptiveElectricityWeighted)
     } yield converted
+
   }
 
   def getPrescriptiveNG: Future[NaturalGasDistribution] = {
