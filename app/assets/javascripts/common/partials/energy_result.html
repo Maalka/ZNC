@@ -2,14 +2,14 @@
 
     <tbody style="font-family: 'Open Sans', sans-serif; font-size: 13px">
 
+        <tr>
+            <td colspan="2"><b style="font-size: 15px">On-Site PV System</b></td>
+        </tr>
+
         <tr class="bottom aligned">
             <td class="twelve wide"></td>
             <td class = "center aligned three wide"></td>
             <td class = "center aligned two wide"></td>
-        </tr>
-
-        <tr>
-            <td colspan="2"><b style="font-size: 15px">On-Site PV System</b></td>
         </tr>
 
         <tr>
@@ -36,15 +36,15 @@
         </tr>
 
         <tr class="top aligned">
-            <td style="font-weight: 700; padding-left:20px">  Building Energy Consumption  </td>
-            <td class = "center aligned "> {{buildingRequirements.building_energy_norm | number: 1}} </td>
-            <td class = "center aligned ">{{buildingRequirements.building_energy | number: 1}}</td>
+            <td style="padding-left:20px"><b>  Building Energy Consumption </b> </td>
+            <td class = "center aligned "><b> {{buildingRequirements.building_energy_norm | number: 1}}</b> </td>
+            <td class = "center aligned "><b>{{buildingRequirements.building_energy | number: 1}}</b></td>
         </tr>
 
         <tr class="top aligned">
-            <td style="font-weight: 700; padding-left:20px">  Total Renewable Energy Required  </td>
-            <td class = "center aligned "> {{buildingRequirements.required_norm | number: 1}} </td>
-            <td class = "center aligned ">{{buildingRequirements.required | number: 1}}</td>
+            <td style="padding-left:20px"><b>  Total Renewable Energy Required  </b></td>
+            <td class = "center aligned "><b> {{buildingRequirements.required_norm | number: 1}} </b></td>
+            <td class = "center aligned "><b>{{buildingRequirements.required | number: 1}}</b></td>
         </tr>
         <tr class="top aligned">
             <td style="padding-left:40px">  On-Site PV Generation Potential   </td>
