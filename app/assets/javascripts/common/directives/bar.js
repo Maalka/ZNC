@@ -95,7 +95,11 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
                 var options = {
                   chart: {
                       type: 'column',
-                      marginRight: 190
+                      marginRight: 190,
+                      spacingTop: 20,
+                      //spacingRight: 10,
+                      spacingBottom: 30,
+                      spacingLeft: 10,
                   },
                   legend: {
                     itemStyle: {
@@ -107,15 +111,17 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
                     align: 'right'
                   },
                   firstLegend: {
-                     title: {
-                            text: 'End Uses',
-                        style: {
-                                fontStyle: 'bold'
-                          }
-                      },
+                    itemWidth: 100,
+                    title: {
+                        text: 'End Uses',
+                    style: {
+                            fontStyle: 'bold'
+                      }
+                  },
                     y: -20
                   },
                   secondLegend: {
+                    itemWidth: 100,
                      title: {
                             text: 'Renewable Energy',
                         style: {
@@ -126,10 +132,19 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
                   },
                   title: {
                       text: 'ESTIMATED ENERGY CONSUMPTION',
-                      align: 'left'
+                      align: 'left',
+                      margin: 20,
+                      style: {
+                            color: '#00A0B0',
+                            fontWeight: 'bold',
+                            fontSize: 15,
+                        }
                   },
                   xAxis: {
-                      categories: ['End Uses', 'Renewable Energy']
+                      categories: ['End Uses', 'Renewable Energy'],
+                      labels: {
+                        autoRotation: false
+                      }
                   },
                   yAxis: {
                       min: 0,
@@ -146,7 +161,7 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
                   },
                   plotOptions: {
                       column: {
-                              stacking: 'normal'
+                          stacking: 'normal'
                       },
                       series: {
                           borderWidth: 0

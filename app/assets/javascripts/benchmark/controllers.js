@@ -35,6 +35,10 @@ define(['angular'], function() {
     $scope.mainColumnWidth = "";
     $scope.propText = "Primary Building Use";
 
+    $scope.showBar = true;
+    $scope.showEnergy = true;
+    $scope.showSolar = true;
+
 
     if (window.matchMedia) {
 
@@ -197,6 +201,28 @@ define(['angular'], function() {
         }
     };
 
+    $scope.showPrescriptive = function(){
+        if($scope.showBar===false){
+                $scope.showBar = true;
+            } else {
+                $scope.showBar = false;
+            }
+    };
+    $scope.showEnergyRequirement = function(){
+        if($scope.showEnergy===false){
+                $scope.showEnergy = true;
+            } else {
+                $scope.showEnergy = false;
+            }
+    };
+    $scope.showSolarPlot = function(){
+        if($scope.showSolar===false){
+                $scope.showSolar = true;
+            } else {
+                $scope.showSolar = false;
+            }
+    };
+
     $scope.sample = [
       {
         "prescriptive_resource": 0,
@@ -277,11 +303,15 @@ define(['angular'], function() {
         $q.resolve($scope.futures).then(function (results) {
 
             $scope.solarResults = null;
+            $scope.endUses = null;
+            $scope.buildingRequirements = null;
 
             $scope.buildingRequirements = $scope.setBuildingRequirements(results);
-            console.log($scope.buildingRequirements);
 
-            $scope.solarResults = $scope.computeSolarResults(results);
+            $scope.solarResults = $scope.getPropResponseField(results,"pvwatts_system_details");
+            $scope.solarMonthly = $scope.solarResults.outputs;
+
+
             $scope.endUses = $scope.computeEndUses(results);
 
         });
@@ -363,37 +393,6 @@ define(['angular'], function() {
               "procured_norm": (prescriptive_requirements.prescriptive_re_procured / building_size * 1000)
         };
         return prescriptiveTable;
-    };
-    $scope.computeSolarResults = function(results){
-
-        var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-
-        var solarTable = {} ;
-        solarTable.monthly = [] ;
-
-        var solarResponse = $scope.getPropResponseField(results,"pvwatts_system_details");
-        var solarResults = solarResponse.outputs;
-
-
-        $scope.solarMonthly = solarResponse.outputs;
-
-        solarTable.file_id = solarResponse.station_info.solar_resource_file;
-        solarTable.city = solarResponse.station_info.city;
-        solarTable.state = solarResponse.station_info.state;
-
-        solarTable.dc_hours = solarResults.dc_monthly.reduce(add, 0);
-        solarTable.ac_hours = solarResults.ac_monthly.reduce(add, 0);
-
-        for (var i =0; i < solarResults.ac_monthly.length; i ++) {
-            solarTable.monthly.push([months[i],solarResults.ac_monthly[i],solarResults.dc_monthly[i]]);
-        }
-
-
-        solarTable.total = ["Total",solarTable.ac_hours,solarTable.dc_hours];
-
-        console.log(solarTable);
-        return solarTable;
-
     };
 
     $scope.computeEndUses = function(results){

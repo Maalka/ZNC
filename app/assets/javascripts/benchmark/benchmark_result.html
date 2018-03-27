@@ -28,30 +28,60 @@
 
 	<div class="ui padded sixteen column grid" style="margin-bottom:10px;">
 
-        <div class=" sixteen wide column page-break-after" style="padding:0px" ng-if="endUses"  >
-            <div bar end-uses="endUses" units="tableEUIUnits" style="width: 100%; height:400px'"></div>
+        <div class="ui basic sixteen wide column" ng-if="endUses">
+            <div class="ui sixteen wide grid">
+                <div class="sixteen wide column left aligned">
+                    <h3 class="ui header" style="padding-top: 1px;">
+                        <a href ng-click="showPrescriptive()"><i class="dropdown icon"></i>ESTIMATED BUILDING ENERGY CONSUMPTION</a>
+                    </h3>
+                </div>
+            </div>
         </div>
 
-		<div class=" teal sixteen wide column" ng-if="endUses">
+        <div class="sixteen wide column" style="padding:0px" ng-if="endUses && showBar===true"  >
+            <div bar end-uses="endUses" units="tableEUIUnits" style="width: 100%;"></div>
+        </div>
+
+		<div class=" teal sixteen wide column" ng-if="endUses && showBar===true">
 			<div ng-include src="'javascripts/benchmark/prescriptive_result.html'">Not Defined</div>
 		</div>
 
-		<div class=" teal sixteen wide column" ng-if="buildingRequirements && auxModel.approach === 'performance'">
-			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
-		</div>
-		<div class=" teal sixteen wide column" ng-if="buildingRequirements && auxModel.approach === 'prescriptive'">
-			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
-		</div>
-
-		<div class="sixteen wide column" style="margin-top:-10px;">
-		</div>
-
-        <div class=" sixteen wide column page-break-after" style="padding:0px" ng-if="solarMonthly"  >
-            <div line solar-monthly="solarMonthly" units="graphEnergyUnits" style="width: 100%; height:400px'"></div>
+        <div class="ui basic sixteen wide column" ng-if="buildingRequirements">
+            <div class="ui sixteen wide grid">
+                <div class="sixteen wide column left aligned">
+                    <h3 class="ui header" style="padding-top: 1px;">
+                        <a href ng-click="showEnergyRequirement()"><i class="dropdown icon"></i>RENEWABLE ENERGY REQUIREMENTS</a>
+                    </h3>
+                </div>
+            </div>
         </div>
 
-		<div class=" teal sixteen wide column" ng-if="solarResults">
-			<div ng-include src="'javascripts/benchmark/solar_result.html'">Not Defined</div>
+		<div class=" teal sixteen wide column" style="margin-bottom:10px;"
+             ng-if="buildingRequirements && auxModel.approach === 'performance' && showEnergy===true">
+			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
+		</div>
+		<div class=" teal sixteen wide column" style="margin-bottom:10px;"
+             ng-if="buildingRequirements && auxModel.approach === 'prescriptive' && showEnergy===true">
+			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
+		</div>
+
+
+        <div class="ui basic sixteen wide column" ng-if="solarMonthly">
+            <div class="ui sixteen wide grid">
+                <div class="sixteen wide column left aligned">
+                    <h3 class="ui header" style="padding-top: 1px;">
+                        <a href ng-click="showSolarPlot()"><i class="dropdown icon"></i>PVWATTS RESULTS</a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <div class=" sixteen wide column page-break-after" style="padding:0px" ng-if="solarMonthly  && showSolar===true"  >
+            <div line solar-monthly="solarMonthly" units="graphEnergyUnits" style="width: 100%;"></div>
+        </div>
+
+		<div class=" teal sixteen wide column" ng-if="solarResults && showSolar===true">
+			<div solar-result result="solarResults" units="tableEnergyUnits">Not Defined</div>
 		</div>
 	    <div class="one wide column" ng-if="!buildingRequirements">
 	    	<i class="arrow left icon" style="padding-top: 1px;"></i>

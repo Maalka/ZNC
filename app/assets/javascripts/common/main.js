@@ -4,6 +4,8 @@
 define(['angular', './services/helper', './services/playRoutes', './filters', './semantic', './popover_service',
     'angular-file-upload',
 	'./directives/benchmark_result_row',
+	'./directives/solar_result',
+	'./directives/energy_result',
 	'./directives/building_info',
 	'./directives/system_info',
 	'./directives/line',

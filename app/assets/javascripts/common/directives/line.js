@@ -36,29 +36,20 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
 
               var options = {
                   chart: {
-                    spacingTop: 0,
-                    spacingRight: 0,
-                    spacingBottom: 10,
-                    spacingLeft: 0,
-                    plotBorderWidth: 0,
-                      events: {
-                        'load': function () {
-                          loadSeries(chart);
-                        },
-                        beforePrint: function () {
-                            this.oldhasUserSize = this.hasUserSize;
-                            this.resetParams = [this.chartWidth, this.chartHeight, false];
-                            this.setSize(600, 400, false);
-                        },
-                        afterPrint: function () {
-                            this.setSize.apply(this, this.resetParams);
-                            this.hasUserSize = this.oldhasUserSize;
-                        }
-                      }
+                      spacingTop: 20,
+                      spacingRight: 10,
+                      spacingBottom: 30,
+                      spacingLeft: 10,
                   },
                   title: {
                           text: 'ANNUAL AC & DC PRODUCTION',
                           align: 'left',
+                          margin: 20,
+                          style: {
+                              color: '#00A0B0',
+                              fontWeight: 'bold',
+                              fontSize: 15,
+                          }
                       },
 
                       yAxis: {
