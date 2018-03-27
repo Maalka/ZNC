@@ -210,7 +210,7 @@ define(['angular'], function() {
           },
         "climate_zone": "1A",
         "file_id": "0-93738",
-        "reporting_units": "metric",
+        "reporting_units": "imperial",
         "prop_types": [
             {
             "building_type": "OfficeLarge",

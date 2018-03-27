@@ -123,7 +123,7 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
               plot();
             }
 
-            $scope.$watch("solarMonthly", function (br) {
+            $scope.$watch("buildingRequirments", function (br) {
 
               if (chart !== undefined) {
                 if (br !== undefined) {
@@ -133,7 +133,7 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
               }
             });
 
-            $scope.$watch("graphEnergyUnits", function (br) {
+            $scope.$watch("tableEUIUnits", function (br) {
 
               if (chart !== undefined) {
                 if (br !== undefined) {
