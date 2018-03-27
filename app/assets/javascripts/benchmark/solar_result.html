@@ -1,5 +1,5 @@
 
-<table class="ui basic inverted white table unstackable" style="font-size: 13px">
+<table class="ui basic inverted white table unstackable" style="padding-left: 0.5em; font-size: 13px">
 
     <tbody style="font-family: 'Open Sans', sans-serif;">
         <tr>
@@ -22,7 +22,7 @@
     </tbody>
 </table>
 
-<table class="ui basic inverted white table unstackable" style="margin-top:-20px;font-size: 13px;">
+<table class="ui basic inverted white table unstackable" style="margin-top:-20px;font-size: 13px;padding-left: 0.5em;">
 
     <tr>
         <td colspan="3">
@@ -41,6 +41,12 @@
             <td style="padding-left:20px">{{entry[0]}}</td>
             <td class = "center aligned">{{entry[1] | number : 0}}</td>
             <td class = "center aligned">{{entry[2] | number : 0}}</td>
+        </tr>
+
+        <tr  class="top aligned" style="font-size: 15px">
+            <td style="padding-left:20px"><b>{{solarResults.total[0]}}</b></td>
+            <td class = "center aligned"><b>{{solarResults.total[1] | number : 0}}</b></td>
+            <td class = "center aligned"><b>{{solarResults.total[2] | number : 0}}</b></td>
         </tr>
 
     </tbody>

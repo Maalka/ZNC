@@ -210,7 +210,7 @@ define(['angular'], function() {
           },
         "climate_zone": "1A",
         "file_id": "0-93738",
-        "reporting_units": "imperial",
+        "reporting_units": "metric",
         "prop_types": [
             {
             "building_type": "OfficeLarge",
@@ -384,7 +384,9 @@ define(['angular'], function() {
         for (var i =0; i < solarResults.ac_monthly.length; i ++) {
             solarTable.monthly.push([months[i],solarResults.ac_monthly[i],solarResults.dc_monthly[i]]);
         }
-        solarTable.monthly.push(["Total",solarTable.ac_hours,solarTable.dc_hours]);
+
+
+        solarTable.total = ["Total",solarTable.ac_hours,solarTable.dc_hours];
 
         console.log(solarTable);
         return solarTable;
