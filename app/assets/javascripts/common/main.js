@@ -6,7 +6,8 @@ define(['angular', './services/helper', './services/playRoutes', './filters', '.
 	'./directives/benchmark_result_row',
 	'./directives/building_info',
 	'./directives/system_info',
-	'./directives/graph',
+	'./directives/line',
+	'./directives/bar',
 	'./directives/required',
 	'./directives/files'
 	],

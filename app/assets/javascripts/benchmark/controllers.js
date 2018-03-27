@@ -374,6 +374,9 @@ define(['angular'], function() {
         var solarResponse = $scope.getPropResponseField(results,"pvwatts_system_details");
         var solarResults = solarResponse.outputs;
 
+
+        $scope.solarMonthly = solarResponse.outputs;
+
         solarTable.file_id = solarResponse.station_info.solar_resource_file;
         solarTable.city = solarResponse.station_info.city;
         solarTable.state = solarResponse.station_info.state;
@@ -481,11 +484,13 @@ define(['angular'], function() {
 
         if($scope.auxModel.reportingUnits==="imperial"){
             $scope.tableEnergyUnits="(kBtu)";
+            $scope.graphEnergyUnits="kBtu";
             $scope.tableBigEnergyUnits="MBtu/yr";
             $scope.tableEUIUnits="kBtu/ft²-yr";
             $scope.tableAreaUnits="(ft²)";
         }else {
             $scope.tableEnergyUnits="(kWh)";
+            $scope.graphEnergyUnits="kWh";
             $scope.tableBigEnergyUnits="MWh/yr";
             $scope.tableEUIUnits="kWh/m²-yr";
             $scope.tableAreaUnits="(m²)";

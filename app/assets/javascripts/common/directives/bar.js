@@ -8,7 +8,7 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
 
   var mod = angular.module('common.directives');
 
-  mod.directive('graph', [function() {
+  mod.directive('bar', [function() {
   // create the flag icon with anchor
 
       var round = function(x) { 
