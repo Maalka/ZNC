@@ -14,6 +14,7 @@ import play.api.Play
 import scala.concurrent.ExecutionContext.Implicits.global
 import java.io.InputStream
 
+import play.api.libs.json.Reads.min
 import play.api.libs.ws.WSResponse
 
 import scala.util.control.NonFatal
@@ -36,6 +37,14 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
   def getBuildingData: Future[List[ValidatedPropTypes]] = prescriptiveEUI.getValidatedPropList
   def getMetrics: Future[ValidatedConversionDetails] = metricConversion.getConversionMetrics(None)
 
+
+  val metricType: String = {
+    (result.head \ "metric" \ "metric_type").validate[String] match {
+      case s: JsSuccess[String] => s.get
+      case e: JsError => "site"
+    }
+  }
+
   def getPVarea:Future[Double] = {
     for {
       systems <- getPV
@@ -45,8 +54,8 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
   def getPVcapacity:Future[Double] = {
     for {
       systems <- getPV
-      convertedSize <- convertSize(systems.map(_.system_capacity).sum,"metric")
-    } yield convertedSize
+      capacity <- Future(systems.map(_.system_capacity).sum)
+    } yield capacity
   }
 
   def getSiteMetrics:Future[Map[String,Any]] = {
@@ -168,9 +177,9 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
 
   def getPrescriptiveTotalCarbon: Future[Energy] = {
     for {
-      prescriptiveTotalEnergy <- getPrescriptiveTotalCarbonIntensity
+      prescriptiveTotalCarbon <- getPrescriptiveTotalCarbonIntensity
       building_size <- prescriptiveEUI.getBuildingSize
-    } yield prescriptiveTotalEnergy * building_size
+    } yield prescriptiveTotalCarbon * building_size
   }
 
   def getPrescriptiveTotalSourceIntensity: Future[Energy] = {
@@ -229,70 +238,73 @@ case class ReportingUnits(reporting_units:String)
 
 
   def convertPrescriptive[T](distribution: T):Future[T]  = Future {
-    reportingUnits match {
-      case ("metric") => {
-        val c = energyMetricConstant / areaMetricConstant
-        distribution match {
-          case b:ElectricityDistribution => {
-            ElectricityDistribution(
-              b.elec_htg * c,
-              b.elec_clg * c,
-              b.elec_intLgt * c,
-              b.elec_extLgt * c,
-              b.elec_intEqp * c,
-              b.elec_extEqp * c,
-              b.elec_fans * c,
-              b.elec_pumps * c,
-              b.elec_heatRej * c,
-              b.elec_humid * c,
-              b.elec_heatRec * c,
-              b.elec_swh * c,
-              b.elec_refrg * c,
-              b.elec_gentor * c,
-              b.elec_net * c
-            )
+    metricType match {
+      case "carbon" => distribution.asInstanceOf[T]
+      case _ => reportingUnits match {
+        case ("metric") => {
+          val c = energyMetricConstant / areaMetricConstant
+          distribution match {
+            case b:ElectricityDistribution => {
+              ElectricityDistribution(
+                b.elec_htg * c,
+                b.elec_clg * c,
+                b.elec_intLgt * c,
+                b.elec_extLgt * c,
+                b.elec_intEqp * c,
+                b.elec_extEqp * c,
+                b.elec_fans * c,
+                b.elec_pumps * c,
+                b.elec_heatRej * c,
+                b.elec_humid * c,
+                b.elec_heatRec * c,
+                b.elec_swh * c,
+                b.elec_refrg * c,
+                b.elec_gentor * c,
+                b.elec_net * c
+              )
+            }
+            case b:NaturalGasDistribution => {
+              NaturalGasDistribution(
+                b.ng_htg * c,
+                b.ng_clg * c,
+                b.ng_intLgt * c,
+                b.ng_extLgt * c,
+                b.ng_intEqp * c,
+                b.ng_extEqp * c,
+                b.ng_fans * c,
+                b.ng_pumps * c,
+                b.ng_heatRej * c,
+                b.ng_humid * c,
+                b.ng_heatRec * c,
+                b.ng_swh * c,
+                b.ng_refrg * c,
+                b.ng_gentor * c,
+                b.ng_net * c
+              )
+            }
+            case b:EndUseDistribution => {
+              EndUseDistribution(
+                b.htg * c,
+                b.clg * c,
+                b.intLgt * c,
+                b.extLgt * c,
+                b.intEqp * c,
+                b.extEqp * c,
+                b.fans * c,
+                b.pumps * c,
+                b.heatRej * c,
+                b.humid * c,
+                b.heatRec * c,
+                b.swh * c,
+                b.refrg * c,
+                b.gentor * c,
+                b.net * c
+              )
+            }
           }
-          case b:NaturalGasDistribution => {
-            NaturalGasDistribution(
-              b.ng_htg * c,
-              b.ng_clg * c,
-              b.ng_intLgt * c,
-              b.ng_extLgt * c,
-              b.ng_intEqp * c,
-              b.ng_extEqp * c,
-              b.ng_fans * c,
-              b.ng_pumps * c,
-              b.ng_heatRej * c,
-              b.ng_humid * c,
-              b.ng_heatRec * c,
-              b.ng_swh * c,
-              b.ng_refrg * c,
-              b.ng_gentor * c,
-              b.ng_net * c
-            )
-          }
-          case b:EndUseDistribution => {
-            EndUseDistribution(
-              b.htg * c,
-              b.clg * c,
-              b.intLgt * c,
-              b.extLgt * c,
-              b.intEqp * c,
-              b.extEqp * c,
-              b.fans * c,
-              b.pumps * c,
-              b.heatRej * c,
-              b.humid * c,
-              b.heatRec * c,
-              b.swh * c,
-              b.refrg * c,
-              b.gentor * c,
-              b.net * c
-            )
-          }
-        }
-      }.asInstanceOf[T]
-      case _ => distribution.asInstanceOf[T]
+        }.asInstanceOf[T]
+        case _ => distribution.asInstanceOf[T]
+      }
     }
   }
 
@@ -358,8 +370,11 @@ case class ReportingUnits(reporting_units:String)
     }
   }
 
-
 }
+
+
+
+
 
 // These classes represent data that have been populated with defaults
 case class BuildingData(

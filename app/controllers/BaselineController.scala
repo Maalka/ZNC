@@ -517,9 +517,9 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
           Right(a)
         }
 
-        def solarTotal(ccEnergy:Double, ccIntensity:Double):Future[Double] = multipleFutures.map { r =>
+        def solarTotal:Future[Double] = multipleFutures.map { r =>
 
-          r.map{a => (a \ "outputs" \ "ac_annual").as[Double]}.sum * ccEnergy
+          r.map{a => (a \ "outputs" \ "ac_annual").as[Double]}.sum
 
         }
 
@@ -540,33 +540,29 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
 
         val performanceRequirements: Future[Map[String,Any]] = {
           for {
-            totalSite <- Baseline.getTotalSiteEnergy
             cc_energy <- Baseline.solarConversionEnergy
-            cc_intensity <- Baseline.solarConversionIntensity
-            e1 <- f1
-            pvTotal <- solarTotal(cc_energy, cc_intensity)
+            totalSite <- Baseline.getTotalSiteEnergy
+            pvTotal <- solarTotal
           } yield {
             Map(
-              "re_rec_onsite_pv" -> pvTotal / 1000,
-              "building_energy" -> MegawattHours(totalSite to MegawattHours).value,
-              "re_total_needed" -> MegawattHours(totalSite to MegawattHours).value,
-              "re_procured" -> Math.max(MegawattHours(totalSite to MegawattHours).value - (pvTotal/1000),0.0)
+              "re_rec_onsite_pv" -> pvTotal / 1000 * cc_energy,
+              "building_energy" -> MegawattHours(totalSite to MegawattHours).value * cc_energy,
+              "re_total_needed" -> MegawattHours(totalSite to MegawattHours).value * cc_energy,
+              "re_procured" -> Math.max(MegawattHours(totalSite to MegawattHours).value - (pvTotal/1000),0.0) * cc_energy
             )
           }
         }
         val prescriptiveRequirements: Future[Map[String,Any]] = {
           for {
-            totalPrescriptive <- Baseline.getPrescriptiveTotalSite
             cc_energy <- Baseline.solarConversionEnergy
-            cc_intensity <- Baseline.solarConversionIntensity
-            e1 <- f1
-            pvTotal <- solarTotal(cc_energy, cc_intensity)
+            totalPrescriptive <- Baseline.getPrescriptiveTotalSite
+            pvTotal <- solarTotal
           } yield {
             Map(
-              "re_rec_onsite_pv" -> pvTotal / 1000,
-              "prescriptive_building_energy" -> MegawattHours(totalPrescriptive to MegawattHours).value,
-              "prescriptive_re_total_needed" -> MegawattHours(totalPrescriptive to MegawattHours).value,
-              "prescriptive_re_procured" -> Math.max(MegawattHours(totalPrescriptive to MegawattHours).value - (pvTotal/1000),0.0)
+              "re_rec_onsite_pv" -> pvTotal / 1000 * cc_energy,
+              "prescriptive_building_energy" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
+              "prescriptive_re_total_needed" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
+              "prescriptive_re_procured" -> Math.max(MegawattHours(totalPrescriptive to MegawattHours).value - (pvTotal/1000),0.0) * cc_energy
               )
           }
         }
@@ -639,7 +635,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
 
           "pv_array",
           "pv_area",
-          "pv_capacity",
+          "pv_capacity_kW",
           "pvwatts_errors",
           "pvwatts_warnings",
           "pvwatts_system_details",

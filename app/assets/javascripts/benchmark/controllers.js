@@ -328,7 +328,7 @@ define(['angular'], function() {
 
         var performanceTable = {
               "pv_area": ($scope.getPropResponseField(results,"pv_area")),
-              "pv_capacity": ($scope.getPropResponseField(results,"pv_capacity")),
+              "pv_capacity": ($scope.getPropResponseField(results,"pv_capacity_kW")),
               "building_energy": (performance_requirements.building_energy),
               "required": (performance_requirements.re_total_needed),
               "pv_potential": (performance_requirements.re_rec_onsite_pv),
@@ -351,7 +351,7 @@ define(['angular'], function() {
 
         var prescriptiveTable = {
               "pv_area": ($scope.getPropResponseField(results,"pv_area")),
-              "pv_capacity": ($scope.getPropResponseField(results,"pv_capacity")),
+              "pv_capacity": ($scope.getPropResponseField(results,"pv_capacity_kW")),
               "building_energy": (prescriptive_requirements.prescriptive_building_energy),
               "required": (prescriptive_requirements.prescriptive_re_total_needed),
               "pv_potential": (prescriptive_requirements.re_rec_onsite_pv),
