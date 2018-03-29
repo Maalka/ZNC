@@ -16,6 +16,11 @@ table.rimas {
     font-size:6 !important;
 }
 
+a.drop {
+    color: #214b75 !important;
+    font-weight: 900 !important;
+}
+
 table.rimas td {
     height:22px !important;
 }

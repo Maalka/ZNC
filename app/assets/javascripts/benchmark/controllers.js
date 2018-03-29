@@ -223,7 +223,7 @@ define(['angular'], function() {
             }
     };
 
-    $scope.sample = [
+    /*$scope.sample = [
       {
         "prescriptive_resource": 0,
         "pv_defaults_resource": 0,
@@ -289,7 +289,7 @@ define(['angular'], function() {
           }
         ]
       }
-    ];
+    ];*/
 
 
 
@@ -298,7 +298,7 @@ define(['angular'], function() {
 
         $log.info($scope.submitArray);
 
-        $scope.futures = benchmarkServices.getZNCMetrics($scope.sample);
+        $scope.futures = benchmarkServices.getZNCMetrics($scope.submitArray);
 
         $q.resolve($scope.futures).then(function (results) {
 
@@ -310,6 +310,7 @@ define(['angular'], function() {
 
             $scope.solarResults = $scope.getPropResponseField(results,"pvwatts_system_details");
             $scope.solarMonthly = $scope.solarResults.outputs;
+            $scope.prescriptiveRequirements = $scope.computePrescriptiveRequirements(results);
 
 
             $scope.endUses = $scope.computeEndUses(results);
@@ -346,6 +347,7 @@ define(['angular'], function() {
         for (var i =0; i < building_sub_types.length; i ++) {
             size.push(building_sub_types[i].floor_area);
         }
+
         return size.reduce(add, 0);
     };
 
@@ -369,6 +371,8 @@ define(['angular'], function() {
               "pv_potential_norm": (performance_requirements.re_rec_onsite_pv / building_size * 1000),
               "procured_norm": (performance_requirements.re_procured / building_size * 1000)
         };
+
+
         return performanceTable;
     };
 
@@ -392,6 +396,9 @@ define(['angular'], function() {
               "pv_potential_norm": (prescriptive_requirements.re_rec_onsite_pv / building_size * 1000),
               "procured_norm": (prescriptive_requirements.prescriptive_re_procured / building_size * 1000)
         };
+
+        console.log(prescriptiveTable);
+        console.log(building_size);
         return prescriptiveTable;
     };
 
@@ -454,7 +461,6 @@ define(['angular'], function() {
             100,
         ]);
 
-        console.log(endUsesTable);
         return endUsesTable;
 
     };
@@ -465,7 +471,7 @@ define(['angular'], function() {
         }
     };
 
-    $scope.$watch("auxModel.reportingUnits", function (value) {
+    $scope.$watch("auxModel.reporting_units", function (value) {
         if (value === undefined) {
             return;
         }
@@ -481,7 +487,7 @@ define(['angular'], function() {
         }
         $scope.forms.hasValidated = true; /// only check the field errors if this form has attempted to validate.
 
-        if($scope.auxModel.reportingUnits==="imperial"){
+        if($scope.auxModel.reporting_units==="imperial"){
             $scope.tableEnergyUnits="(kBtu)";
             $scope.graphEnergyUnits="kBtu";
             $scope.tableBigEnergyUnits="MBtu/yr";

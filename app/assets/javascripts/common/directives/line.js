@@ -3,7 +3,7 @@
  * changes form inputs based on property type
  * and supports multiple property types
  */
-define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
+define(['angular','highcharts', './main'], function(angular) {
   'use strict';
 
   var mod = angular.module('common.directives');
@@ -45,6 +45,7 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
                           text: 'ANNUAL AC & DC PRODUCTION',
                           align: 'left',
                           margin: 20,
+                          x:15,
                           style: {
                               color: '#00A0B0',
                               fontWeight: 'bold',
@@ -62,10 +63,9 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
                               'Jul', 'Aug', 'Oct', 'Sep', 'Nov', 'Dec']
                       }],
                       legend: {
+                          enabled:true,
                           align: 'center',
                           verticalAlign: 'bottom',
-                          x: 0,
-                          y: 0
                       },
 
                       plotOptions: {
@@ -80,10 +80,12 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
                       series: [{
                           name: 'DC',
                           color: '#359BB4',
+                          showInLegend: true,
                           data:  $scope.solarMonthly.dc_monthly
                       }, {
                           name: 'AC',
                           color: '#1f2c5c',
+                          showInLegend: true,
                           data: $scope.solarMonthly.ac_monthly
                       }],
 
@@ -109,6 +111,7 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
                   chart = this;
                 });
               }, 0);
+
             };
             if ($scope.solarMonthly !== undefined) {
               plot();

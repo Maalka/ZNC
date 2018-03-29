@@ -3,7 +3,7 @@
  * changes form inputs based on property type
  * and supports multiple property types
  */
-define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
+define(['angular','highcharts', './main'], function(angular) {
   'use strict';
 
   var mod = angular.module('common.directives');
@@ -15,7 +15,8 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
           restrict: 'A',
           scope: {
             endUses: '=endUses',
-            units: '=units'
+            units: '=units',
+            prescriptiveRequirements: '=prescriptiveRequirements'
           },
           controller: ["$scope", "$element","$timeout", function ($scope, $element, $timeout) {
             var chart;
@@ -31,66 +32,23 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
 
             };
 
+            $scope.getEndUse = function(key){
+                for(var i = 0; i < $scope.endUses.endUses.length; i++ ) {
+                    if($scope.endUses.endUses[i][0] === key) {
+                        return $scope.endUses.endUses[i][3];
+                    }
+                }
+            };
+
+            $scope.getOtherEndUses = function(){
+                var sumOther = 0;
+                for(var j = 0; j < $scope.endUses.endUsesOther.length; j++ ) {
+                    sumOther = sumOther + $scope.endUses.endUsesOther[j][3];
+                }
+                return sumOther;
+            };
 
             var plot = function () {
-
-
-                /*(function(H) {
-                    var merge = H.merge;
-
-                    H.wrap(H.Legend.prototype, 'getAllItems', function() {
-                      var allItems = [],
-                        chart = this.chart,
-                        options = this.options,
-                        legendID = options.legendID;
-
-                      H.each(chart.series, function(series) {
-                        if (series) {
-                          var seriesOptions = series.options;
-
-                          // use points or series for the legend item depending on legendType
-                          if (!isNaN(legendID) && (seriesOptions.legendID === legendID)) {
-                            allItems = allItems.concat(
-                              series.legendItems ||
-                              (seriesOptions.legendType === 'point' ?
-                                series.data :
-                                series)
-                            );
-                          }
-                        }
-                      });
-
-                      return allItems;
-                    });
-
-                    H.wrap(H.Chart.prototype, 'render', function(p) {
-                      var chart = this,
-                        chartOptions = chart.options;
-
-                      chart.firstLegend = new H.Legend(chart, merge(chartOptions.legend, chartOptions.firstLegend, {
-                        legendID: 0
-                      }));
-
-                      chart.secondLegend = new H.Legend(chart, merge(chartOptions.legend, chartOptions.secondLegend, {
-                        legendID: 1
-                      }));
-
-                      p.call(this);
-                    });
-
-                    H.wrap(H.Chart.prototype, 'redraw', function(p, r, a) {
-                      var chart = this;
-
-                      p.call(chart, r, a);
-
-                      chart.firstLegend.render();
-                      chart.secondLegend.render();
-                    });
-
-                    H.wrap(H.Legend.prototype, 'positionItem', function(p, item) {
-                      p.call(this, item);
-                    });
-                })(highcharts);*/
 
                 var options = {
                   chart: {
@@ -134,6 +92,7 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
                       text: 'ESTIMATED ENERGY CONSUMPTION',
                       align: 'left',
                       margin: 20,
+                      x:15,
                       style: {
                             color: '#00A0B0',
                             fontWeight: 'bold',
@@ -150,7 +109,7 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
                       min: 0,
                       max: 70,
                       title: {
-                          text: 'kBtu/ft2-yr'
+                          text: $scope.units
                       },
                   },
                   tooltip: {
@@ -171,55 +130,55 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
                       {
                           name: 'Heating',
                           color: '#f88b50',
-                          data: [[0,5]],
+                          data: [[0,$scope.getEndUse("Heating")]],
                           legendID: 0,
                       },
                       {
                           name: 'Cooling',
                           color: '#9bd9fd',
-                          data: [[0,5]],
+                          data: [[0,$scope.getEndUse("Cooling")]],
                                     legendID: 0,
                       },
                       {
                           name: 'Fans',
                           color: '#B15679',
-                          data: [[0,2]],
+                          data: [[0,$scope.getEndUse("Fans")]],
                           legendID: 0,
                       },
                       {
                           name: 'Interior Lighting',
                           color: '#facd6f',
-                          data: [[0,10]],
+                          data: [[0,$scope.getEndUse("Interior Lighting")]],
                           legendID: 0,
                       },
                       {
                           name: 'Plug Loads',
                           color: '#2f4598',
-                          data: [[0,8]],
+                          data: [[0,$scope.getEndUse("Plug Loads")]],
                           legendID: 0,
                       },
                       {
                           name: 'Service Hot Water',
                           color: '#06a1f9',
-                          data: [[0,6]],
+                          data: [[0,$scope.getEndUse("Service Hot Water")]],
                           legendID: 0,
                       },
                       {
                           name: 'Other',
                           color: '#7f6fb1',
-                          data: [[0,15]],
+                          data: [[0,$scope.getOtherEndUses()]],
                           legendID: 0,
                       },
                       {
                           name: 'On site',
                           color: '#398371',
-                          data: [[1,18]],
+                          data: [[1,$scope.prescriptiveRequirements.pv_potential_norm]],
                           legendID: 1,
                       },
                       {
                           name: 'Off site',
                           color: '#b0cdc6',
-                          data: [[1,33]],
+                          data: [[1,$scope.prescriptiveRequirements.procured_norm]],
                           legendID: 1,
                       }
                   ]
@@ -241,7 +200,23 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
               if (chart !== undefined) {
                 if (br !== undefined) {
                   loadSeries(chart);
+                }
+              }
+            });
 
+            $scope.$watch("prescriptiveRequirements", function (br) {
+
+              if (chart !== undefined) {
+                if (br !== undefined) {
+                  loadSeries(chart);
+                }
+              }
+            });
+            $scope.$watch("auxModel.reportingUnits", function (br) {
+
+              if (chart !== undefined) {
+                if (br !== undefined) {
+                  loadSeries(chart);
                 }
               }
             });
@@ -251,7 +226,6 @@ define(['angular','highcharts', 'maalkaflags', './main'], function(angular) {
               if (chart !== undefined) {
                 if (br !== undefined) {
                   loadSeries(chart);
-
                 }
               }
             });

@@ -34,10 +34,18 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
   def pVWattsResponse: Future[JsValue] = nrel_client.makeWsRequest(Seq.empty[(String, String)])
 
   def getBuildingEnergyList: Future[EnergyList] = submittedEnergy.getSiteEnergyList
-  def getBuildingData: Future[List[ValidatedPropTypes]] = prescriptiveEUI.getValidatedPropList
   def getMetrics: Future[ValidatedConversionDetails] = metricConversion.getConversionMetrics(None)
 
+  def getBuildingData: Future[List[ValidatedPropTypes]] = {
 
+    for {
+      propList <- prescriptiveEUI.getValidatedPropList
+      convertedProps <- Future.sequence(propList.map(convertPropType(_)))
+    } yield {
+      println(convertedProps)
+      convertedProps
+    }
+  }
   val metricType: String = {
     (result.head \ "metric" \ "metric_type").validate[String] match {
       case s: JsSuccess[String] => s.get
@@ -368,6 +376,36 @@ case class ReportingUnits(reporting_units:String)
         }
       }
     }
+  }
+
+
+  def convertPropType(prop:ValidatedPropTypes):Future[ValidatedPropTypes] = Future{
+
+    var floorArea = {
+      prop.floor_area_units match {
+        case "ftSQ" => {
+          reportingUnits match {
+            case "imperial" => prop.floor_area
+            case "metric" => areaMetricUnit(prop.floor_area)
+          }
+        }
+        case "mSQ" => {
+          reportingUnits match {
+            case "imperial" => areaImperialUnit(prop.floor_area)
+            case "metric" => prop.floor_area
+          }
+        }
+      }
+    }
+
+    var floorAreaUnits = {
+      reportingUnits match {
+        case "imperial" => "ftSQ"
+        case "metric" => "mSQ"
+      }
+    }
+  println(floorArea,floorAreaUnits, reportingUnits)
+  ValidatedPropTypes(prop.building_type, floorArea,floorAreaUnits)
   }
 
 }

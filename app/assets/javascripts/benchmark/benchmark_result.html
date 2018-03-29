@@ -11,12 +11,12 @@
 		<div class="right aligned eleven wide column">
 			<form class="ui form " ng-class="{'error': !forms.baselineForm.$valid}">
 				<div class="ui radio checkbox">
-					<input type="radio" id="project-reporting-metric" ng-model="auxModel.reportingUnits"
+					<input type="radio" id="project-reporting-metric" ng-model="auxModel.reporting_units"
 						   value='metric'>
 					<label for="project-reporting-metric">metric</label>
 				</div>
 				<div class="ui radio checkbox">
-					<input type="radio" id="project-reporting-imperial" ng-model="auxModel.reportingUnits" ng-init="auxModel.reportingUnits='imperial'"
+					<input type="radio" id="project-reporting-imperial" ng-model="auxModel.reporting_units" ng-init="auxModel.reporting_units='imperial'"
 						   value='imperial'>
 					<label for='project-reporting-imperial'>imperial</label>
 				</div>
@@ -32,14 +32,14 @@
             <div class="ui sixteen wide grid">
                 <div class="sixteen wide column left aligned">
                     <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;">
-                        <a href ng-click="showPrescriptive()"><i class="dropdown icon"></i>ESTIMATED BUILDING ENERGY CONSUMPTION</a>
+                        <a href class="drop" ng-click="showPrescriptive()"><i class="dropdown icon"></i>ESTIMATED BUILDING ENERGY CONSUMPTION</a>
                     </h3>
                 </div>
             </div>
         </div>
 
         <div class="sixteen wide column" ng-if="endUses && showBar===true"  >
-            <div bar end-uses="endUses" units="tableEUIUnits" style="width: 100%;"></div>
+            <div bar prescriptive-requirements="prescriptiveRequirements" end-uses="endUses" units="tableEUIUnits" style="width: 100%;"></div>
         </div>
 
 		<div class=" teal sixteen wide column" ng-if="endUses && showBar===true">
@@ -50,7 +50,7 @@
             <div class="ui sixteen wide grid">
                 <div class="sixteen wide column left aligned">
                     <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;">
-                        <a href ng-click="showEnergyRequirement()"><i class="dropdown icon"></i>RENEWABLE ENERGY REQUIREMENTS</a>
+                        <a href class="drop" ng-click="showEnergyRequirement()"><i class="dropdown icon"></i>RENEWABLE ENERGY REQUIREMENTS</a>
                     </h3>
                 </div>
             </div>
@@ -70,14 +70,14 @@
             <div class="ui sixteen wide grid">
                 <div class="sixteen wide column left aligned">
                     <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;">
-                        <a href ng-click="showSolarPlot()"><i class="dropdown icon"></i>PVWATTS RESULTS</a>
+                        <a href class="drop" ng-click="showSolarPlot()"><i class="dropdown icon"></i>PVWATTS RESULTS</a>
                     </h3>
                 </div>
             </div>
         </div>
 
-        <div class=" sixteen wide column page-break-after" style="padding:0px" ng-if="solarMonthly  && showSolar===true"  >
-            <div line solar-monthly="solarMonthly" units="graphEnergyUnits" style="width: 100%;"></div>
+        <div class=" sixteen wide column page-break-after" ng-if="solarMonthly  && showSolar===true"  >
+            <div line solar-monthly="solarMonthly" units="graphEnergyUnits"></div>
         </div>
 
 		<div class=" teal sixteen wide column" ng-if="solarResults && showSolar===true">
