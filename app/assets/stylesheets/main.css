@@ -8,6 +8,47 @@ input.small {
 	width: 8rem !important;
 }
 
+
+table.rimas {
+    padding-left:.5em !important;
+    padding-top:5px !important;
+    font-family: 'Open Sans', sans-serif !important;
+    font-size:6 !important;
+}
+
+table.rimas td {
+    height:22px !important;
+}
+
+table.rimas td.halfspace {
+    padding-left: 15px !important;
+}
+
+table.rimas td.onespace {
+    padding-left: 30px !important;
+}
+
+table.rimas td.twospace {
+    padding-left: 65px !important;
+    height: 15px;
+}
+table.rimas td.smallheight {
+    height: 10px !important;
+}
+
+
+table.rimas td.right {
+    text-align: right !important;
+}
+
+table.rimas td.center {
+    text-align: center !important;
+}
+
+table.rimas td.space {
+    height: 15px !important;
+}
+
 .sup {
     vertical-align: super;
     font-size: smaller;

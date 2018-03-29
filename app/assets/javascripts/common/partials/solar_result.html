@@ -1,52 +1,70 @@
 
-<table class="ui basic inverted white table unstackable" style="padding-left: 0.5em; font-size: 13px">
+<table class="rimas"style="margin-top:5px">
 
-    <tbody style="font-family: 'Open Sans', sans-serif;">
+    <tbody>
         <tr>
-            <td class="seven wide" style="padding-left:20px";>FileID</td>
-            <td colspan=2 class="right aligned five wide">{{solarResults.file_id || "N/A"}}</td>
-            <td class="right aligned"></td>
+            <td class="onespace" style="width:40%">FileID</td>
+            <td class="right" style="width:30%">{{solarResults.file_id || "N/A"}}</td>
+            <td style="width:15%"></td>
         </tr>
         <tr>
-            <td class="seven wide" style="padding-left:20px";>City</td>
-            <td colspan=2 class="right aligned">{{solarResults.city || "N/A"}}</td>
+            <td class="onespace">City</td>
+            <td class="right">{{solarResults.city || "N/A"}}</td>
         </tr>
         <tr>
-            <td class="seven wide" style="padding-left:20px";>State</td>
-            <td colspan=2 class="right aligned">{{solarResults.state || "N/A"}}</td>
+            <td class="onespace">State</td>
+            <td class="right">{{solarResults.state || "N/A"}}</td>
         </tr>
         <tr>
-            <td class="seven wide" style="padding-left:20px";>FTE Solar Hours (kWh)</td>
-            <td colspan=2 class="right aligned">{{solarResults.ac_hours  | number : 0}}</td>
+            <td class="onespace">FTE Solar Hours (kWh)</td>
+            <td class="right">{{solarResults.ac_hours  | number : 0}}</td>
         </tr>
     </tbody>
 </table>
 
-<table class="ui basic inverted white table unstackable" style="margin-top:-20px;font-size: 13px;padding-left: 0.5em;">
-
+<table class="ui basic inverted white table unstackable" style="margin-top:-5px">
     <tr>
-        <td colspan="3">
+        <td colspan="4">
             <hr>
         </td>
     </tr>
+</table>
 
-    <tbody style="font-family: 'Open Sans', sans-serif;">
-        <tr class="bottom aligned">
-            <td class="one wide"></td>
-            <td class = "center aligned two wide"><b>AC Production</b><br>{{tableEnergyUnits}}</td>
-            <td class = "center aligned two wide"><b>DC Production</b><br>{{tableEnergyUnits}}</td>
+
+<table class="rimas" style="margin-top:-10px">
+
+
+    <tbody>
+
+        <tr class="bottom aligned one">
+            <td class="onespace" style="width:20%"></td>
+            <td class = "center" style="width:35%;"><b>AC Production</b><br>{{tableEnergyUnits}}</td>
+            <td class = "center" style="width:35%;"><b>DC Production</b><br>{{tableEnergyUnits}}</td>
+            <td style="width:10%"></td>
+        </tr>
+
+        <tr>
+            <td class="space"></td>
         </tr>
 
         <tr  class="top aligned" ng-repeat="entry in solarResults.monthly">
-            <td style="padding-left:20px">{{entry[0]}}</td>
-            <td class = "center aligned">{{entry[1] | number : 0}}</td>
-            <td class = "center aligned">{{entry[2] | number : 0}}</td>
+            <td class="onespace">{{entry[0]}}</td>
+            <td class = "center">{{entry[1] | number : 0}}</td>
+            <td class = "center">{{entry[2] | number : 0}}</td>
         </tr>
 
-        <tr  class="top aligned" style="font-size: 15px">
-            <td style="padding-left:20px"><b>{{solarResults.total[0]}}</b></td>
-            <td class = "center aligned"><b>{{solarResults.total[1] | number : 0}}</b></td>
-            <td class = "center aligned"><b>{{solarResults.total[2] | number : 0}}</b></td>
+        <tr>
+            <td class="space"></td>
+        </tr>
+
+        <tr class="top aligned">
+            <td class="onespace"><b>{{solarResults.total[0]}}</b></td>
+            <td class = "center"><b>{{solarResults.total[1] | number : 0}}</b></td>
+            <td class = "center"><b>{{solarResults.total[2] | number : 0}}</b></td>
+        </tr>
+
+        <tr>
+            <td class="space"></td>
         </tr>
 
     </tbody>
