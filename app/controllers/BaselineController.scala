@@ -616,6 +616,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
           Baseline.getPV.map(api(_)).recover { case NonFatal(th) => apiRecover(th) } ,
           Baseline.getPVarea.map(api(_)).recover { case NonFatal(th) => apiRecover(th) } ,
           Baseline.getPVcapacity.map(api(_)).recover { case NonFatal(th) => apiRecover(th) } ,
+
           solar_errors.recover { case NonFatal(th) => apiRecover(th) } ,
           solar_warnings.recover { case NonFatal(th) => apiRecover(th) } ,
           merged.recover { case NonFatal(th) => apiRecover(th) },

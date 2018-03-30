@@ -66,7 +66,7 @@
 		</div>
 
 
-        <div class="ui basic sixteen wide column" ng-if="solarMonthly">
+        <div class="ui basic sixteen wide column" ng-if="buildingRequirements && solarMonthly">
             <div class="ui sixteen wide grid">
                 <div class="sixteen wide column left aligned">
                     <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;">
@@ -76,7 +76,7 @@
             </div>
         </div>
 
-        <div class=" sixteen wide column page-break-after" ng-if="solarMonthly  && showSolar===true"  >
+        <div class=" sixteen wide column page-break-after" ng-if="buildingRequirements && solarMonthly  && showSolar===true"  >
             <div line solar-monthly="solarMonthly" units="graphEnergyUnits"></div>
         </div>
 

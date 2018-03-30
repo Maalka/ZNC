@@ -9,7 +9,6 @@ define(['angular','highcharts', './main'], function(angular) {
   var mod = angular.module('common.directives');
 
   mod.directive('bar', [function() {
-  // create the flag icon with anchor
 
       return {
           restrict: 'A',
@@ -35,7 +34,11 @@ define(['angular','highcharts', './main'], function(angular) {
             $scope.getEndUse = function(key){
                 for(var i = 0; i < $scope.endUses.endUses.length; i++ ) {
                     if($scope.endUses.endUses[i][0] === key) {
-                        return $scope.endUses.endUses[i][3];
+                        if($scope.endUses.endUses[i][3] === null){
+                            return 0.0;
+                        }else {
+                            return $scope.endUses.endUses[i][3];
+                        }
                     }
                 }
             };
@@ -43,7 +46,9 @@ define(['angular','highcharts', './main'], function(angular) {
             $scope.getOtherEndUses = function(){
                 var sumOther = 0;
                 for(var j = 0; j < $scope.endUses.endUsesOther.length; j++ ) {
-                    sumOther = sumOther + $scope.endUses.endUsesOther[j][3];
+                    if($scope.endUses.endUsesOther[j][3] !== null){
+                        sumOther = sumOther + $scope.endUses.endUsesOther[j][3];
+                    }
                 }
                 return sumOther;
             };
@@ -107,13 +112,14 @@ define(['angular','highcharts', './main'], function(angular) {
                   },
                   yAxis: {
                       min: 0,
-                      max: 70,
+                      max: $scope.prescriptiveRequirements.building_energy_norm + 20,
                       title: {
                           text: $scope.units
                       },
                   },
                   tooltip: {
-                      shared: false
+                      shared: true,
+                      enabled: true
                   },
                   credits: {
                       enabled: false
@@ -192,6 +198,7 @@ define(['angular','highcharts', './main'], function(angular) {
               }, 0);
             };
             if ($scope.endUses !== undefined) {
+                console.log($scope.endUses);
               plot();
             }
 

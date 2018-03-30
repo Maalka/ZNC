@@ -302,9 +302,7 @@ define(['angular'], function() {
 
         $q.resolve($scope.futures).then(function (results) {
 
-            $scope.solarResults = null;
-            $scope.endUses = null;
-            $scope.buildingRequirements = null;
+
 
             $scope.buildingRequirements = $scope.setBuildingRequirements(results);
 
@@ -319,6 +317,7 @@ define(['angular'], function() {
     };
 
     $scope.setBuildingRequirements = function(results){
+
 
         if($scope.auxModel.approach === "performance"){
                 return $scope.computePerformanceRequirements(results);
@@ -397,8 +396,6 @@ define(['angular'], function() {
               "procured_norm": (prescriptive_requirements.prescriptive_re_procured / building_size * 1000)
         };
 
-        console.log(prescriptiveTable);
-        console.log(building_size);
         return prescriptiveTable;
     };
 
@@ -466,8 +463,14 @@ define(['angular'], function() {
     };
 
     $scope.submitErrors = function () {
-        for (var i = 0; i < $scope.forms.baselineForm.$error.required.length; i++){
-            $log.info($scope.forms.baselineForm.$error.required[i].$name);
+        if($scope.forms.baselineForm.$error.required){
+            for (var i = 0; i < $scope.forms.baselineForm.$error.required.length; i++){
+                $log.info($scope.forms.baselineForm.$error.required[i].$name);
+                console.log($scope.forms.baselineForm.$error.required[i].$name);
+            }
+            $scope.performanceError = false;
+        } else {
+            $scope.performanceError = true;
         }
     };
 
@@ -482,6 +485,11 @@ define(['angular'], function() {
     });
 
     $scope.submit = function () {
+
+        $scope.solarResults = null;
+        $scope.endUses = null;
+        $scope.buildingRequirements = null;
+
         if($scope.forms.baselineForm === undefined) {
             return;
         }
@@ -567,20 +575,28 @@ define(['angular'], function() {
                 $scope.auxModel.energies = getFullEnergyList();
             }
 
-            $scope.auxModel.prop_types = getPropTypes();
-            $scope.auxModel.pv_data = getPVData();
+            if($scope.auxModel.approach === 'performance' && $scope.auxModel.energies!==null || $scope.auxModel.approach === 'prescriptive'){
+                $scope.auxModel.prop_types = getPropTypes();
+                $scope.auxModel.pv_data = getPVData();
 
-            $scope.submitArray.push($scope.auxModel);
-            $scope.computeBenchmarkResult();
+                $scope.submitArray.push($scope.auxModel);
+                $scope.computeBenchmarkResult();
+            } else {
+                $scope.displayErrors();
+            }
+
 
         }else {
-            $scope.submitErrors();
-            $scope.benchmarkResult = null;
-            $scope.buildingRequirements = null;
-            $scope.computeBenchmarkResult();
+            $scope.displayErrors();
         }
 
     };
+
+        $scope.displayErrors = function () {
+            $scope.submitErrors();
+            $scope.benchmarkResult = null;
+            $scope.buildingRequirements = null;
+        };
 
         $scope.geographicProperties = {
                 country:

@@ -404,7 +404,7 @@ case class ReportingUnits(reporting_units:String)
         case "metric" => "mSQ"
       }
     }
-  println(floorArea,floorAreaUnits, reportingUnits)
+
   ValidatedPropTypes(prop.building_type, floorArea,floorAreaUnits)
   }
 
