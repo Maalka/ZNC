@@ -118,8 +118,7 @@ define(['angular','highcharts', './main'], function(angular) {
                       },
                   },
                   tooltip: {
-                      shared: true,
-                      enabled: true
+                      shared: false,
                   },
                   credits: {
                       enabled: false

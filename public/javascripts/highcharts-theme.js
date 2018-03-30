@@ -9,24 +9,6 @@ define(['highcharts', 'highcharts-more'], function(angular, nvd3) {
             },
             credits: {
                 enabled: false
-            },
-            plotOptions: {
-                area: {
-                    showInLegend: false,
-                    enableMouseTracking: false
-                },
-                column: {
-                    showInLegend: false,
-                    enableMouseTracking: false
-                },
-                line: {
-                    showInLegend: false,
-                    enableMouseTracking: false
-                },
-                flag: {
-                    showInLegend: false,
-                    enableMouseTracking: false
-                }
             }
         };
 
