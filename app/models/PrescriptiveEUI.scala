@@ -351,8 +351,8 @@ case class PrescriptiveValues(parameters:JsValue) {
     val floorArea:Double = propDesc.floor_area match {
       case Some(a: Double) => {
         units match {
-          case "mSQ" => (Area((a, "mSQ")).get to SquareFeet)
-          case "ftSQ" => (Area((a, "ftSQ")).get to SquareFeet)
+          case "mSQ" => SquareMeters(a) to SquareFeet
+          case "ftSQ" => SquareFeet(a).value
           case _ => throw new Exception("Floor Area Units Must be mSQ or ftSQ! ")
         }
       }

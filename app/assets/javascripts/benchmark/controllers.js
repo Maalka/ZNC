@@ -16,21 +16,16 @@ define(['angular'], function() {
   var DashboardCtrl = function($rootScope, $scope, $window, $sce, $timeout, $q, $log, benchmarkServices) {
 
     $rootScope.includeHeader = maalkaIncludeHeader;
-    $rootScope.pageTitle = "2030 Baseline";
-    //The model that will be submitted for analysis
-    $scope.auxModel = {};
-    //The table of energy information input by user, default to empty
-    $scope.energies = [{}, {}];
-    $scope.sold = [{'renewableType': {id:"grid",name:"Sold"}}];
+    $rootScope.pageTitle = "ZNC Tool";
 
-    $scope.renewableEnergies = [{}, {}];
-    //For displaying user-input energy entries after having been saved
-    $scope.propList = [];
+
+    $scope.auxModel = {};
+    $scope.tempModel = {};
+    $scope.energies = [{}, {}];
+    $scope.pvList = [{id:0,name:"PV SYSTEM",showDivider:false}];
+    $scope.pvCounter = 1;
 
     $scope.benchmarkResult = null;
-    $scope.lacksDD = false;
-    $scope.hasOnSite = false;
-    $scope.hasOffSite = false;
 
     $scope.propOutputList = [];
     $scope.tableEUIUnits = null;
@@ -39,10 +34,11 @@ define(['angular'], function() {
     $scope.propTypes = [];
     $scope.mainColumnWidth = "";
     $scope.propText = "Primary Building Use";
-    $scope.buildingZone = "commercial";
-    $scope.auxModel.buildingList = "commercial";
-    $scope.targetToggle = "percentReduction";
-    $scope.isResidential = false;
+
+    $scope.showBar = true;
+    $scope.showEnergy = true;
+    $scope.showSolar = true;
+
 
     if (window.matchMedia) {
 
@@ -84,110 +80,35 @@ define(['angular'], function() {
         });
     }
 
-    $scope.$watch("auxModel.buildingZone", function (v) {
-        if(v === "commercial"){
-            if($scope.propTypes.length !== 0) {
-                $scope.auxModel.buildingList = "parking";
-            }else {
-                $scope.auxModel.buildingList = "commercial";
-            }
-        }else{
-            $scope.auxModel.buildingList = "residential";
-        }
-    });
+    function add(a, b) {
+        return a + b;
+    }
 
-
-    $scope.$watch("auxModel.buildingType", function (v) {
+    $scope.$watch("tempModel.buildingType", function (v) {
         if (v === undefined || v === null) {
             return; 
         }
 
-        if(($scope.auxModel.country) && (v)){
-
-            $scope.isResidential = false;
-
-            for(var i = 0; i < $scope.buildingProperties.buildingType.residential.length; i++ ) {
-                if( $scope.buildingProperties.buildingType.residential[i].id === v.id){
-                    if (v.id === "MultiFamily"){
-                        $scope.isResidential = false;
-                    } else {
-                        $scope.isResidential = true;
-                    }
-                   if ($scope.isResidential === true && v.id !== "MultiFamily"){
-                       $scope.propTypes = [];
-                   }
-
-                   // $scope.propTypes = [];
-                    break;
-                }
-            }
-
-
-
-            for(var j = 0; j < $scope.propTypes.length; j++ ) {
-                for(var k = 0; k < $scope.buildingProperties.buildingType.residential.length; k++ ) {
-                    if( $scope.propTypes[j].type === $scope.buildingProperties.buildingType.residential[k].id &&
-                    $scope.propTypes[j].type !== "MultiFamily"){
-                        $scope.clearProp($scope.propTypes[j]);
-                        break;
-                    }
-                }
-            }
-
-
-
-            if($scope.auxModel.buildingZone === "commercial" || v.id === "MultiFamily"){
-
-                if($scope.auxModel.buildingType.id === "Parking"){
-                    $scope.auxModel.tempList = "parking";
-                }else{
-                    $scope.auxModel.tempList = "commercial";
-                }
-            }else{
-                $scope.auxModel.tempList = "residential";
-            }
+        if(v){
 
             $scope.propTypes.push({
                 changeTo: v,
                 type: v.id,
                 name: v.name,
-                country:$scope.auxModel.country,
-                buildingZone: $scope.auxModel.buildingZone,
-                buildingList: $scope.auxModel.tempList,
-                toggleTarget: $scope.auxModel.targetToggle
             });
 
-           if($scope.auxModel.buildingZone === "commercial" || v.id === "MultiFamily"){
-                $scope.auxModel.buildingZone = "commercial";
-                if($scope.propTypes.length !== 0) {
-                    $scope.auxModel.buildingList = "parking";
-                }else{
-                    $scope.auxModel.buildingList = "commercial";
-                }
-            }else{
-                $scope.auxModel.buildingList = "residential";
-            }
-
-
-
-
             $scope.propText="Add Another Use";
-            // there seems to be a $digest issue where undefined isn't carried through to the dropdown directive
-            $scope.auxModel.resetBuildingType = true;
-            $scope.auxModel.buildingType = undefined;
+            $scope.tempModel.resetBuildingType = true;
+            $scope.tempModel.buildingType = undefined;
         }
     });
 
-    $scope.updatePropType = function($index) { 
+    $scope.updatePropType = function($index) {
 
         $scope.propTypes[$index] = {
             changeTo: $scope.propTypes[$index].changeTo,
-            country: $scope.propTypes[$index].country,
-            buildingZone: $scope.propTypes[$index].buildingZone,
-            buildingList: $scope.propTypes[$index].buildingList,
-            toggleTarget: $scope.propTypes[$index].toggleTarget,
             type: $scope.propTypes[$index].changeTo.id,
-            name: $scope.propTypes[$index].changeTo.name
+            name: $scope.propTypes[$index].changeTo.name,
         };
     };
 
@@ -196,27 +117,8 @@ define(['angular'], function() {
         $scope.clearGeography();
     });
 
-    $scope.$watch("auxModel.targetToggle", function (v) {
-        if(v === 'zeroScore'){
-        $scope.auxModel.is2030=false;
-    }
-    });
-
-    $scope.$watch("auxModel.newConstruction", function (v) {
-        if(v === true){
-            $scope.auxModel.percentBetterThanMedian = 70;
-            $scope.auxModel.targetToggle = "percentReduction";
-        }else{
-            $scope.auxModel.percentBetterThanMedian = 20;
-        }
-    });
-
     $scope.clearGeography = function () {
-        $scope.auxModel.city = "";
-        $scope.auxModel.state = null;
-        //$scope.auxModel.postalCode = "";
-        $scope.auxModel.buildingType = undefined;
-        $scope.propTypes = [];
+        $scope.auxModel.city = undefined;
     };
 
 
@@ -237,52 +139,57 @@ define(['angular'], function() {
         }
     };
 
-    $scope.addRenewableEnergiesRow = function(){
-        $scope.renewableEnergies.push({});
-    };
-
-    $scope.removeRenewableRow = function(index){
-        $scope.renewableEnergies.splice(index, 1);
-        if ($scope.renewableEnergies.length ===    1) {
-            $scope.addRenewableEnergiesRow();
-        }
-    };
-
-    $scope.removeSoldRow = function(){
-        $scope.sold.pop();
-        $scope.sold.push({'renewableType': {id:"grid",name:"Sold"}});
-    };
-
-
 
     $scope.removeProp = function(prop){
-
         var index;
         for(var i = 0; i < $scope.propTypes.length; i++ ) {
-            if($scope.propTypes[i].name === prop.model.name && $scope.propTypes[i].country === prop.model.country) {
+            if($scope.propTypes[i].name === prop.model.name) {
+                index = i;
+                break;
+            }
+        }
+        $scope.propTypes.splice(index, 1);
+    };
+
+    $scope.showDivider = function() {
+        if($scope.pvList.length > 1){
+            return true;
+            }else {
+            return false;
+                }
+    };
+
+    $scope.addPV = function(){
+        var divider = true;
+        if ($scope.pvList.length ===  0) {
+            divider = false;
+        }
+        $scope.pvList.push({id:$scope.pvCounter,name:"PV SYSTEM",showDivider:divider});
+        $scope.pvCounter = $scope.pvCounter + 1;
+    };
+
+    $scope.removePV = function(pv){
+        var index;
+        for(var i = 0; i < $scope.pvList.length; i++ ) {
+            if($scope.pvList[i].id === pv.model.id) {
                 index = i;
                 break;
             }
         }
 
-        $scope.propTypes.splice(index, 1);
+        $scope.pvList.splice(index, 1);
 
-        if($scope.propTypes.length === 0){
-            $scope.propText="Primary Building Use";
-            if($scope.auxModel.buildingZone === "commercial"){
-                 $scope.auxModel.buildingList = "commercial";
-            }else{
-                $scope.auxModel.buildingList = "residential";
-            }
+        if ($scope.pvList.length ===  0) {
+            $scope.addPV();
         }
-
     };
+
 
     $scope.clearProp = function(prop){
         var index;
 
         for(var i = 0; i < $scope.propTypes.length; i++ ) {
-            if($scope.propTypes[i].name === prop.name && $scope.propTypes[i].country === prop.country) {
+            if($scope.propTypes[i].name === prop.name) {
                 index = i;
                 break;
             }
@@ -294,85 +201,132 @@ define(['angular'], function() {
         }
     };
 
-    $scope.postalCodeCheck = function() {
-        if($scope.auxModel.postalCode){
-            if($scope.auxModel.postalCode.length > 4){
-                $scope.temp = {"postalCode":$scope.auxModel.postalCode};
-                $scope.computeDegreeDays();
-            }else{
-                $scope.clearDegreeDays();
+    $scope.showPrescriptive = function(){
+        if($scope.showBar===false){
+                $scope.showBar = true;
+            } else {
+                $scope.showBar = false;
             }
-        }else{
-            $scope.clearDegreeDays();
-         }
     };
-
-    $scope.clearDegreeDays = function(){
-        $scope.auxModel.HDD = null;
-        $scope.auxModel.CDD = null;
-        $scope.lacksDD = true;
-    };
-
-    $scope.computeDegreeDays = function(){
-
-        $scope.futures = benchmarkServices.getDDMetrics($scope.temp);
-        $q.resolve($scope.futures).then(function (results) {
-            $scope.auxModel.CDD = $scope.getPropResponseField(results,"CDD");
-            $scope.auxModel.HDD = $scope.getPropResponseField(results,"HDD");
-            if (results.errors.length > 0){
-                $scope.lacksDD = true;
+    $scope.showEnergyRequirement = function(){
+        if($scope.showEnergy===false){
+                $scope.showEnergy = true;
+            } else {
+                $scope.showEnergy = false;
             }
-        });
     };
+    $scope.showSolarPlot = function(){
+        if($scope.showSolar===false){
+                $scope.showSolar = true;
+            } else {
+                $scope.showSolar = false;
+            }
+    };
+
+    /*$scope.sample = [
+      {
+        "prescriptive_resource": 0,
+        "pv_defaults_resource": 0,
+        "approach": "performance",
+        "metric":
+          {
+            "conversion_resource": 0,
+            "source_natural_gas": 2.1,
+            "carbon_natural_gas": 0.61
+          },
+        "climate_zone": "1A",
+        "file_id": "0-93738",
+        "reporting_units": "imperial",
+        "prop_types": [
+            {
+            "building_type": "OfficeLarge",
+            "floor_area": 100000,
+            "floor_area_units": "ftSQ"
+            }
+        ],
+        "stories": 6.0,
+        "pv_data": [
+          {
+            "estimated_area": 100,
+            "module_type": 0,
+            "losses": 20.0,
+            "array_type": 0,
+            "tilt": 20,
+            "azimuth": 45,
+            "inv_eff": 93.0,
+            "access_perimeter": 6,
+            "pv_area_units": "mSQ"
+          },
+          {
+            "module_type": 0,
+            "losses": 20.0,
+            "array_type": 0,
+            "tilt": 20,
+            "azimuth": 45,
+            "inv_eff": 93.0,
+            "access_perimeter": 6,
+            "pv_area_units": "mSQ"
+          },
+          {
+            "w_per_meter2": 150,
+            "module_type": 0,
+            "losses": 2.0,
+            "inv_eff": 91.0
+            }
+          ],
+        "energies": [
+          {
+            "energy_name": "Electric (Grid)",
+            "energy_type": "electricity",
+            "energy_units": "kWh",
+            "energy_use": 1500000
+          },
+          {
+            "energy_name": "Natural Gas",
+            "energy_type": "natural_gas",
+            "energy_units": "therms",
+            "energy_use": 20000
+          }
+        ]
+      }
+    ];*/
+
+
 
     $scope.computeBenchmarkResult = function(){
 
-        $scope.propSubmit = [];
-        for (var i = 0; i < $scope.propList.length; i++){
-            if($scope.propList[i].buildingType !== "Parking"){
-                $scope.propSubmit.push($scope.propList[i]);
-            }
-        }
 
-        $log.info($scope.propSubmit);
+        $log.info($scope.submitArray);
 
-        $scope.futures = benchmarkServices.getZEPIMetrics($scope.propSubmit);
+        $scope.futures = benchmarkServices.getZNCMetrics($scope.submitArray);
 
         $q.resolve($scope.futures).then(function (results) {
-            $scope.baselineConstant = $scope.getBaselineConstant();
-            $scope.scoreText = "Zero Score";
-            $scope.scoreGraph = "Rating";
-            $scope.FFText = $sce.trustAsHtml('Site EUI');
-            $scope.scoreUnits = $scope.isResidential  ? "0-130" : "0-100";
-
-            $scope.benchmarkResult = $scope.computeBenchmarkMix(results);
-            $scope.benchmarkResult.city = $scope.auxModel.city;
-            $scope.benchmarkResult.state = $scope.auxModel.state;
-            $scope.benchmarkResult.postalCode = $scope.auxModel.postalCode;
-            //console.log($scope.benchmarkResult);
-            if ($scope.auxModel.targetToggle === "zeroScore") {
-                $scope.benchmarkResult.percentBetterThanMedian = $scope.getBaselineConstant() - $scope.auxModel.percentBetterThanMedian;
-            } else {
-                $scope.benchmarkResult.percentBetterThanMedian = $scope.auxModel.percentBetterThanMedian;
-            }
-
-            $scope.hasOnSite = ($scope.getPropResponseField(results,"onSiteRenewableTotal") > 0.01) ;
-            $scope.hasOffSite = ($scope.getPropResponseField(results,"offSitePurchasedTotal") > 0.01) ;
-            $scope.hasSiteEnergy = ($scope.getPropResponseField(results,"siteEUI") > 0.01) ;
 
 
 
+            $scope.buildingRequirements = $scope.setBuildingRequirements(results);
+
+            $scope.solarResults = $scope.getPropResponseField(results,"pvwatts_system_details");
+            $scope.solarMonthly = $scope.solarResults.outputs;
+            $scope.prescriptiveRequirements = $scope.computePrescriptiveRequirements(results);
+
+
+            $scope.endUses = $scope.computeEndUses(results);
 
         });
     };
 
-    $scope.getBaselineConstant = function(){
-        if ($scope.isResidential === true && $scope.auxModel.is2030 === true){
-            return 130;
-        } else {
-            return 100;
-        }
+    $scope.setBuildingRequirements = function(results){
+
+
+        if($scope.auxModel.approach === "performance"){
+                return $scope.computePerformanceRequirements(results);
+            } else {
+                return $scope.computePrescriptiveRequirements(results);
+            }
+
     };
+
 
     $scope.getPropResponseField = function(propResponse,key){
         var returnValue;
@@ -386,83 +340,141 @@ define(['angular'], function() {
         return returnValue;
     };
 
-    $scope.computeBenchmarkMix = function(results){
+    $scope.getPropSize = function(building_sub_types){
 
-        $scope.propOutputList = $scope.getPropResponseField(results,"propOutputList");
-        $scope.percentBetterSiteEUI = Math.ceil($scope.getPropResponseField(results,"percentBetterSiteEUI"));
-        $scope.siteEUI = Math.ceil($scope.getPropResponseField(results,"siteEUI"));
-
-        if($scope.siteEUI > $scope.percentBetterSiteEUI){
-            $scope.showPercentBetterTarget = 'decrease';
-            $scope.percentBetterGoal = Math.ceil($scope.getPropResponseField(results,"percentBetterActualtoGoal"));
-        }else if($scope.siteEUI < $scope.percentBetterSiteEUI){
-            $scope.showPercentBetterTarget = 'better';
-            $scope.percentBetterGoal = Math.ceil($scope.getPropResponseField(results,"actualGoalBetter"));
-        } else {
-            $scope.showPercentBetterTarget = undefined;
+        var size = [];
+        for (var i =0; i < building_sub_types.length; i ++) {
+            size.push(building_sub_types[i].floor_area);
         }
 
-        var metricsTable = [
+        return size.reduce(add, 0);
+    };
 
-              {"percentBetterMedian": Math.ceil($scope.getPropResponseField(results,"percentBetterMedian"))},
-              {"percentBetterTarget": Math.ceil($scope.getPropResponseField(results,"percentBetterTarget"))},
-              {"percentBetterActual": Math.ceil($scope.getPropResponseField(results,"percentBetterActual"))},
-              {"percentBetterActualwOnSite": Math.ceil($scope.getPropResponseField(results,"percentBetterActualwOnSite"))},
-              {"percentBetterActualwOffSite": Math.ceil($scope.getPropResponseField(results,"percentBetterActualwOffSite"))},
-              {"percentBetterActualwOnandOffSite": Math.ceil($scope.getPropResponseField(results,"percentBetterActualwOnandOffSite"))},
+    $scope.computePerformanceRequirements = function(results){
 
+        var performance_requirements = $scope.getPropResponseField(results,"performance_requirements");
+        var building_sub_types = $scope.getPropResponseField(results,"building_sub_types");
 
-              {"percentBetterActualtoGoal": Math.ceil($scope.getPropResponseField(results,"percentBetterActualtoGoal"))},
-              {"actualGoalBetter": Math.ceil($scope.getPropResponseField(results,"actualGoalBetter"))},
+        var building_size = $scope.getPropSize(building_sub_types);
 
-              {"medianZEPI": $scope.getBaselineConstant()},
-              {"percentBetterZEPI": Math.floor($scope.getPropResponseField(results,"percentBetterZEPI"))},
-              {"actualZEPI": $scope.getBaselineConstant() - Math.floor($scope.getPropResponseField(results,"percentBetterActual"))},
-              {"actualZEPIwOnSite": $scope.getBaselineConstant() - Math.floor($scope.getPropResponseField(results,"percentBetterActualwOnSite"))},
-              {"actualZEPIwOffSite": $scope.getBaselineConstant() - Math.floor($scope.getPropResponseField(results,"percentBetterActualwOffSite"))},
-              {"actualZEPIwOnAndOffSite": $scope.getBaselineConstant() - Math.floor($scope.getPropResponseField(results,"percentBetterActualwOnandOffSite"))},
+        var performanceTable = {
+              "pv_area": ($scope.getPropResponseField(results,"pv_area")),
+              "pv_capacity": ($scope.getPropResponseField(results,"pv_capacity_kW")),
+              "building_energy": (performance_requirements.building_energy),
+              "required": (performance_requirements.re_total_needed),
+              "pv_potential": (performance_requirements.re_rec_onsite_pv),
+              "procured": (performance_requirements.re_procured),
 
-              {"siteEUI": Math.ceil($scope.getPropResponseField(results,"siteEUI"))},
-              {"siteEUIwOnSite": Math.ceil($scope.getPropResponseField(results,"siteEUIwOnSite"))},
-              {"siteEUIwOffSite": Math.ceil($scope.getPropResponseField(results,"siteEUIwOffSite"))},
-              {"siteEUIwOnAndOffSite": Math.ceil($scope.getPropResponseField(results,"siteEUIwOnAndOffSite"))},
-
-              {"sourceEUI": Math.ceil($scope.getPropResponseField(results,"sourceEUI"))},
-              {"sourceEUIwOnSite": Math.ceil($scope.getPropResponseField(results,"sourceEUIwOnSite"))},
-              {"sourceEUIwOffSite": Math.ceil($scope.getPropResponseField(results,"sourceEUIwOffSite"))},
-              {"sourceEUIwOnAndOffSite": Math.ceil($scope.getPropResponseField(results,"sourceEUIwOnAndOffSite"))},
+              "building_energy_norm": (performance_requirements.building_energy / building_size * 1000),
+              "required_norm": (performance_requirements.re_total_needed / building_size * 1000),
+              "pv_potential_norm": (performance_requirements.re_rec_onsite_pv / building_size * 1000),
+              "procured_norm": (performance_requirements.re_procured / building_size * 1000)
+        };
 
 
-              {"medianSiteEUI": Math.ceil($scope.getPropResponseField(results,"medianSiteEUI"))},
-              {"medianSourceEUI": Math.ceil($scope.getPropResponseField(results,"medianSourceEUI"))},
+        return performanceTable;
+    };
 
-              {"percentBetterSiteEUI": Math.ceil($scope.getPropResponseField(results,"percentBetterSiteEUI"))},
-              {"percentBetterSourceEUI": Math.ceil($scope.getPropResponseField(results,"percentBetterSourceEUI"))},
+    $scope.computePrescriptiveRequirements = function(results){
+
+        var prescriptive_requirements = $scope.getPropResponseField(results,"prescriptive_requirements");
+        var building_sub_types = $scope.getPropResponseField(results,"building_sub_types");
+
+        var building_size = $scope.getPropSize(building_sub_types);
+
+        var prescriptiveTable = {
+              "pv_area": ($scope.getPropResponseField(results,"pv_area")),
+              "pv_capacity": ($scope.getPropResponseField(results,"pv_capacity_kW")),
+              "building_energy": (prescriptive_requirements.prescriptive_building_energy),
+              "required": (prescriptive_requirements.prescriptive_re_total_needed),
+              "pv_potential": (prescriptive_requirements.re_rec_onsite_pv),
+              "procured": (prescriptive_requirements.prescriptive_re_procured),
+
+              "building_energy_norm": (prescriptive_requirements.prescriptive_building_energy / building_size * 1000),
+              "required_norm": (prescriptive_requirements.prescriptive_re_total_needed / building_size * 1000),
+              "pv_potential_norm": (prescriptive_requirements.re_rec_onsite_pv / building_size * 1000),
+              "procured_norm": (prescriptive_requirements.prescriptive_re_procured / building_size * 1000)
+        };
+
+        return prescriptiveTable;
+    };
+
+    $scope.computeEndUses = function(results){
+
+        function nullZero(a) {
+            if(a===0){
+                return null;
+            } else {
+            return a;
+            }
+        }
+
+        var endUses = ["Heating", "Cooling", "Interior Lighting", "Plug Loads", "Service Hot Water", "Fans"];
+        var shortNames = ["htg", "clg", "intLgt", "intEqp", "swh", "fans"];
+        var othersEndUses = ["Exterior Equipment","Exterior Light","Generators","Heat Recovery","Heat Rejection","Humidity Control","Pumps","Refrigeration"];
+        var othersNames = ["extEqp","extLgt","gentor","heatRec","heatRej","humid","pumps","refrg"];
 
 
-              {"totalEmissions": Math.ceil($scope.getPropResponseField(results,"totalEmissions"))},
-              {"percentBetterEmissions": Math.ceil($scope.getPropResponseField(results,"percentBetterEmissions"))},
-              {"medianEmissions": Math.ceil($scope.getPropResponseField(results,"medianEmissions"))},
-
-              {"onSiteRenewableTotal": $scope.getPropResponseField(results,"onSiteRenewableTotal")},
-              {"offSitePurchasedTotal": $scope.getPropResponseField(results,"offSitePurchasedTotal")},
-              {"siteEnergyALL": $scope.getPropResponseField(results,"siteEnergyALL")},
-
-              {"parkingEnergy": $scope.getPropResponseField(results,"parkingEnergy")},
-              {"parkingArea": $scope.getPropResponseField(results,"parkingArea")}
+        var endUsesTable = {} ;
+        endUsesTable.endUses = [] ;
+        endUsesTable.endUsesOther = [] ;
+        endUsesTable.endUsesTotal = [] ;
 
 
-        ];
-        return metricsTable;
+        var endUseResponse = $scope.getPropResponseField(results,"prescriptive_metrics");
+
+        endUsesTable.eui = endUseResponse.site_eui;
+        endUsesTable.energy = endUseResponse.site_energy / 1000; // this will be either MBtu or MWh
+
+
+
+        for (var i =0; i < endUses.length; i ++) {
+
+            endUsesTable.endUses.push([
+                endUses[i],
+                nullZero(endUseResponse.prescriptive_electricity_metric_data[shortNames[i]]),
+                nullZero(endUseResponse.prescriptive_natural_gas_metric_data[shortNames[i]]),
+                nullZero(endUseResponse.prescriptive_end_use_metric_data[shortNames[i]]),
+                endUseResponse.prescriptive_end_use_metric_percents[shortNames[i]]*100
+            ]);
+        }
+
+        for (var j =0; j < othersEndUses.length; j ++) {
+
+            endUsesTable.endUsesOther.push([
+                othersEndUses[j],
+                nullZero(endUseResponse.prescriptive_electricity_metric_data[othersNames[j]]),
+                nullZero(endUseResponse.prescriptive_natural_gas_metric_data[othersNames[j]]),
+                nullZero(endUseResponse.prescriptive_end_use_metric_data[othersNames[j]]),
+                endUseResponse.prescriptive_end_use_metric_percents[othersNames[j]]*100
+            ]);
+        }
+
+        endUsesTable.endUsesTotal.push([
+            "Total",
+            endUseResponse.prescriptive_electricity_metric_data.net,
+            endUseResponse.prescriptive_natural_gas_metric_data.net,
+            endUseResponse.prescriptive_end_use_metric_data.net,
+            100,
+        ]);
+
+        return endUsesTable;
+
     };
 
     $scope.submitErrors = function () {
-        for (var i = 0; i < $scope.forms.baselineForm.$error.required.length; i++){
-            $log.info($scope.forms.baselineForm.$error.required[i].$name);
+        if($scope.forms.baselineForm.$error.required){
+            for (var i = 0; i < $scope.forms.baselineForm.$error.required.length; i++){
+                $log.info($scope.forms.baselineForm.$error.required[i].$name);
+                console.log($scope.forms.baselineForm.$error.required[i].$name);
+            }
+            $scope.performanceError = false;
+        } else {
+            $scope.performanceError = true;
         }
     };
 
-    $scope.$watch("auxModel.reportingUnits", function (value) {
+    $scope.$watch("auxModel.reporting_units", function (value) {
         if (value === undefined) {
             return;
         }
@@ -472,670 +484,248 @@ define(['angular'], function() {
         }
     });
 
-    $scope.degreeDaysCheck = function () {
-        $scope.computeDegreeDays();
-    };
-
     $scope.submit = function () {
+
+        $scope.solarResults = null;
+        $scope.endUses = null;
+        $scope.buildingRequirements = null;
+
         if($scope.forms.baselineForm === undefined) {
             return;
         }
         $scope.forms.hasValidated = true; /// only check the field errors if this form has attempted to validate.
-        $scope.propList = [];
 
-        if($scope.auxModel.reportingUnits==="us"){
-            $scope.tableEnergyUnits="(kBtu/yr)";
-            $scope.tableEUIUnits="(kBtu/ft²/yr)";
+        if($scope.auxModel.reporting_units==="imperial"){
+            $scope.tableEnergyUnits="(kBtu)";
+            $scope.graphEnergyUnits="kBtu";
+            $scope.tableBigEnergyUnits="MBtu/yr";
+            $scope.tableEUIUnits="kBtu/ft²-yr";
+            $scope.tableAreaUnits="(ft²)";
         }else {
-            $scope.tableEnergyUnits="(kWh/yr)";
-            $scope.tableEUIUnits="(kWh/m²/yr)";
+            $scope.tableEnergyUnits="(kWh)";
+            $scope.graphEnergyUnits="kWh";
+            $scope.tableBigEnergyUnits="MWh/yr";
+            $scope.tableEUIUnits="kWh/m²-yr";
+            $scope.tableAreaUnits="(m²)";
         }
-
-        if($scope.auxModel.CDD === undefined || $scope.auxModel.HDD === undefined ||
-        $scope.auxModel.HDD === null || $scope.auxModel.HDD === null){
-            $scope.lacksDD = true;
-        }
-
-
 
         var validEnergy = function(e) {
-            return (e.energyType !== undefined &&
-                    e.energyName !== undefined &&
-                    //e.energyName !== "Electric (renewable)" &&
-                    e.energyUnits !== undefined &&
-                    e.energyUse !== undefined && $scope.auxModel.newConstruction === false);
+            return (e.energy_type !== undefined &&
+                    e.energy_name !== undefined &&
+                    e.energy_units !== undefined &&
+                    e.energy_use);
         };
 
         var mapEnergy = function (e) {
             return {
-                'energyType': (e.energyType) ? e.energyType.id : undefined,
-                'energyName': (e.energyType) ? e.energyType.name : undefined,
-                'energyUnits': e.energyUnits,
-                'energyUse': Number(e.energyUse),
-                'energyRate': null
+                'energy_type': (e.energy_type) ? e.energy_type.id : undefined,
+                'energy_name': (e.energy_type) ? e.energy_type.name : null,
+                'energy_units': e.energy_units,
+                'energy_use': Number(e.energy_use)
             };
-        };
-        var mapRenewableEnergy = function (e) {
-            return {
-                'energyType': (e.renewableType) ? e.renewableType.id : undefined,
-                'energyName': (e.renewableType) ? e.renewableType.name : undefined,
-                'energyUnits': e.renewableUnits,
-                'energyUse': Number(e.energyUse),
-                'energyRate': null
-            };
-        };
-
-        var validRenewableFromRegular = function(e) {
-            return (e.energyType !== undefined &&
-                    e.energyName !== undefined &&
-                    e.energyName === "Electric (renewable)" &&
-                    e.energyUnits !== undefined &&
-                    e.energyUse !== undefined && $scope.auxModel.newConstruction === false);
-        };
-
-        var getSoldEnergy = function () {
-
-            var soldEnergyList =[];
-            var soldEnergy = 0.0;
-            var renewableEnergy = 0.0;
-
-            for (var i = 0; i < $scope.sold.map(mapRenewableEnergy).filter(validEnergy).length; i++){
-                soldEnergy = soldEnergy + $scope.sold.map(mapRenewableEnergy).filter(validEnergy)[i].energyUse;
-            }
-            for (var j = 0; j < $scope.renewableEnergies.map(mapRenewableEnergy).filter(validEnergy).length; j++){
-                renewableEnergy = renewableEnergy + $scope.renewableEnergies.map(mapRenewableEnergy).filter(validEnergy)[j].energyUse;
-            }
-
-            if($scope.sold.map(mapRenewableEnergy).filter(validEnergy).length !== 0){
-                if(soldEnergy < renewableEnergy){
-                    soldEnergyList = $scope.sold.map(mapRenewableEnergy).filter(validEnergy);
-                }else{
-                    soldEnergyList = [{
-                    'energyType': "grid",
-                    'energyName': "Sold",
-                    'energyUnits': $scope.sold[0].renewableUnits,
-                    'energyUse': renewableEnergy
-                    }];
-                }
-            }
-
-            return soldEnergyList;
-        };
-
-
-        var getRenewableEnergyList = function () {
-
-            var renewableEnergyListFromRegular = $scope.energies.map(mapEnergy).filter(validRenewableFromRegular);
-            var renewableEnergyList = $scope.renewableEnergies.map(mapRenewableEnergy).filter(validEnergy);
-
-
-            renewableEnergyListFromRegular.push.apply(renewableEnergyListFromRegular,getSoldEnergy());
-            renewableEnergyList.push.apply(renewableEnergyList,renewableEnergyListFromRegular);
-
-            return renewableEnergyList;
         };
 
         var getFullEnergyList = function () {
 
             var energyListFromRegular = $scope.energies.map(mapEnergy).filter(validEnergy);
-            var renewableEnergyList = $scope.renewableEnergies.map(mapRenewableEnergy).filter(validEnergy);
-            //var soldEnergyList = $scope.sold.map(mapRenewableEnergy).filter(validEnergy);
 
-            renewableEnergyList.push.apply(renewableEnergyList,getSoldEnergy());
-            energyListFromRegular.push.apply(energyListFromRegular,renewableEnergyList);
-
+            energyListFromRegular.push.apply(energyListFromRegular);
 
             return energyListFromRegular;
         };
 
-        if($scope.forms.baselineForm.$valid){
+        var getPropTypes = function () {
 
-            $scope.hasParkingHeating = null;
-            $scope.openParkingArea = null;
-            $scope.partiallyEnclosedParkingArea = null;
-            $scope.fullyEnclosedParkingArea = null;
-            $scope.parkingAreaUnits = null;
-            $scope.totalParkingArea = null;
+            var props = [];
+            for (var i =0; i < $scope.propTypes.length; i ++) {
+                props.push($scope.propTypes[i].propertyModel);
+                }
+            return props;
+        };
 
-            for (var j = 0; j < $scope.propTypes.length; j++){
-                if($scope.propTypes[j].valid === true){
-                    if($scope.propTypes[j].propertyModel.buildingType === "Parking"){
-                        $scope.hasParkingHeating = $scope.propTypes[j].propertyModel.hasParkingHeating ;
-                        $scope.openParkingArea = $scope.propTypes[j].propertyModel.openParkingArea;
-                        $scope.partiallyEnclosedParkingArea = $scope.propTypes[j].propertyModel.partiallyEnclosedParkingArea;
-                        $scope.fullyEnclosedParkingArea = $scope.propTypes[j].propertyModel.fullyEnclosedParkingArea;
-                        $scope.parkingAreaUnits = $scope.propTypes[j].propertyModel.areaUnits;
-                        $scope.totalParkingArea = $scope.propTypes[j].propertyModel.openParkingArea + $scope.propTypes[j].propertyModel.partiallyEnclosedParkingArea + $scope.propTypes[j].propertyModel.fullyEnclosedParkingArea;
-                    }
+        var getPVData = function () {
+
+            var pv_data = [];
+            for (var i =0; i < $scope.pvList.length; i ++) {
+                pv_data.push($scope.pvList[i].pvModel);
+                }
+            return pv_data;
+        };
+
+        var getCityValue = function (value) {
+
+            for (var i =0; i < $scope.geographicProperties.city.length; i ++) {
+                if($scope.geographicProperties.city[i].id === $scope.auxModel.city){
+                    return $scope.geographicProperties.city[i][value];
                 }
             }
-        }
+        };
 
 
         if($scope.forms.baselineForm.$valid){
-            for (var i = 0; i < $scope.propTypes.length; i++){
-                if($scope.propTypes[i].valid === true){
 
+            $scope.submitArray = [];
 
-                    $scope.propTypes[i].propertyModel.hasParkingHeating = $scope.hasParkingHeating;
-                    $scope.propTypes[i].propertyModel.openParkingArea = $scope.openParkingArea;
-                    $scope.propTypes[i].propertyModel.partiallyEnclosedParkingArea = $scope.partiallyEnclosedParkingArea;
-                    $scope.propTypes[i].propertyModel.fullyEnclosedParkingArea = $scope.fullyEnclosedParkingArea;
-                    $scope.propTypes[i].propertyModel.parkingAreaUnits = $scope.parkingAreaUnits;
-                    $scope.propTypes[i].propertyModel.totalParkingArea = $scope.totalParkingArea;
+            $scope.auxModel.climate_zone = getCityValue("climate_zone");
+            $scope.auxModel.file_id = getCityValue("file_id");
 
-                    $scope.propTypes[i].propertyModel.baselineConstant = $scope.getBaselineConstant();
-                    $scope.propTypes[i].propertyModel.country = $scope.auxModel.country;
-                    $scope.propTypes[i].propertyModel.targetToggle = $scope.auxModel.targetToggle;
-                    $scope.propTypes[i].propertyModel.city = $scope.auxModel.city;
-                    $scope.propTypes[i].propertyModel.buildingName = ($scope.auxModel.buildingName) ? $scope.auxModel.buildingName : "Anonymous";
-                    $scope.propTypes[i].propertyModel.postalCode = $scope.auxModel.postalCode;
-                    $scope.propTypes[i].propertyModel.state = $scope.auxModel.state;
-                    $scope.propTypes[i].propertyModel.HDD = $scope.auxModel.HDD;
-                    $scope.propTypes[i].propertyModel.CDD = $scope.auxModel.CDD;
-                    $scope.propTypes[i].propertyModel.reportingUnits = $scope.auxModel.reportingUnits;
-                    $scope.propTypes[i].propertyModel.targetScore = null;
-                    //$scope.propTypes[i].propertyModel.netMetered = $scope.auxModel.netMetered;
-                    $scope.propTypes[i].propertyModel.percentBetterThanMedian = $scope.auxModel.percentBetterThanMedian;
-
-
-                    if($scope.isResidential && !$scope.auxModel.is2030 && ($scope.propTypes[i].type !== "MultiFamily")){
-                        $scope.propTypes[i].propertyModel.target2030=true;
-                    } else {
-                        $scope.propTypes[i].propertyModel.target2030=false;
-                    }
-
-                    if($scope.renewableEnergies.map(mapRenewableEnergy).filter(validEnergy).length===0 &&
-                       $scope.energies.map(mapEnergy).filter(validEnergy).length===0){
-                        $scope.propTypes[i].propertyModel.energies=null;
-                    } else {
-                        $scope.propTypes[i].propertyModel.energies = getFullEnergyList();
-                    }
-
-                    if($scope.renewableEnergies.map(mapRenewableEnergy).filter(validEnergy).length===0 &&
-                       $scope.energies.map(mapEnergy).filter(validRenewableFromRegular).length ===0){
-                        $scope.propTypes[i].propertyModel.renewableEnergies=null;
-                    } else {
-                        $scope.propTypes[i].propertyModel.renewableEnergies = getRenewableEnergyList();
-                    }
-
-
-                    $scope.propList.push($scope.propTypes[i].propertyModel);
-
-                } else {
-                    $log.info('Error in ' + $scope.propTypes[i].type);
-                }
+            if($scope.energies.map(mapEnergy).filter(validEnergy).length===0){
+                $scope.auxModel.energies=null;
+            } else {
+                $scope.auxModel.energies = getFullEnergyList();
             }
-        }else {
-            $scope.submitErrors();
-        }
 
+            if($scope.auxModel.approach === 'performance' && $scope.auxModel.energies!==null || $scope.auxModel.approach === 'prescriptive'){
+                $scope.auxModel.prop_types = getPropTypes();
+                $scope.auxModel.pv_data = getPVData();
 
-
-        if ($scope.propList.length !== 0){
+                $scope.submitArray.push($scope.auxModel);
                 $scope.computeBenchmarkResult();
-            }else{
-                $scope.benchmarkResult = null;
+            } else {
+                $scope.displayErrors();
             }
+
+
+        }else {
+            $scope.displayErrors();
+        }
 
     };
+
+        $scope.displayErrors = function () {
+            $scope.submitErrors();
+            $scope.benchmarkResult = null;
+            $scope.buildingRequirements = null;
+        };
 
         $scope.geographicProperties = {
                 country:
                     [{id:"USA",name:"United States"},
                     {id:"Canada",name:"Canada"}],
-                state:
+                city:
                     [
-                    {id:"AL",name:"Alabama",filter_id:"USA"},
-                    {id:"AK",name:"Alaska",filter_id:"USA"},
-                    {id:"AZ",name:"Arizona",filter_id:"USA"},
-                    {id:"AR",name:"Arkansas",filter_id:"USA"},
-                    {id:"CA",name:"California",filter_id:"USA"},
-                    {id:"CO",name:"Colorado",filter_id:"USA"},
-                    {id:"CT",name:"Connecticut",filter_id:"USA"},
-                    {id:"DE",name:"Delaware",filter_id:"USA"},
-                    {id:"DC",name:"District Of Columbia",filter_id:"USA"},
-                    {id:"FL",name:"Florida",filter_id:"USA"},
-                    {id:"GA",name:"Georgia",filter_id:"USA"},
-                    {id:"HI",name:"Hawaii",filter_id:"USA"},
-                    {id:"ID",name:"Idaho",filter_id:"USA"},
-                    {id:"IL",name:"Illinois",filter_id:"USA"},
-                    {id:"IN",name:"Indiana",filter_id:"USA"},
-                    {id:"IA",name:"Iowa",filter_id:"USA"},
-                    {id:"KS",name:"Kansas",filter_id:"USA"},
-                    {id:"KY",name:"Kentucky",filter_id:"USA"},
-                    {id:"LA",name:"Louisiana",filter_id:"USA"},
-                    {id:"ME",name:"Maine",filter_id:"USA"},
-                    {id:"MD",name:"Maryland",filter_id:"USA"},
-                    {id:"MA",name:"Massachusetts",filter_id:"USA"},
-                    {id:"MI",name:"Michigan",filter_id:"USA"},
-                    {id:"MN",name:"Minnesota",filter_id:"USA"},
-                    {id:"MS",name:"Mississippi",filter_id:"USA"},
-                    {id:"MO",name:"Missouri",filter_id:"USA"},
-                    {id:"MT",name:"Montana",filter_id:"USA"},
-                    {id:"NE",name:"Nebraska",filter_id:"USA"},
-                    {id:"NV",name:"Nevada",filter_id:"USA"},
-                    {id:"NH",name:"New Hampshire",filter_id:"USA"},
-                    {id:"NJ",name:"New Jersey",filter_id:"USA"},
-                    {id:"NM",name:"New Mexico",filter_id:"USA"},
-                    {id:"NY",name:"New York",filter_id:"USA"},
-                    {id:"NC",name:"North Carolina",filter_id:"USA"},
-                    {id:"ND",name:"North Dakota",filter_id:"USA"},
-                    {id:"OH",name:"Ohio",filter_id:"USA"},
-                    {id:"OK",name:"Oklahoma",filter_id:"USA"},
-                    {id:"OR",name:"Oregon",filter_id:"USA"},
-                    {id:"PA",name:"Pennsylvania",filter_id:"USA"},
-                    {id:"RI",name:"Rhode Island",filter_id:"USA"},
-                    {id:"SC",name:"South Carolina",filter_id:"USA"},
-                    {id:"SD",name:"South Dakota",filter_id:"USA"},
-                    {id:"TN",name:"Tennessee",filter_id:"USA"},
-                    {id:"TX",name:"Texas",filter_id:"USA"},
-                    {id:"UT",name:"Utah",filter_id:"USA"},
-                    {id:"VT",name:"Vermont",filter_id:"USA"},
-                    {id:"VA",name:"Virginia",filter_id:"USA"},
-                    {id:"WA",name:"Washington",filter_id:"USA"},
-                    {id:"WV",name:"West Virginia",filter_id:"USA"},
-                    {id:"WI",name:"Wisconsin",filter_id:"USA"},
-                    {id:"WY",name:"Wyoming",filter_id:"USA"},
-                    {id:"AB",name:"Alberta",filter_id:"Canada"},
-                    {id:"BC",name:"British Columbia",filter_id:"Canada"},
-                    {id:"MB",name:"Manitoba",filter_id:"Canada"},
-                    {id:"NB",name:"New Brunswick",filter_id:"Canada"},
-                    {id:"NL",name:"Newfoundland",filter_id:"Canada"},
-                    {id:"NS",name:"Nova Scotia",filter_id:"Canada"},
-                    {id:"NT",name:"Northwest Territories",filter_id:"Canada"},
-                    {id:"NU",name:"Nunavut",filter_id:"Canada"},
-                    {id:"ON",name:"Ontario",filter_id:"Canada"},
-                    {id:"PE",name:"Prince Edward Island",filter_id:"Canada"},
-                    {id:"QC",name:"Quebec",filter_id:"Canada"},
-                    {id:"SK",name:"Saskatchewan",filter_id:"Canada"},
-                    {id:"YT",name:"Yukon",filter_id:"Canada"}]
+                    {id:"Chicago",name:"Chicago",climate_zone:"1A",file_id:"0-93738",filter_id:"USA"},
+                    {id:"New York City",name:"New York City",climate_zone:"1A",file_id:"0-93738",filter_id:"USA"},
+                    {id:"Toronto",name:"Toronto",climate_zone:"1A",file_id:"0-93738",filter_id:"Canada"},
+                    {id:"Vancouver",name:"Vancouver",climate_zone:"1A",file_id:"0-93738",filter_id:"Canada"}
+                    ]
             };
 
         $scope.buildingProperties = {
 
             buildingType: {
                 commercial: [
-                    {id:"FinancialOffice",name:"Bank Branch"},
-                    {id:"FinancialOffice",name:"Financial Office"},
-                    {id:"AdultEducation",name:"Adult Education"},
-                    {id:"College",name:"College / University"},
-                    {id:"K12School",name:"K-12 School"},
-                    {id:"PreSchool",name:"Pre-school / DayCare"},
-                    {id:"VocationalSchool",name:"Vocational School"},
-                    {id:"OtherEducation",name:"Other Education"},
-                    {id:"ConventionCenter",name:"Convention Center"},
-                    {id:"MovieTheater",name:"Movie Theater"},
-                    {id:"Museum",name:"Museum"},
-                    {id:"PerformingArts",name:"Performing Arts"},
-                    {id:"BowlingAlley",name:"Bowling Alley"},
-                    {id:"FitnessCenter",name:"Fitness Center"},
-                    {id:"IceRink",name:"Ice / Curling Rink"},
-                    {id:"RollerRink",name:"Roller Rink"},
-                    {id:"SwimmingPool",name:"Swimming Pool"},
-                    {id:"OtherRecreation",name:"Other Recreation"},
-                    {id:"Stadium",name:"Stadium"},
-                    {id:"IndoorArena",name:"Indoor Arena"},
-                    {id:"RaceTrack",name:"Race Track"},
-                    {id:"Aquarium",name:"Aquarium"},
-                    {id:"Bar",name:"Bar"},
-                    //{id:"Bar",name:"Nightclub"},
-                    {id:"Casino",name:"Casino"},
-                    {id:"Zoo",name:"Zoo"},
-                    {id:"OtherEntertainment",name:"Other Entertainment"},
-                    {id:"GasStation",name:"Convenience Store with Gas Station"},
-                    {id:"ConvenienceStore",name:"Convenience Store without Gas Station"},
-                    {id:"FastFoodRestaurant",name:"Fast Food Restaurant"},
-                    {id:"Restaurant",name:"Restaurant"},
-                    {id:"Supermarket",name:"Supermarket"},
-                    {id:"Retail",name:"Wholesale Club"},
-                    {id:"FoodSales",name:"Food Sales"},
-                    {id:"FoodService",name:"Food Service"},
-                    {id:"AmbulatorySurgicalCenter",name:"Ambulatory Surgical Center"},
+                    {id:"OfficeLarge",name:"Office - Large"},
+                    {id:"OfficeMedium",name:"Office - Medium"},
+                    {id:"OfficeSmall",name:"Office - Small"},
+                    {id:"Office",name:"Office - Other"},
+                    {id:"RetailStandalone",name:"Retail - Standalone"},
+                    {id:"RetailStripmall",name:"Retail - Stripmall"},
+                    {id:"Retail",name:"Retail - Other"},
+                    {id:"SchoolPrimary",name:"School - Primary"},
+                    {id:"SchoolSecondary",name:"School - Secondary"},
+                    {id:"School",name:"School - Other"},
                     {id:"Hospital",name:"Hospital"},
-                    {id:"SpecialtyHospital",name:"Specialty Hospital"},
-                    {id:"MedicalOffice",name:"Medical Office"},
-                    {id:"OutpatientCenter",name:"Outpatient Rehabilitation Center"},
-                    {id:"PhysicalTherapyCenter",name:"Physical Therapy Center"},
-                    {id:"SeniorCare",name:"Senior Care Community"},
-                    {id:"UrgentCareCenter",name:"Urgent Care Center"},
-                    {id:"Barracks",name:"Barracks"},
-                    {id:"Hotel",name:"Hotel"},
-                    {id:"MultiFamily",name:"Multifamily Housing"},
-                    {id:"Prison",name:"Prison / Incarceration"},
-                    {id:"ResidenceHall",name:"Residence Hall"},
-                    {id:"ResidentialLodging",name:"Other Residential Lodging"},
-                    {id:"MixedUse",name:"Mixed Use Property"},
-                    {id:"Office",name:"Office"},
-                    {id:"VeterinaryOffice",name:"Veterinary Office"},
-                    {id:"Courthouse",name:"Courthouse"},
-                    {id:"DrinkingWaterTreatment",name:"Drinking Water Treatment Center"},
-                    {id:"FireStation",name:"Fire Station"},
-                    {id:"Library",name:"Library"},
-                    {id:"PostOffice",name:"Post Office"},
-                    {id:"PoliceStation",name:"Police Station"},
-                    {id:"MeetingHall",name:"Meeting Hall"},
-                    {id:"TransportationTerminal",name:"Transportation Terminal"},
-                    {id:"WastewaterCenter",name:"Wastewater Treatment Center"},
-                    {id:"OtherPublicServices",name:"Other Public Services"},
-                    {id:"WorshipCenter",name:"Worship Facility"},
-                    {id:"AutoDealership",name:"Automobile Dealership"},
-                    {id:"EnclosedMall",name:"Enclosed Mall"},
-                    {id:"StripMall",name:"Strip Mall"},
-                    {id:"Retail",name:"Retail Store"},
-                    {id:"DataCenter",name:"Data Center"}, //Data Centers behave very different and require custom script
-                    {id:"PersonalServices",name:"Personal Services (Health/Beauty, Dry Cleaning, etc.)"},
-                    {id:"RepairServices",name:"Repair Services (Vehicle, Shoe Locksmith, etc.)"},
-                    {id:"OtherServices",name:"Other Services"},
-                    {id:"PowerStation",name:"Energy / Power Station"},
-                    {id:"OtherUtility",name:"Other Utility Station"},
-                    {id:"SelfStorageFacility",name:"Self Storage Facility"},
-                    {id:"Warehouse",name:"Warehouse - UnRefrigerated"},
-                    {id:"RefrigeratedWarehouse",name:"Warehouse - Refrigerated"},
-                    {id:"Warehouse",name:"Distribution Center"}
-                ],
-                residential: [
-                    {id:"SingleFamilyDetached",name:"Single Family - Detached"},
-                    {id:"SingleFamilyAttached",name:"Single Family - Attached"},
-                    {id:"MobileHome",name:"Mobile Home"},
-                    {id:"MultiFamily",name:"Multifamily Housing"}
-                ],
-                parking: [
-                {id:"FinancialOffice",name:"Bank Branch"},
-                {id:"FinancialOffice",name:"Financial Office"},
-                {id:"AdultEducation",name:"Adult Education"},
-                {id:"College",name:"College / University"},
-                {id:"K12School",name:"K-12 School"},
-                {id:"PreSchool",name:"Pre-school / DayCare"},
-                {id:"VocationalSchool",name:"Vocational School"},
-                {id:"OtherEducation",name:"Other Education"},
-                {id:"ConventionCenter",name:"Convention Center"},
-                {id:"MovieTheater",name:"Movie Theater"},
-                {id:"Museum",name:"Museum"},
-                {id:"PerformingArts",name:"Performing Arts"},
-                {id:"BowlingAlley",name:"Bowling Alley"},
-                {id:"FitnessCenter",name:"Fitness Center"},
-                {id:"IceRink",name:"Ice / Curling Rink"},
-                {id:"RollerRink",name:"Roller Rink"},
-                {id:"SwimmingPool",name:"Swimming Pool"},
-                {id:"OtherRecreation",name:"Other Recreation"},
-                {id:"Stadium",name:"Stadium"},
-                {id:"IndoorArena",name:"Indoor Arena"},
-                {id:"RaceTrack",name:"Race Track"},
-                {id:"Aquarium",name:"Aquarium"},
-                {id:"Bar",name:"Bar"},
-                //{id:"Bar",name:"Nightclub"},
-                {id:"Casino",name:"Casino"},
-                {id:"Zoo",name:"Zoo"},
-                {id:"OtherEntertainment",name:"Other Entertainment"},
-                {id:"GasStation",name:"Convenience Store with Gas Station"},
-                {id:"ConvenienceStore",name:"Convenience Store without Gas Station"},
-                {id:"FastFoodRestaurant",name:"Fast Food Restaurant"},
-                {id:"Restaurant",name:"Restaurant"},
-                {id:"Supermarket",name:"Supermarket"},
-                {id:"Retail",name:"Wholesale Club"},
-                {id:"FoodSales",name:"Food Sales"},
-                {id:"FoodService",name:"Food Service"},
-                {id:"AmbulatorySurgicalCenter",name:"Ambulatory Surgical Center"},
-                {id:"Hospital",name:"Hospital"},
-                {id:"SpecialtyHospital",name:"Specialty Hospital"},
-                {id:"MedicalOffice",name:"Medical Office"},
-                {id:"OutpatientCenter",name:"Outpatient Rehabilitation Center"},
-                {id:"PhysicalTherapyCenter",name:"Physical Therapy Center"},
-                {id:"SeniorCare",name:"Senior Care Community"},
-                {id:"UrgentCareCenter",name:"Urgent Care Center"},
-                {id:"Barracks",name:"Barracks"},
-                {id:"Hotel",name:"Hotel"},
-                {id:"MultiFamily",name:"Multifamily Housing"},
-                {id:"Prison",name:"Prison / Incarceration"},
-                {id:"ResidenceHall",name:"Residence Hall"},
-                {id:"ResidentialLodging",name:"Other Residential Lodging"},
-                {id:"MixedUse",name:"Mixed Use Property"},
-                {id:"Office",name:"Office"},
-                {id:"VeterinaryOffice",name:"Veterinary Office"},
-                {id:"Courthouse",name:"Courthouse"},
-                {id:"DrinkingWaterTreatment",name:"Drinking Water Treatment Center"},
-                {id:"FireStation",name:"Fire Station"},
-                {id:"Library",name:"Library"},
-                {id:"PostOffice",name:"Post Office"},
-                {id:"PoliceStation",name:"Police Station"},
-                {id:"MeetingHall",name:"Meeting Hall"},
-                {id:"TransportationTerminal",name:"Transportation Terminal"},
-                {id:"WastewaterCenter",name:"Wastewater Treatment Center"},
-                {id:"OtherPublicServices",name:"Other Public Services"},
-                {id:"WorshipCenter",name:"Worship Facility"},
-                {id:"AutoDealership",name:"Automobile Dealership"},
-                {id:"EnclosedMall",name:"Enclosed Mall"},
-                {id:"StripMall",name:"Strip Mall"},
-                {id:"Retail",name:"Retail Store"},
-                {id:"DataCenter",name:"Data Center"}, //Data Centers behave very different and require custom script
-                {id:"PersonalServices",name:"Personal Services (Health/Beauty, Dry Cleaning, etc.)"},
-                {id:"RepairServices",name:"Repair Services (Vehicle, Shoe Locksmith, etc.)"},
-                {id:"OtherServices",name:"Other Services"},
-                {id:"PowerStation",name:"Energy / Power Station"},
-                {id:"OtherUtility",name:"Other Utility Station"},
-                {id:"SelfStorageFacility",name:"Self Storage Facility"},
-                {id:"Warehouse",name:"Warehouse - UnRefrigerated"},
-                {id:"RefrigeratedWarehouse",name:"Warehouse - Refrigerated"},
-                {id:"Warehouse",name:"Distribution Center"},
-                {id:"Parking",name:"Parking"}
+                    {id:"OutPatientHealthCare",name:"Healthcare - Outpatient"},
+                    {id:"Healthcare",name:"Healthcare - Other"},
+                    {id:"RestaurantSitDown",name:"Restaurant - Sit Down"},
+                    {id:"RestaurantFastFood",name:"Restaurant - Fast Food"},
+                    {id:"Restaurant",name:"Restaurant - Other"},
+                    {id:"HotelLarge",name:"Hotel - Large"},
+                    {id:"HotelSmall",name:"Hotel - Small"},
+                    {id:"Hotel",name:"Hotel - Other"},
+                    {id:"Warehouse",name:"Warehouse"},
+                    {id:"ApartmentHighRise",name:"Apartment - High Rise"},
+                    {id:"ApartmentMidRise",name:"Apartment - Mid Rise"} ,
+                    {id:"Apartment",name:"Apartment - Other"},
+                    {id:"AllOthers",name:"Other"}
                 ]
             }
         };
 
-        $scope.propsWithAlgorithms = [
-           "DataCenter",
-           "Hospital",
-           "Hotel",
-           "K12School",
-           "MedicalOffice",
-           "MultiFamily",
-           "Office",
-           "Parking",
-           "ResidenceHall",
-           "Retail",
-           "SeniorCare",
-           "Supermarket",
-           "Warehouse",
-           "RefrigeratedWarehouse",
-           "WastewaterCenter",
-           "WorshipCenter"
-       ];
-
         $scope.energyProperties = {
 
             energyType:[
-                {id:"grid",name:"Electric (Grid)"},
-                {id:"grid",name:"Electric (renewable)"},
-                //{id:"onSiteElectricity",name:"Electric (Solar)"},
-                //{id:"onSiteElectricity",name:"Electric (Wind)"},
-                {id:"naturalGas",name:"Natural Gas"},
-                {id:"fuelOil1",name:"Fuel Oil 1"},
-                {id:"fuelOil2",name:"Fuel Oil 2"},
-                {id:"fuelOil4",name:"Fuel Oil 4"},
-                {id:"fuelOil6",name:"Fuel Oil 5,6"},
+                {id:"electricity",name:"Electricity"},
+                {id:"natural_gas",name:"Natural Gas"},
+                {id:"fuel_oil",name:"Fuel Oil"},
                 {id:"propane",name:"Propane"},
-                {id:"kerosene",name:"Kerosene"},
                 {id:"steam",name:"District Steam"},
-                {id:"hotWater",name:"District Hot Water"},
-                {id:"chilledWater",name:"District Chilled Water (Absorption)"},
-                {id:"chilledWater",name:"District Chilled Water (Electric)"},
-                {id:"chilledWater",name:"District Chilled Water (Engine)"},
-                {id:"chilledWater",name:"District Chilled Water (Other)"},
-                {id:"wood",name:"Wood"},
-                {id:"coke",name:"Coke"},
-                {id:"coalA",name:"Coal (Anthracite)"},
-                {id:"coalB",name:"Coal (Bituminous) "},
-                {id:"diesel",name:"Diesel"},
+                {id:"hot_water",name:"District Hot Water"},
+                {id:"chilled_water",name:"District Chilled Water"},
+                {id:"coal",name:"Coal"},
+                {id:"other",name:"Diesel"},
+                {id:"other",name:"Wood"},
+                {id:"other",name:"Coke"},
                 {id:"other",name:"Other"}
             ],
 
-            renewableType:[
-                {id:"grid",name:"On-Site Solar"},
-                {id:"grid",name:"On-Site Wind"},
-                {id:"grid",name:"On-Site Other"}
-            ],
-
-            soldType:[
-                {id:"soldGrid",name:"On-Site Solar"},
-                {id:"soldGrid",name:"On-Site Wind"},
-                {id:"soldGrid",name:"On-Site Other"}
-            ],
-
-            renewableUnits:[
-                {id:"KBtu",name:"kBtu",filter_id:"grid"},
-                {id:"MBtu",name:"MBtu",filter_id:"grid"},
-                {id:"kWh",name:"kWh",filter_id:"grid"},
-                {id:"MWh",name:"MWh",filter_id:"grid"},
-                {id:"GJ",name:"GJ",filter_id:"grid"},
-            ],
-
-
             energyUnits: [
                 //<!--Electricity - Grid -->
-                {id:"KBtu",name:"kBtu",filter_id:"grid"},
-                {id:"MBtu",name:"MBtu",filter_id:"grid"},
-                {id:"kWh",name:"kWh",filter_id:"grid"},
-                {id:"MWh",name:"MWh",filter_id:"grid"},
-                {id:"GJ",name:"GJ",filter_id:"grid"},
-
-                //<!--Electricity - Onsite Renewable-->
-                {id:"KBtu",name:"kBtu",filter_id:"onSiteElectricity"},
-                {id:"MBtu",name:"MBtu",filter_id:"onSiteElectricity"},
-                {id:"kWh",name:"kWh",filter_id:"onSiteElectricity"},
-                {id:"MWh",name:"MWh",filter_id:"onSiteElectricity"},
-                {id:"GJ",name:"GJ",filter_id:"onSiteElectricity"},
+                {id:"kBtu",name:"kBtu",filter_id:"electricity"},
+                {id:"MBtu",name:"MBtu",filter_id:"electricity"},
+                {id:"kWh",name:"kWh",filter_id:"electricity"},
+                {id:"MWh",name:"MWh",filter_id:"electricity"},
+                {id:"GJ",name:"GJ",filter_id:"electricity"},
 
                 //<!--Natural Gas -->
-                {id:"NGMcf",name:"MCF",filter_id:"naturalGas"},
-                {id:"NGKcf",name:"kcf",filter_id:"naturalGas"},
-                {id:"NGCcf",name:"ccf",filter_id:"naturalGas"},
-                {id:"NGcf",name:"cf",filter_id:"naturalGas"},
-                {id:"NGm3",name:"Cubic Meters",filter_id:"naturalGas"},
-                {id:"GJ",name:"GJ",filter_id:"naturalGas"},
-                {id:"KBtu",name:"kBtu",filter_id:"naturalGas"},
-                {id:"MBtu",name:"MBtu",filter_id:"naturalGas"},
-                {id:"therms",name:"Therms",filter_id:"naturalGas"},
+                {id:"NG Mcf",name:"Mcf",filter_id:"natural_gas"},
+                {id:"NG kcf",name:"kcf",filter_id:"natural_gas"},
+                {id:"NG ccf",name:"ccf",filter_id:"natural_gas"},
+                {id:"NG cf",name:"cf",filter_id:"natural_gas"},
+                {id:"NGm3",name:"m³",filter_id:"natural_gas"},
+                {id:"GJ",name:"GJ",filter_id:"natural_gas"},
+                {id:"kBtu",name:"kBtu",filter_id:"natural_gas"},
+                {id:"MBtu",name:"MBtu",filter_id:"natural_gas"},
+                {id:"therms",name:"Therms",filter_id:"natural_gas"},
 
                 //<!--Fuel Oil No. 1 -->
-                {id:"KBtu",name:"kBtu",filter_id:"fueloil1Unit"},
-                {id:"MBtu",name:"MBtu ",filter_id:"fueloil1Unit"},
-                {id:"GJ",name:"GJ",filter_id:"fueloil1Unit"},
-                {id:"No1UKG",name:"Gallons (UK)",filter_id:"fueloil1Unit"},
-                {id:"No1USG",name:"Gallons",filter_id:"fueloil1Unit"},
-                {id:"No1L",name:"Liters",filter_id:"fueloil1Unit"},
-
-                //<!--Fuel Oil No. 2 -->
-                {id:"KBtu",name:"kBtu",filter_id:"fueloil2Unit"},
-                {id:"MBtu",name:"MBtu",filter_id:"fueloil2Unit"},
-                {id:"GJ",name:"GJ",filter_id:"fueloil2Unit"},
-                {id:"No2UKG",name:"Gallons (UK)",filter_id:"fueloil2Unit"},
-                {id:"No2USG",name:"Gallons",filter_id:"fueloil2Unit"},
-                {id:"No2L",name:"Liters",filter_id:"fueloil2Unit"},
-
-                //<!--Fuel Oil No. 4 -->
-                {id:"KBtu",name:"kBtu",filter_id:"fueloil4Unit"},
-                {id:"MBtu",name:"MBtu",filter_id:"fueloil4Unit"},
-                {id:"GJ",name:"GJ",filter_id:"fueloil4Unit"},
-                {id:"No4UKG",name:"Gallons (UK)",filter_id:"fueloil4Unit"},
-                {id:"No4USG",name:"Gallons",filter_id:"fueloil4Unit"},
-                {id:"No4L",name:"Liters",filter_id:"fueloil4Unit"},
-
-                //<!--Fuel Oil No. 5,6 -->
-                {id:"KBtu",name:"kBtu",filter_id:"fueloil6Unit"},
-                {id:"MBtu",name:"MBtu",filter_id:"fueloil6Unit"},
-                {id:"GJ",name:"GJ",filter_id:"fueloil6Unit"},
-                {id:"No6UKG",name:"Gallons (UK)",filter_id:"fueloil6Unit"},
-                {id:"No6USG",name:"Gallons",filter_id:"fueloil6Unit"},
-                {id:"No6L",name:"Liters",filter_id:"fueloil6Unit"},
-
-                //<!--Diesel-->
-                {id:"KBtu",name:"kBtu",filter_id:"diesel"},
-                {id:"MBtu",name:"MBtu",filter_id:"diesel"},
-                {id:"GJ",name:"GJ",filter_id:"diesel"},
-                {id:"DieselUKG",name:"Gallons (UK)",filter_id:"diesel"},
-                {id:"DieselUSG",name:"Gallons",filter_id:"diesel"},
-                {id:"DieselL",name:"Liters",filter_id:"diesel"},
-
-                //<!--Kerosene-->
-                {id:"KBtu",name:"kBtu",filter_id:"kerosene"},
-                {id:"MBtu",name:"MBtu",filter_id:"kerosene"},
-                {id:"GJ",name:"GJ",filter_id:"kerosene"},
-                {id:"KeroseneUKG",name:"Gallons (UK)",filter_id:"kerosene"},
-                {id:"KeroseneUSG",name:"Gallons",filter_id:"kerosene"},
-                {id:"KeroseneL",name:"Liters",filter_id:"kerosene"},
+                {id:"kBtu",name:"kBtu",filter_id:"fuel_oil"},
+                {id:"MBtu",name:"MBtu ",filter_id:"fuel_oil"},
+                {id:"GJ",name:"GJ",filter_id:"fuel_oil"},
 
                 //<!--Propane-->
                 {id:"GJ",name:"GJ",filter_id:"propane"},
-                {id:"KBtu",name:"kBtu",filter_id:"propane"},
+                {id:"kBtu",name:"kBtu",filter_id:"propane"},
                 {id:"MBtu",name:"MBtu",filter_id:"propane"},
-                {id:"PropaneUKG",name:"Gallons (UK)",filter_id:"propane"},
-                {id:"PropaneUSG",name:"Gallons",filter_id:"propane"},
-                {id:"PropaneCf",name:"kcf",filter_id:"propane"},
-                {id:"PropaneCCf",name:"ccf",filter_id:"propane"},
-                {id:"PropaneKCf",name:"cf",filter_id:"propane"},
-                {id:"PropaneL",name:"Liters",filter_id:"propane"},
+                {id:"Propane cf",name:"kcf",filter_id:"propane"},
+                {id:"Propane ccf",name:"ccf",filter_id:"propane"},
+                {id:"Propane kcf",name:"cf",filter_id:"propane"},
+                {id:"Propane L",name:"L",filter_id:"propane"},
+                {id:"Propane igal",name:"Gallons (Imperial)",filter_id:"propane"},
+                {id:"Propane gal",name:"Gallons",filter_id:"propane"},
 
                 //<!--District Steam-->
                 {id:"GJ",name:"GJ",filter_id:"steam"},
-                {id:"KBtu",name:"kBtu",filter_id:"steam"},
+                {id:"kBtu",name:"kBtu",filter_id:"steam"},
                 {id:"MBtu",name:"MBtu",filter_id:"steam"},
                 {id:"therms",name:"Therms",filter_id:"steam"},
-                {id:"SteamLb",name:"Pounds",filter_id:"steam"},
-                {id:"SteamKLb",name:"Thousand pounds",filter_id:"steam"},
-                {id:"SteamMLb",name:"Million pounds",filter_id:"steam"},
+                {id:"Steam lb",name:"Pounds",filter_id:"steam"},
+                {id:"Steam klb",name:"k lbs",filter_id:"steam"},
+                {id:"Steam Mlb",name:"M lbs",filter_id:"steam"},
 
                 //<!--District Hot Water-->
-                {id:"KBtu",name:"kBtu",filter_id:"hotWater"},
-                {id:"MBtu",name:"MBtu",filter_id:"hotWater"},
-                {id:"GJ",name:"GJ",filter_id:"hotWater"},
-                {id:"therms",name:"Therms",filter_id:"hotWater"},
+                {id:"kBtu",name:"kBtu",filter_id:"hot_water"},
+                {id:"MBtu",name:"MBtu",filter_id:"hot_water"},
+                {id:"GJ",name:"GJ",filter_id:"hot_water"},
+                {id:"therms",name:"Therms",filter_id:"hot_water"},
 
                 //<!--District Chilled Water-->
-                {id:"KBtu",name:"kBtu",filter_id:"chilledWater"},
-                {id:"MBtu",name:"MBtu",filter_id:"chilledWater"},
-                {id:"GJ",name:"GJ",filter_id:"chilledWater"},
-                {id:"CHWTonH",name:"Ton Hours",filter_id:"chilledWater"},
+                {id:"kBtu",name:"kBtu",filter_id:"chilled_water"},
+                {id:"MBtu",name:"MBtu",filter_id:"chilled_water"},
+                {id:"GJ",name:"GJ",filter_id:"chilled_water"},
+                {id:"CHW TonH",name:"Ton Hours",filter_id:"chilled_water"},
 
-                //<!--Coal (Anthracite)-->
-                {id:"KBtu",name:"kBtu",filter_id:"coalA"},
-                {id:"MBtu",name:"MBtu",filter_id:"coalA"},
-                {id:"GJ",name:"GJ",filter_id:"coalA"},
-                {id:"CoalATon",name:"Tons",filter_id:"coalA"},
-                {id:"CoalATonne",name:"Tonnes (Metric)",filter_id:"coalA"},
-                {id:"CoalALb",name:"Pounds",filter_id:"coalA"},
-                {id:"CoalAKLb",name:"Thousand Pounds",filter_id:"coalA"},
-                {id:"CoalAMLb",name:"Million Pounds",filter_id:"coalA"},
-
-                //<!--Coal (Bituminous)-->
-                {id:"KBtu",name:"kBtu",filter_id:"coalB"},
-                {id:"MBtu",name:"MBtu",filter_id:"coalB"},
-                {id:"GJ",name:"GJ",filter_id:"coalB"},
-                {id:"CoalBitTon",name:"Tons",filter_id:"coalB"},
-                {id:"CoalBitTonne",name:"Tonnes (Metric)",filter_id:"coalB"},
-                {id:"CoalBitLb",name:"Pounds",filter_id:"coalB"},
-                {id:"CoalBitKLb",name:"Thousand Pounds",filter_id:"coalB"},
-                {id:"CoalBitMLb",name:"Million Pounds",filter_id:"coalB"},
-
-                //<!--Coke-->
-                {id:"KBtu",name:"kBtu",filter_id:"coke"},
-                {id:"MBtu",name:"MBtu",filter_id:"coke"},
-                {id:"GJ",name:"GJ",filter_id:"coke"},
-                {id:"CokeTon",name:"Tons",filter_id:"coke"},
-                {id:"CokeTonne",name:"Tonnes (Metric)",filter_id:"coke"},
-                {id:"CokeLb",name:"Pounds",filter_id:"coke"},
-                {id:"CokeKLb",name:"Thousand Pounds",filter_id:"coke"},
-                {id:"CokeMLb",name:"Million Pounds",filter_id:"coke"},
-
-                //<!--Wood-->
-                {id:"KBtu",name:"kBtu",filter_id:"wood"},
-                {id:"MBtu",name:"MBtu",filter_id:"wood"},
-                {id:"GJ",name:"GJ",filter_id:"wood"},
-                {id:"WoodTon",name:"Tons",filter_id:"wood"},
-                {id:"WoodTonne",name:"Tonnes (Metric)",filter_id:"wood"},
+                //<!--Coal-->
+                {id:"kBtu",name:"kBtu",filter_id:"coal"},
+                {id:"MBtu",name:"MBtu",filter_id:"coal"},
+                {id:"GJ",name:"GJ",filter_id:"coal"},
 
                 //<!--Other-->
-                {id:"KBtu",name:"kBtu",filter_id:"other"},
+                {id:"kBtu",name:"kBtu",filter_id:"other"},
+                {id:"MBtu",name:"MBtu",filter_id:"other"},
+                {id:"kWh",name:"kWh",filter_id:"other"},
+                {id:"MWh",name:"MWh",filter_id:"other"},
                 {id:"GJ",name:"GJ",filter_id:"other"}
                 ]
         };

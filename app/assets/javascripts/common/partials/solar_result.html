@@ -1,0 +1,71 @@
+
+<table class="rimas"style="margin-top:5px">
+
+    <tbody>
+        <tr>
+            <td class="onespace" style="width:40%">FileID</td>
+            <td class="right" style="width:30%">{{solarResults.file_id || "N/A"}}</td>
+            <td style="width:15%"></td>
+        </tr>
+        <tr>
+            <td class="onespace">City</td>
+            <td class="right">{{solarResults.city || "N/A"}}</td>
+        </tr>
+        <tr>
+            <td class="onespace">State</td>
+            <td class="right">{{solarResults.state || "N/A"}}</td>
+        </tr>
+        <tr>
+            <td class="onespace">FTE Solar Hours (kWh)</td>
+            <td class="right">{{solarResults.ac_hours  | number : 0}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="ui basic inverted white table unstackable" style="margin-top:-5px">
+    <tr>
+        <td colspan="4">
+            <hr>
+        </td>
+    </tr>
+</table>
+
+
+<table class="rimas" style="margin-top:-10px">
+
+
+    <tbody>
+
+        <tr class="bottom aligned one">
+            <td class="onespace" style="width:15%"></td>
+            <td class = "center" style="width:45%;"><b>AC Production</b><br>{{tableEnergyUnits}}</td>
+            <td class = "center"><b>DC Production</b><br>{{tableEnergyUnits}}</td>
+            <td style="width:5%"></td>
+        </tr>
+
+        <tr>
+            <td class="space"></td>
+        </tr>
+
+        <tr  class="top aligned" ng-repeat="entry in solarResults.monthly">
+            <td class="onespace">{{entry[0]}}</td>
+            <td class = "center">{{entry[1] | number : 0}}</td>
+            <td class = "center">{{entry[2] | number : 0}}</td>
+        </tr>
+
+        <tr>
+            <td class="space"></td>
+        </tr>
+
+        <tr class="top aligned">
+            <td class="onespace"><b>{{solarResults.total[0]}}</b></td>
+            <td class = "center"><b>{{solarResults.total[1] | number : 0}}</b></td>
+            <td class = "center"><b>{{solarResults.total[2] | number : 0}}</b></td>
+        </tr>
+
+        <tr>
+            <td class="space"></td>
+        </tr>
+
+    </tbody>
+</table>

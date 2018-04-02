@@ -58,53 +58,53 @@ case class EUICalculator(parameters: JsValue) {
       case _ => throw new Exception("Unidentified energy entry in array!")
     }
   }
-  
+
   def mapEnergy(units:String,value:Double):Energy = {
     units match {
-      case "KBtu" => KBtus(value)
+      case "kBtu" => KBtus(value)
       case "MBtu" => MBtus(value)
       case "kWh" => KilowattHours(value)
       case "MWh" => MegawattHours(value)
       case "GJ" => Gigajoules(value)
-      case "NGMcf" => NGMCfs(value)
-      case "NGKcf" => NGKCfs(value)
-      case "NGCcf" => NGCCfs(value)
-      case "NGcf" => NGCfs(value)
+      case "NG Mcf" => NGMCfs(value)
+      case "NG kcf" => NGKCfs(value)
+      case "NG ccf" => NGCCfs(value)
+      case "NG cf" => NGCfs(value)
       case "NGm3" => NGm3s(value)
-      case "Therms" => Therms(value)
-      case "No1UKG" => OilNo1UKGs(value)
-      case "No1USG" => OilNo1USGs(value)
-      case "No1L" => OilNo1Ls(value)
-      case "No2UKG" => OilNo2UKGs(value)
-      case "No2USG" => OilNo2USGs(value)
-      case "No2L" => OilNo2Ls(value)
-      case "No4UKG" => OilNo4UKGs(value)
-      case "No4USG" => OilNo4USGs(value)
-      case "No4L" => OilNo4Ls(value)
-      case "No6UKG" => OilNo6UKGs(value)
-      case "No6USG" => OilNo6USGs(value)
-      case "No6L" => OilNo6Ls(value)
-      case "PropaneUKG" => PropaneUKGs(value)
-      case "PropaneUSG" => PropaneUSGs(value)
-      case "PropaneCf" => PropaneCfs(value)
-      case "PropaneCCf" => PropaneCCfs(value)
-      case "PropaneKCf" => PropaneKCfs(value)
-      case "PropaneL" => PropaneLs(value)
-      case "SteamLb" => SteamLbs(value)
-      case "SteamKLb" => SteamKLbs(value)
-      case "SteamMLb" => SteamMLbs(value)
-      case "CHWTonH" => CHWTonHs(value)
-      case "CoalATon" => CoalATons(value)
-      case "CoalATonne" => CoalATonnes(value)
-      case "CoalALb" => CoalALbs(value)
-      case "CoalBitTon" => CoalBitTons(value)
-      case "CoalBitTonne" => CoalBitTonnes(value)
-      case "CoalBitLb" => CoalBitLbs(value)
-      case "CokeTon" => CokeTons(value)
-      case "CokeTonne" => CokeTonnes(value)
-      case "CokeLb" => CokeLbs(value)
-      case "WoodTon" => WoodTons(value)
-      case "WoodTonne" => WoodTonnes(value)
+      case "therms" => Therms(value)
+      case "No1 igal" => OilNo1UKGs(value)
+      case "No1 gal" => OilNo1USGs(value)
+      case "No1 L" => OilNo1Ls(value)
+      case "No2 igal" => OilNo2UKGs(value)
+      case "No2 gal" => OilNo2USGs(value)
+      case "No2 L" => OilNo2Ls(value)
+      case "No4 igal" => OilNo4UKGs(value)
+      case "No4 gal" => OilNo4USGs(value)
+      case "No4 L" => OilNo4Ls(value)
+      case "No6 igal" => OilNo6UKGs(value)
+      case "No6 gal" => OilNo6USGs(value)
+      case "No6 L" => OilNo6Ls(value)
+      case "Propane igal" => PropaneUKGs(value)
+      case "Propane gal" => PropaneUSGs(value)
+      case "Propane cf" => PropaneCfs(value)
+      case "Propane ccf" => PropaneCCfs(value)
+      case "Propane kcf" => PropaneKCfs(value)
+      case "Propane L" => PropaneLs(value)
+      case "Steam lb" => SteamLbs(value)
+      case "Steam klb" => SteamKLbs(value)
+      case "Steam Mlb" => SteamMLbs(value)
+      case "CHW TonH" => CHWTonHs(value)
+      case "CoalA ton" => CoalATons(value)
+      case "CoalA tonne" => CoalATonnes(value)
+      case "CoalA lb" => CoalALbs(value)
+      case "CoalBit ton" => CoalBitTons(value)
+      case "CoalBit tonne" => CoalBitTonnes(value)
+      case "CoalBit lb" => CoalBitLbs(value)
+      case "Coke ton" => CokeTons(value)
+      case "Coke tonne" => CokeTonnes(value)
+      case "Coke lb" => CokeLbs(value)
+      case "Wood ton" => WoodTons(value)
+      case "Wood tonne" => WoodTonnes(value)
     }
   }
 
@@ -114,10 +114,10 @@ case class EUICalculator(parameters: JsValue) {
 case class EnergyMetrics(energyType:String,energyName:String,energyUnits:String,energyUse:Double)
 object EnergyMetrics {
   implicit val energyReads: Reads[EnergyMetrics] = (
-    (JsPath \ "energyType").read[String] and
-    (JsPath \ "energyName").read[String] and
-    (JsPath \ "energyUnits").read[String] and
-    (JsPath \ "energyUse").read[Double](min(0.0))
+    (JsPath \ "energy_type").read[String] and
+    (JsPath \ "energy_name").read[String] and
+    (JsPath \ "energy_units").read[String] and
+    (JsPath \ "energy_use").read[Double](min(0.0))
     )(EnergyMetrics.apply _)
 }
 

@@ -1,0 +1,181 @@
+<div>
+    <div class="sixteen wide column" ng-show="showDivider">
+        <div class="ui divider"></div>
+    </div>
+    <div class="ui left aligned grid" style="padding-bottom:5px;">
+
+        <div class="five wide field" style="padding-top:5px;">
+            <h3 class="ui header">{{name}}</h3>
+        </div>
+
+        <div class="right floated right aligned seven wide column"
+             ng-class="{'disabled': !pvModel.estimated_area || !pvModel.areaUnits}">
+            <div checkbox class="ui checkbox checked">
+                <input type="checkbox" id="cb-default" ng-model="defaultValues" ng-init="defaultValues=true"
+                       ng-true-value=true ng-false-value=false>
+                <label for="cb-default">Use Default Values?</label>
+            </div>
+        </div>
+
+        <div class="right floated right aligned two wide column">
+            delete
+        </div>
+        <div class="right floated left aligned one wide column">
+            <div class="ui large labeled button" ng-click="removePV()" style="margin-top:.1em;">
+                <i class="minus red circle icon"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="ui left aligned grid">
+
+
+        <div class="six wide column">
+            <label>Estimated Area for Collectors</label>
+        </div>
+
+        <div class="ten wide column">
+            <div class="inline fields">
+
+                    <div class="eleven wide field required" ng-class="{error: !pvModel.estimated_area && forms.hasValidated}">
+                      <input type="number" ng-model="pvModel.estimated_area"
+                           required
+                           min="0"
+                           placeholder="Enter Number">
+                    </div>
+                    <div class="four wide field required" ng-class="{error: !pvModel.pv_area_units && forms.hasValidated}">
+                      <select class="ui dropdown"
+                          dropdown
+                          ng-model="pvModel.pv_area_units"
+                          ng-options="item.id as item.name for item in pvProperties.areaUnits"
+                          required>
+                        <option value="">Select</option>
+                      </select>
+                    </div>
+
+            </div>
+        </div>
+
+
+        <div class="six wide column">
+            <label>Module Type</label>
+        </div>
+
+        <div class="ten wide column">
+            <div class="inline fields">
+
+                <div class="sixteen wide field required">
+                <select class="ui dropdown"
+                        dropdown
+                        ng-model="pvModel.module_type"
+                        ng-options="item.id as item.name for item in pvProperties.moduleType"
+                        required>
+                    <option value="">Select</option>
+                </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="six wide column">
+            <label>Losses (%)</label>
+        </div>
+
+
+        <div class="ten wide column">
+            <div class="inline fields">
+
+                <div class="sixteen wide field required"  ng-class="{error: !pvModel.losses && forms.hasValidated}">
+
+                  <input type="number" ng-model="pvModel.losses"
+                       required
+                       min="-5"
+                       max="99"
+                       placeholder="Enter Number">
+                </div>
+            </div>
+        </div>
+
+        <div class="six wide column">
+            <label>Array Type</label>
+        </div>
+
+
+        <div class="ten wide column">
+            <div class="inline fields">
+                <div class="sixteen wide field required">
+                    <select class="ui dropdown"
+                            dropdown
+                            ng-model="pvModel.array_type"
+                            ng-options="item.id as item.name for item in pvProperties.arrayType"
+                            required>
+                        <option value="">Select</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="six wide column">
+            <label>Tilt (Degrees)</label>
+        </div>
+
+
+        <div class="ten wide column">
+            <div class="inline fields">
+                <div class="sixteen wide field required"  ng-class="{error: !pvModel.tilt && forms.hasValidated}">
+                    <input type="number" ng-model="pvModel.tilt"
+                           required
+                           min="0"
+                           max="90"
+                           placeholder="Enter Number">
+                </div>
+            </div>
+        </div>
+
+        <div class="six wide column">
+            <label>Azimuth (Degrees)</label>
+        </div>
+
+        <div class="ten wide column">
+            <div class="inline fields">
+                <div class="sixteen wide field required"   ng-class="{error: !pvModel.azimuth && forms.hasValidated}">
+                    <input type="number" ng-model="pvModel.azimuth"
+                           required
+                           min="0"
+                           max="360"
+                           placeholder="Enter Number">
+                </div>
+            </div>
+        </div>
+
+        <div class="six wide column">
+            <label>Inverter Efficiency (Degrees)</label>
+        </div>
+
+        <div class="ten wide column">
+            <div class="inline fields">
+                <div class="sixteen wide field required" ng-class="{error: !pvModel.inv_eff && forms.hasValidated}">
+                    <input type="number" ng-model="pvModel.inv_eff"
+                           required
+                           min="90"
+                           max="99.5"
+                           placeholder="Enter Number">
+                </div>
+            </div>
+        </div>
+
+
+<!--        <div class="one wide column ">
+            <div class="ui large labeled button" ng-click="addPV()" style="margin-top:.4em;">
+                <i class="add green circle icon"></i>
+            </div>
+        </div>
+        <div class="ui six wide column" style="margin-left:-18px;">
+            <label class="design-label">Add another PV System</label>
+        </div>-->
+    </div>
+</div>
+
+

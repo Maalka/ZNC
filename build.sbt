@@ -7,7 +7,7 @@ name := "znc"
 organization in ThisBuild := "com.maalka"
 
 // TODO Set your version here
-version := "1.0.0.0"
+version := "1.0.1.0"
 
 scalaVersion in ThisBuild := "2.11.6"
 
@@ -41,11 +41,11 @@ javaOptions in Universal ++= Seq(
 )
 
 */
-lazy val squants = ProjectRef(uri("https://github.com/Maalka/squants.git"), "squantsJVM")
-//lazy val root = (project in file(".")).enablePlugins(SbtWeb, PlayScala, JavaAppPackaging).dependsOn(squants)
-lazy val root = (project in file(".")).enablePlugins(PlayScala, JavaAppPackaging).dependsOn(squants)
+
+lazy val root = (project in file(".")).enablePlugins(PlayScala, JavaAppPackaging)
 
 resolvers += "emueller-bintray" at "http://dl.bintray.com/emueller/maven"
+resolvers += "Artifactory Realm" at "https://jfrog.maalka.com/artifactory/libs-release-local/"
 
 // Dependencies
 libraryDependencies ++= Seq(
@@ -65,6 +65,8 @@ libraryDependencies ++= Seq(
   "org.webjars" % "matchmedia-ng" % "1.0.5",
   "org.webjars.bower" % "filesaver" % "1.3.3",
   "org.webjars.npm" % "ng-file-upload" % "12.2.13",
+
+  "org.typelevel" %% "squants" % "1.3.1-maalka-1.0",
 
   "com.typesafe.akka" %% "akka-slf4j" % "2.5.9",
   "com.typesafe.akka" %% "akka-stream" % "2.5.9",

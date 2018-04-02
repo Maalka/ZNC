@@ -9,24 +9,6 @@ define(['highcharts', 'highcharts-more'], function(angular, nvd3) {
             },
             credits: {
                 enabled: false
-            },
-            plotOptions: {
-                area: {
-                    showInLegend: false,
-                    enableMouseTracking: false
-                },
-                column: {
-                    showInLegend: false,
-                    enableMouseTracking: false
-                },
-                line: {
-                    showInLegend: false,
-                    enableMouseTracking: false
-                },
-                flag: {
-                    showInLegend: false,
-                    enableMouseTracking: false
-                }
             }
         };
 
@@ -55,6 +37,62 @@ define(['highcharts', 'highcharts-more'], function(angular, nvd3) {
                 'Z'
             ];
         };
+        (function(H) {
+            var merge = H.merge;
+
+            H.wrap(H.Legend.prototype, 'getAllItems', function() {
+              var allItems = [],
+                chart = this.chart,
+                options = this.options,
+                legendID = options.legendID;
+
+              H.each(chart.series, function(series) {
+                if (series) {
+                  var seriesOptions = series.options;
+
+                  // use points or series for the legend item depending on legendType
+                  if (!isNaN(legendID) && (seriesOptions.legendID === legendID)) {
+                    allItems = allItems.concat(
+                      series.legendItems ||
+                      (seriesOptions.legendType === 'point' ?
+                        series.data :
+                        series)
+                    );
+                  }
+                }
+              });
+
+              return allItems;
+            });
+
+            H.wrap(H.Chart.prototype, 'render', function(p) {
+              var chart = this,
+                chartOptions = chart.options;
+
+              chart.firstLegend = new H.Legend(chart, merge(chartOptions.legend, chartOptions.firstLegend, {
+                legendID: 0
+              }));
+
+              chart.secondLegend = new H.Legend(chart, merge(chartOptions.legend, chartOptions.secondLegend, {
+                legendID: 1
+              }));
+
+              p.call(this);
+            });
+
+            H.wrap(H.Chart.prototype, 'redraw', function(p, r, a) {
+              var chart = this;
+
+              p.call(chart, r, a);
+
+              chart.firstLegend.render();
+              chart.secondLegend.render();
+            });
+
+            H.wrap(H.Legend.prototype, 'positionItem', function(p, item) {
+              p.call(this, item);
+            });
+        })(Highcharts);
         return Highcharts;
     })();
 });

@@ -16,7 +16,7 @@ import play.api.libs.json._
 import play.api.mvc._
 
 import scala.concurrent.{Await, Future}
-import squants.energy.Energy
+import squants.energy.{Energy, MegawattHours}
 
 import scala.util.control.NonFatal
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -235,14 +235,14 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
               "required":true
             },
             "prescriptive_resource": {
-              "type": "integer"
+              "type": ["integer","null"]
             },
             "reporting_units": {
               "type": "string",
               "enum": ["imperial", "metric"]
             },
             "pv_resource": {
-              "type": "integer"
+              "type": ["integer","null"]
             },
             "approach": {
               "type": "string",
@@ -250,7 +250,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
             },
             "metric": {
               "id": "/items/properties/metric",
-              "type": "object",
+              "type": ["object","null"],
               "properties": {
                 "metric_type": {
                   "type": "string",
@@ -397,34 +397,31 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
             },
             "energies": {
               "id": "/items/properties/energies",
-              "type": "array",
+              "type": ["array","null"],
               "items": {
                   "type": "object",
                   "properties": {
-                    "energyName": {
-                      "type": "string"
+                    "energy_name": {
+                      "type": ["string","null"]
                     },
-                    "energyType": {
+                    "energy_type": {
                       "type": "string",
                       "enum": ["electricity","natural_gas","fuel_oil","propane","steam","hot_water","chilled_water","coal","other"]
                     },
-                    "energyUnits": {
+                    "energy_units": {
                       "type": "string",
-                       "enum": ["KBtu","MBtu","kWh","MWh","GJ","NGMcf","NGKcf","NGCcf","NGcf", "NGm3","Therms","No1UKG","No1USG",
-                             "No1L","No2UKG","No2USG","No2L","No4UKG","No4USG","No4L","No6UKG","No6USG","No6L","PropaneUKG","PropaneUSG","PropaneCf","PropaneCCf",
-                             "PropaneKCf","PropaneL","SteamLb","SteamKLb","SteamMLb","CHWTonH","CoalATon","CoalATonne","CoalALb",
-                             "CoalBitTon","CoalBitTonne","CoalBitLb","CokeTon","CokeTonne","CokeLb","WoodTon","WoodTonne"]
+                       "enum": ["kBtu","MBtu","kWh","MWh","GJ","NG Mcf","NG kcf","NG ccf","NG cf", "NGm3","therms","Propane igal","Propane gal","Propane cf","Propane ccf",
+                             "Propane kcf","Propane L","Steam lb","Steam klb","Steam Mlb","CHW TonH"]
                     },
-                    "energyUse": {
+                    "energy_use": {
                       "type": "number",
                       "minimum": 0
                     }
                   },
                   "required": [
-                    "energyName",
-                    "energyType",
-                    "energyUnits",
-                    "energyUse"
+                    "energy_type",
+                    "energy_units",
+                    "energy_use"
                   ]
               }
             }
@@ -434,9 +431,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
         ]
       }""".stripMargin)).get
 
-  def getZEPIMetrics() = Action.async(parse.json) { implicit request =>
-
-    val Baseline: EUIMetrics = EUIMetrics(request.body, nrel_client)
+  def getZNCMetrics() = Action.async(parse.json) { implicit request =>
 
     val json: JsValue = request.body
     val result = validator.validate(schema, json)
@@ -448,6 +443,8 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
         }
       },
       valid = { post =>
+
+        val Baseline: EUIMetrics = EUIMetrics(request.body, nrel_client)
 
         val f1: Future[Either[String, JsValue]] = Baseline.getPV.map(api(_)).recover { case NonFatal(th) => apiRecover(th) }
 
@@ -474,7 +471,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
 
         def f2(ccEnergy:Double, ccIntensity:Double) = multipleFutures.map { r =>
 
-          val stationInfo = (r.head \ "station_info").get
+          val station_info = (r.head \ "station_info").get
           val version = (r.head \ "version").get
           val ac_annual: Double = r.map{a => (a \ "outputs" \ "ac_annual").as[Double]}.sum * ccEnergy
           val capacity_factor = r.map{a => (a \ "outputs" \ "capacity_factor").as[Double]}.sum / r.map{a => (a \ "outputs" \ "capacity_factor").as[Double]}.length
@@ -514,15 +511,15 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
               "poa_monthly" -> poa_monthly,
               "solrad_monthly" -> solrad_monthly
             ),
-            "stationInfo" -> stationInfo,
+            "station_info" -> station_info,
             "version" -> version
           )
           Right(a)
         }
 
-        def solarTotal(ccEnergy:Double, ccIntensity:Double):Future[Double] = multipleFutures.map { r =>
+        def solarTotal:Future[Double] = multipleFutures.map { r =>
 
-          r.map{a => (a \ "outputs" \ "ac_annual").as[Double]}.sum * ccEnergy
+          r.map{a => (a \ "outputs" \ "ac_annual").as[Double]}.sum
 
         }
 
@@ -543,33 +540,29 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
 
         val performanceRequirements: Future[Map[String,Any]] = {
           for {
-            totalSite <- Baseline.getTotalSiteEnergy
             cc_energy <- Baseline.solarConversionEnergy
-            cc_intensity <- Baseline.solarConversionIntensity
-            e1 <- f1
-            pvTotal <- solarTotal(cc_energy, cc_intensity)
+            totalSite <- Baseline.getTotalSiteEnergy
+            pvTotal <- solarTotal
           } yield {
             Map(
-              "re_rec_onsite_pv" -> pvTotal,
-              "building_energy" -> totalSite.value,
-              "re_total_needed" -> totalSite.value,
-              "re_procured" -> Math.max(totalSite.value - pvTotal,0.0)
+              "re_rec_onsite_pv" -> pvTotal / 1000 * cc_energy,
+              "building_energy" -> MegawattHours(totalSite to MegawattHours).value * cc_energy,
+              "re_total_needed" -> MegawattHours(totalSite to MegawattHours).value * cc_energy,
+              "re_procured" -> Math.max(MegawattHours(totalSite to MegawattHours).value - (pvTotal/1000),0.0) * cc_energy
             )
           }
         }
         val prescriptiveRequirements: Future[Map[String,Any]] = {
           for {
-            totalPrescriptive <- Baseline.getPrescriptiveTotalSite
             cc_energy <- Baseline.solarConversionEnergy
-            cc_intensity <- Baseline.solarConversionIntensity
-            e1 <- f1
-            pvTotal <- solarTotal(cc_energy, cc_intensity)
+            totalPrescriptive <- Baseline.getPrescriptiveTotalSite
+            pvTotal <- solarTotal
           } yield {
             Map(
-              "re_rec_onsite_pv" -> pvTotal,
-              "prescriptive_building_energy" -> totalPrescriptive.value,
-              "prescriptive_re_total_needed" -> totalPrescriptive.value,
-              "prescriptive_re_procured" -> Math.max(totalPrescriptive.value - pvTotal,0.0)
+              "re_rec_onsite_pv" -> pvTotal / 1000 * cc_energy,
+              "prescriptive_building_energy" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
+              "prescriptive_re_total_needed" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
+              "prescriptive_re_procured" -> Math.max(MegawattHours(totalPrescriptive to MegawattHours).value - (pvTotal/1000),0.0) * cc_energy
               )
           }
         }
@@ -621,6 +614,9 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
           Baseline.getPrescriptiveMetrics.map(api(_)).recover { case NonFatal(th) => apiRecover(th) },
 
           Baseline.getPV.map(api(_)).recover { case NonFatal(th) => apiRecover(th) } ,
+          Baseline.getPVarea.map(api(_)).recover { case NonFatal(th) => apiRecover(th) } ,
+          Baseline.getPVcapacity.map(api(_)).recover { case NonFatal(th) => apiRecover(th) } ,
+
           solar_errors.recover { case NonFatal(th) => apiRecover(th) } ,
           solar_warnings.recover { case NonFatal(th) => apiRecover(th) } ,
           merged.recover { case NonFatal(th) => apiRecover(th) },
@@ -633,12 +629,14 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
         val fieldNames = Seq(
 
           "performance_requirements",
-          "prescriptive_Requirements",
+          "prescriptive_requirements",
 
           "performance_metrics",
           "prescriptive_metrics",
 
           "pv_array",
+          "pv_area",
+          "pv_capacity_kW",
           "pvwatts_errors",
           "pvwatts_warnings",
           "pvwatts_system_details",
