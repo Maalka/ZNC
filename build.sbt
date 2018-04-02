@@ -1,13 +1,13 @@
 import WebKeys._
 
 // TODO Replace with your project's/module's name
-name := "benchmark"
+name := "znc"
 
 // TODO Set your organization here; ThisBuild means it will apply to all sub-modules
 organization in ThisBuild := "com.maalka"
 
 // TODO Set your version here
-version := "1.8.1.0"
+version := "1.0.0.0"
 
 scalaVersion in ThisBuild := "2.11.6"
 
