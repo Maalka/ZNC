@@ -42,6 +42,7 @@ define(['angular','./main'], function(angular) {
                     $scope.pvModel.tilt=null;
                     $scope.pvModel.azimuth=null;
                     $scope.pvModel.inv_eff=null;
+                    $scope.pvModel.estimated_area=null;
                 };
 
                 $scope.$watch("defaultValues", function () {
@@ -157,20 +158,44 @@ define(['angular','./main'], function(angular) {
                 //for setting defaults based on building Type, Country does not matter here due to unused parameters upon analysis
                 $scope.setDefaults = function() {
 
-                        setpvModelFields();
+                    setpvModelFields();
 
-                        // set the defaults
-                        $scope.pvModelFields.pvSystem.forEach(function (v){
-                            $scope.pvModel[v.name] = v.default;
-                        });
+                    // set the defaults
+                    $scope.pvModelFields.pvSystem.forEach(function (v){
+                        $scope.pvModel[v.name] = v.default;
+                    });
+
+                    var floor_area = 0.0;
+
+                    for (var i =0; i < $scope.benchmark.propTypes.length; i ++) {
+                        var units = $scope.benchmark.propTypes[i].propertyModel.floor_area_units;
+
+                        if(units === "mSQ"){
+                            floor_area = floor_area + $scope.benchmark.propTypes[i].propertyModel.floor_area;
+                        } else {
+                             floor_area = floor_area + $scope.benchmark.propTypes[i].propertyModel.floor_area / 10.7639;
+                        }
+
+                    }
+
+                    console.log(floor_area);
+
+                    var stories = $scope.benchmark.auxModel.stories;
+
+                    if (stories !== undefined && stories !== null && floor_area !== undefined && floor_area !== null)
+                    {
+                        $scope.pvModel.estimated_area = (floor_area / stories) - 8 * (Math.sqrt(floor_area / stories) - 2);
+                        $scope.pvModel.pv_area_units = "mSQ";
+                    } else {
+                        $scope.pvModel.estimated_area = null;
+                        $scope.pvModel.pv_area_units = "mSQ";
+                    }
                 };
 
 
             }]
         };
     }]);
-
-
 
   return mod;
 });

@@ -97,8 +97,8 @@ case class SolarProperties(parameters: JsValue) {
           case _ => throw new Exception("If PV Area is supplied, pv_area_units must be mSQ or ftSQ! ")
         }
       }
-      case _ => (solarResources.floor_area / solarResources.stories) - 4 * access_perimeter * (math.sqrt(solarResources.floor_area /
-        solarResources.stories) - access_perimeter)
+        case _ => (solarResources.floor_area / solarResources.stories) - 4 * access_perimeter * (math.sqrt(solarResources.floor_area /
+          solarResources.stories) - access_perimeter)
     }
 
     //Default access perimeter

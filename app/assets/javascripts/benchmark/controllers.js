@@ -302,14 +302,11 @@ define(['angular'], function() {
 
         $q.resolve($scope.futures).then(function (results) {
 
-
-
             $scope.buildingRequirements = $scope.setBuildingRequirements(results);
 
             $scope.solarResults = $scope.getPropResponseField(results,"pvwatts_system_details");
             $scope.solarMonthly = $scope.solarResults.outputs;
             $scope.prescriptiveRequirements = $scope.computePrescriptiveRequirements(results);
-
 
             $scope.endUses = $scope.computeEndUses(results);
 
@@ -340,7 +337,9 @@ define(['angular'], function() {
         return returnValue;
     };
 
-    $scope.getPropSize = function(building_sub_types){
+    $scope.getPropSize = function(){
+
+        var building_sub_types = $scope.getPropResponseField(results,"building_sub_types");
 
         var size = [];
         for (var i =0; i < building_sub_types.length; i ++) {
@@ -353,9 +352,8 @@ define(['angular'], function() {
     $scope.computePerformanceRequirements = function(results){
 
         var performance_requirements = $scope.getPropResponseField(results,"performance_requirements");
-        var building_sub_types = $scope.getPropResponseField(results,"building_sub_types");
 
-        var building_size = $scope.getPropSize(building_sub_types);
+        var building_size = $scope.getPropSize();
 
         var performanceTable = {
               "pv_area": ($scope.getPropResponseField(results,"pv_area")),
@@ -378,9 +376,8 @@ define(['angular'], function() {
     $scope.computePrescriptiveRequirements = function(results){
 
         var prescriptive_requirements = $scope.getPropResponseField(results,"prescriptive_requirements");
-        var building_sub_types = $scope.getPropResponseField(results,"building_sub_types");
 
-        var building_size = $scope.getPropSize(building_sub_types);
+        var building_size = $scope.getPropSize();
 
         var prescriptiveTable = {
               "pv_area": ($scope.getPropResponseField(results,"pv_area")),
