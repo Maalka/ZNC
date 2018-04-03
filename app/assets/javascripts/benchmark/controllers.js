@@ -337,9 +337,7 @@ define(['angular'], function() {
         return returnValue;
     };
 
-    $scope.getPropSize = function(){
-
-        var building_sub_types = $scope.getPropResponseField(results,"building_sub_types");
+    $scope.getPropSize = function(building_sub_types){
 
         var size = [];
         for (var i =0; i < building_sub_types.length; i ++) {
@@ -353,7 +351,8 @@ define(['angular'], function() {
 
         var performance_requirements = $scope.getPropResponseField(results,"performance_requirements");
 
-        var building_size = $scope.getPropSize();
+        var building_sub_types = $scope.getPropResponseField(results,"building_sub_types");
+        var building_size = $scope.getPropSize(building_sub_types);
 
         var performanceTable = {
               "pv_area": ($scope.getPropResponseField(results,"pv_area")),
@@ -377,7 +376,8 @@ define(['angular'], function() {
 
         var prescriptive_requirements = $scope.getPropResponseField(results,"prescriptive_requirements");
 
-        var building_size = $scope.getPropSize();
+        var building_sub_types = $scope.getPropResponseField(results,"building_sub_types");
+        var building_size = $scope.getPropSize(building_sub_types);
 
         var prescriptiveTable = {
               "pv_area": ($scope.getPropResponseField(results,"pv_area")),
