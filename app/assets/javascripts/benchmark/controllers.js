@@ -9646,7 +9646,7 @@ define(['angular'], function() {
                     "city": "Ahmadabad",
                     "country": "India",
                     "lon": "72.63",
-                    "cz": "0B",
+                    "cz": "1B",
                     "file": "0-14607",
                     "lat": "23.07"
                   },
@@ -9654,7 +9654,7 @@ define(['angular'], function() {
                     "city": "Akola",
                     "country": "India",
                     "lon": "77.07",
-                    "cz": "0B",
+                    "cz": "1B",
                     "file": "0-14607",
                     "lat": "20.7"
                   },
@@ -9670,7 +9670,7 @@ define(['angular'], function() {
                     "city": "Balasore",
                     "country": "India",
                     "lon": "86.93",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-41415",
                     "lat": "21.52"
                   },
@@ -9702,7 +9702,7 @@ define(['angular'], function() {
                     "city": "Bhubaneswar",
                     "country": "India",
                     "lon": "85.83",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-41415",
                     "lat": "20.25"
                   },
@@ -9710,7 +9710,7 @@ define(['angular'], function() {
                     "city": "Bhuj-Rudramata",
                     "country": "India",
                     "lon": "69.67",
-                    "cz": "0B",
+                    "cz": "1B",
                     "file": "0-14607",
                     "lat": "23.25"
                   },
@@ -9718,7 +9718,7 @@ define(['angular'], function() {
                     "city": "Bikaner",
                     "country": "India",
                     "lon": "73.3",
-                    "cz": "0B",
+                    "cz": "1B",
                     "file": "0-14607",
                     "lat": "28"
                   },
@@ -9726,7 +9726,7 @@ define(['angular'], function() {
                     "city": "Bombay/Santacruz",
                     "country": "India",
                     "lon": "72.85",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "19.12"
                   },
@@ -9734,7 +9734,7 @@ define(['angular'], function() {
                     "city": "Calcutta/Dum Dum",
                     "country": "India",
                     "lon": "88.45",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-41415",
                     "lat": "22.65"
                   },
@@ -9750,7 +9750,7 @@ define(['angular'], function() {
                     "city": "Coimbatore/Peelamed",
                     "country": "India",
                     "lon": "77.05",
-                    "cz": "0B",
+                    "cz": "1B",
                     "file": "0-14607",
                     "lat": "11.03"
                   },
@@ -9758,7 +9758,7 @@ define(['angular'], function() {
                     "city": "Cuddalore",
                     "country": "India",
                     "lon": "79.77",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "11.77"
                   },
@@ -9766,7 +9766,7 @@ define(['angular'], function() {
                     "city": "Cwc Vishakhapatnam",
                     "country": "India",
                     "lon": "83.3",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "17.7"
                   },
@@ -9790,7 +9790,7 @@ define(['angular'], function() {
                     "city": "Goa/Panjim",
                     "country": "India",
                     "lon": "73.82",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "15.48"
                   },
@@ -9814,7 +9814,7 @@ define(['angular'], function() {
                     "city": "Hyderabad Airport",
                     "country": "India",
                     "lon": "78.47",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "17.45"
                   },
@@ -9854,7 +9854,7 @@ define(['angular'], function() {
                     "city": "Jamshedpur",
                     "country": "India",
                     "lon": "86.18",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-41415",
                     "lat": "22.82"
                   },
@@ -9862,7 +9862,7 @@ define(['angular'], function() {
                     "city": "Jodhpur",
                     "country": "India",
                     "lon": "73.02",
-                    "cz": "0B",
+                    "cz": "1B",
                     "file": "0-14607",
                     "lat": "26.3"
                   },
@@ -9870,7 +9870,7 @@ define(['angular'], function() {
                     "city": "Kakinada",
                     "country": "India",
                     "lon": "82.23",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "16.95"
                   },
@@ -9878,7 +9878,7 @@ define(['angular'], function() {
                     "city": "Kozhikode",
                     "country": "India",
                     "lon": "75.78",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "11.25"
                   },
@@ -9886,7 +9886,7 @@ define(['angular'], function() {
                     "city": "Kurnool",
                     "country": "India",
                     "lon": "78.07",
-                    "cz": "0B",
+                    "cz": "1B",
                     "file": "0-14607",
                     "lat": "15.8"
                   },
@@ -9902,7 +9902,7 @@ define(['angular'], function() {
                     "city": "Machilipatnam",
                     "country": "India",
                     "lon": "81.15",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "16.2"
                   },
@@ -9910,7 +9910,7 @@ define(['angular'], function() {
                     "city": "Madras/Minambakkam",
                     "country": "India",
                     "lon": "80.18",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "13"
                   },
@@ -9918,7 +9918,7 @@ define(['angular'], function() {
                     "city": "Mangalore/Bajpe",
                     "country": "India",
                     "lon": "74.88",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "12.92"
                   },
@@ -9926,7 +9926,7 @@ define(['angular'], function() {
                     "city": "Nagpur Sonegaon",
                     "country": "India",
                     "lon": "79.05",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "21.1"
                   },
@@ -9934,7 +9934,7 @@ define(['angular'], function() {
                     "city": "Nellore",
                     "country": "India",
                     "lon": "79.98",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "14.45"
                   },
@@ -9974,7 +9974,7 @@ define(['angular'], function() {
                     "city": "Pbo Anantapur",
                     "country": "India",
                     "lon": "77.63",
-                    "cz": "0B",
+                    "cz": "1B",
                     "file": "0-14607",
                     "lat": "14.58"
                   },
@@ -9990,7 +9990,7 @@ define(['angular'], function() {
                     "city": "Rajkot",
                     "country": "India",
                     "lon": "70.78",
-                    "cz": "0B",
+                    "cz": "1B",
                     "file": "0-14607",
                     "lat": "22.3"
                   },
@@ -9998,7 +9998,7 @@ define(['angular'], function() {
                     "city": "Ratnagiri",
                     "country": "India",
                     "lon": "73.33",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "16.98"
                   },
@@ -10006,7 +10006,7 @@ define(['angular'], function() {
                     "city": "Sholapur",
                     "country": "India",
                     "lon": "75.9",
-                    "cz": "0B",
+                    "cz": "1B",
                     "file": "0-14607",
                     "lat": "17.67"
                   },
@@ -10014,7 +10014,7 @@ define(['angular'], function() {
                     "city": "Surat",
                     "country": "India",
                     "lon": "72.83",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "21.2"
                   },
@@ -10022,7 +10022,7 @@ define(['angular'], function() {
                     "city": "Thiruvananthapuram",
                     "country": "India",
                     "lon": "76.95",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "8.48"
                   },
@@ -10030,7 +10030,7 @@ define(['angular'], function() {
                     "city": "Tiruchchirapalli",
                     "country": "India",
                     "lon": "78.72",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-14607",
                     "lat": "10.77"
                   },
@@ -10038,7 +10038,7 @@ define(['angular'], function() {
                     "city": "Veraval",
                     "country": "India",
                     "lon": "70.37",
-                    "cz": "0B",
+                    "cz": "1B",
                     "file": "0-14607",
                     "lat": "20.9"
                   },
@@ -12142,7 +12142,7 @@ define(['angular'], function() {
                     "city": "Sanhu Dao",
                     "country": "China",
                     "lon": "111.62",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-41415",
                     "lat": "16.53"
                   },
@@ -12526,7 +12526,7 @@ define(['angular'], function() {
                     "city": "Truong Sa",
                     "country": "China",
                     "lon": "111.92",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-41415",
                     "lat": "8.65"
                   },
@@ -12822,7 +12822,7 @@ define(['angular'], function() {
                     "city": "Xisha Dao",
                     "country": "China",
                     "lon": "112.33",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-41415",
                     "lat": "16.83"
                   },
@@ -12910,7 +12910,7 @@ define(['angular'], function() {
                     "city": "Yaxian",
                     "country": "China",
                     "lon": "109.52",
-                    "cz": "0A",
+                    "cz": "1A",
                     "file": "0-41415",
                     "lat": "18.23"
                   },
