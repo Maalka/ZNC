@@ -617,29 +617,29 @@ define(['angular'], function() {
 
             buildingType: {
                 commercial: [
-                    {id:"OfficeLarge",name:"Office - Large"},
-                    {id:"OfficeMedium",name:"Office - Medium"},
-                    {id:"OfficeSmall",name:"Office - Small"},
-                    {id:"Office",name:"Office - Other"},
-                    {id:"RetailStandalone",name:"Retail - Standalone"},
-                    {id:"RetailStripmall",name:"Retail - Stripmall"},
-                    {id:"Retail",name:"Retail - Other"},
-                    {id:"SchoolPrimary",name:"School - Primary"},
-                    {id:"SchoolSecondary",name:"School - Secondary"},
-                    {id:"School",name:"School - Other"},
-                    {id:"Hospital",name:"Hospital"},
-                    {id:"OutPatientHealthCare",name:"Healthcare - Outpatient"},
-                    {id:"Healthcare",name:"Healthcare - Other"},
-                    {id:"RestaurantSitDown",name:"Restaurant - Sit Down"},
-                    {id:"RestaurantFastFood",name:"Restaurant - Fast Food"},
-                    {id:"Restaurant",name:"Restaurant - Other"},
-                    {id:"HotelLarge",name:"Hotel - Large"},
-                    {id:"HotelSmall",name:"Hotel - Small"},
-                    {id:"Hotel",name:"Hotel - Other"},
+                    //{id:"OfficeLarge",name:"Office - Large"},
+                    //{id:"OfficeMedium",name:"Office - Medium"},
+                    //{id:"OfficeSmall",name:"Office - Small"},
+                    {id:"Office",name:"Office"},
+                    //{id:"RetailStandalone",name:"Retail - Standalone"},
+                    //{id:"RetailStripmall",name:"Retail - Stripmall"},
+                    {id:"Retail",name:"Retail"},
+                    //{id:"SchoolPrimary",name:"School - Primary"},
+                    //{id:"SchoolSecondary",name:"School - Secondary"},
+                    {id:"School",name:"School"},
+                    //{id:"Hospital",name:"Hospital"},
+                    //{id:"OutPatientHealthCare",name:"Healthcare - Outpatient"},
+                    {id:"Healthcare",name:"Healthcare"},
+                    //{id:"RestaurantSitDown",name:"Restaurant - Sit Down"},
+                    //{id:"RestaurantFastFood",name:"Restaurant - Fast Food"},
+                    {id:"Restaurant",name:"Restaurant"},
+                    //{id:"HotelLarge",name:"Hotel - Large"},
+                    //{id:"HotelSmall",name:"Hotel - Small"},
+                    {id:"Hotel",name:"Hotel"},
                     {id:"Warehouse",name:"Warehouse"},
-                    {id:"ApartmentHighRise",name:"Apartment - High Rise"},
-                    {id:"ApartmentMidRise",name:"Apartment - Mid Rise"} ,
-                    {id:"Apartment",name:"Apartment - Other"},
+                    //{id:"ApartmentHighRise",name:"Apartment - High Rise"},
+                    //{id:"ApartmentMidRise",name:"Apartment - Mid Rise"} ,
+                    {id:"Apartment",name:"Apartment"},
                     {id:"AllOthers",name:"Other"}
                 ]
             }
@@ -9639,7 +9639,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "91.25",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-419230-tm3",
                     "lat": "23.88"
                   },
                   {
@@ -9647,7 +9647,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "72.63",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-426470-tm3",
                     "lat": "23.07"
                   },
                   {
@@ -9655,7 +9655,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "77.07",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-428670-tm3",
                     "lat": "20.7"
                   },
                   {
@@ -9663,7 +9663,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "75.4",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-430030-tm3",
                     "lat": "19.85"
                   },
                   {
@@ -9671,7 +9671,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "86.93",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-428090-tm3",
                     "lat": "21.52"
                   },
                   {
@@ -9679,7 +9679,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "77.58",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-432950-EPW-ISHRAE-epw",
                     "lat": "12.97"
                   },
                   {
@@ -9687,7 +9687,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "74.62",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-431920-tm3",
                     "lat": "15.85"
                   },
                   {
@@ -9695,7 +9695,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "77.35",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-428670-tm3",
                     "lat": "23.28"
                   },
                   {
@@ -9703,7 +9703,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "85.83",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-427010-EPW-ISHRAE-epw",
                     "lat": "20.25"
                   },
                   {
@@ -9711,7 +9711,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "69.67",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-426470-tm3",
                     "lat": "23.25"
                   },
                   {
@@ -9719,7 +9719,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "73.3",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-421820-tm3",
                     "lat": "28"
                   },
                   {
@@ -9727,7 +9727,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "72.85",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-430030-tm3",
                     "lat": "19.12"
                   },
                   {
@@ -9735,7 +9735,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "88.45",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-428090-tm3",
                     "lat": "22.65"
                   },
                   {
@@ -9743,7 +9743,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "76.43",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-432330-EPW-ISHRAE-epw",
                     "lat": "14.23"
                   },
                   {
@@ -9751,7 +9751,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "77.05",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-433440-EPW-ISHRAE-epw",
                     "lat": "11.03"
                   },
                   {
@@ -9759,7 +9759,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "79.77",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-432790-tm3",
                     "lat": "11.77"
                   },
                   {
@@ -9767,7 +9767,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "83.3",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-431500-EPW-ISHRAE-epw",
                     "lat": "17.7"
                   },
                   {
@@ -9775,7 +9775,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "75.63",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-432330-EPW-ISHRAE-epw",
                     "lat": "15.42"
                   },
                   {
@@ -9783,7 +9783,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "91.58",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-424100-EPW-ISHRAE-epw",
                     "lat": "26.1"
                   },
                   {
@@ -9791,7 +9791,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "73.82",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-431920-tm3",
                     "lat": "15.48"
                   },
                   {
@@ -9799,7 +9799,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "78.25",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-423610-EPW-ISHRAE-epw",
                     "lat": "26.23"
                   },
                   {
@@ -9807,7 +9807,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "75.73",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-421820-tm3",
                     "lat": "29.17"
                   },
                   {
@@ -9815,7 +9815,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "78.47",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-430860-EPW-ISHRAE-epw",
                     "lat": "17.45"
                   },
                   {
@@ -9823,7 +9823,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "75.8",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-426470-tm3",
                     "lat": "22.72"
                   },
                   {
@@ -9831,7 +9831,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "79.95",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-428670-tm3",
                     "lat": "23.2"
                   },
                   {
@@ -9839,7 +9839,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "82.03",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-431500-EPW-ISHRAE-epw",
                     "lat": "19.08"
                   },
                   {
@@ -9847,7 +9847,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "75.8",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-421820-tm3",
                     "lat": "26.82"
                   },
                   {
@@ -9855,7 +9855,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "86.18",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-427010-EPW-ISHRAE-epw",
                     "lat": "22.82"
                   },
                   {
@@ -9863,7 +9863,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "73.02",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-426470-tm3",
                     "lat": "26.3"
                   },
                   {
@@ -9871,7 +9871,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "82.23",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-431500-EPW-ISHRAE-epw",
                     "lat": "16.95"
                   },
                   {
@@ -9879,7 +9879,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "75.78",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-432840-EPW-ISHRAE-epw",
                     "lat": "11.25"
                   },
                   {
@@ -9887,7 +9887,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "78.07",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-432130-EPW-ISHRAE-epw",
                     "lat": "15.8"
                   },
                   {
@@ -9895,7 +9895,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "80.88",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-444160-tm3",
                     "lat": "26.75"
                   },
                   {
@@ -9903,7 +9903,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "81.15",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-432450-EPW-ISHRAE-epw",
                     "lat": "16.2"
                   },
                   {
@@ -9911,7 +9911,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "80.18",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-432790-tm3",
                     "lat": "13"
                   },
                   {
@@ -9919,7 +9919,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "74.88",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-432840-EPW-ISHRAE-epw",
                     "lat": "12.92"
                   },
                   {
@@ -9927,7 +9927,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "79.05",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-428670-tm3",
                     "lat": "21.1"
                   },
                   {
@@ -9935,7 +9935,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "79.98",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-432450-EPW-ISHRAE-epw",
                     "lat": "14.45"
                   },
                   {
@@ -9943,7 +9943,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "77.12",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-421820-tm3",
                     "lat": "28.57"
                   },
                   {
@@ -9951,7 +9951,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "77.2",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-421820-tm3",
                     "lat": "28.58"
                   },
                   {
@@ -9959,7 +9959,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "76.47",
                     "cz": "2B",
-                    "file": "0-14607",
+                    "file": "2-421820-tm3",
                     "lat": "30.33"
                   },
                   {
@@ -9967,7 +9967,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "85.1",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-424980-EPW-ISHRAE-epw",
                     "lat": "25.6"
                   },
                   {
@@ -9975,7 +9975,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "77.63",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-432130-EPW-ISHRAE-epw",
                     "lat": "14.58"
                   },
                   {
@@ -9983,7 +9983,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "73.85",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-430030-tm3",
                     "lat": "18.53"
                   },
                   {
@@ -9991,7 +9991,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "70.78",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-426470-tm3",
                     "lat": "22.3"
                   },
                   {
@@ -9999,7 +9999,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "73.33",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-431100-EPW-ISHRAE-epw",
                     "lat": "16.98"
                   },
                   {
@@ -10007,7 +10007,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "75.9",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-431100-EPW-ISHRAE-epw",
                     "lat": "17.67"
                   },
                   {
@@ -10015,7 +10015,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "72.83",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-426470-tm3",
                     "lat": "21.2"
                   },
                   {
@@ -10023,7 +10023,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "76.95",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-433710-tm3",
                     "lat": "8.48"
                   },
                   {
@@ -10031,7 +10031,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "78.72",
                     "cz": "1A",
-                    "file": "0-14607",
+                    "file": "2-433440-EPW-ISHRAE-epw",
                     "lat": "10.77"
                   },
                   {
@@ -10039,7 +10039,7 @@ define(['angular'], function() {
                     "country": "India",
                     "lon": "70.37",
                     "cz": "1B",
-                    "file": "0-14607",
+                    "file": "2-430030-tm3",
                     "lat": "20.9"
                   },
                   {
@@ -10047,7 +10047,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.95",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-531920-EPW-CSWD-epw",
                     "lat": "44.02"
                   },
                   {
@@ -10055,7 +10055,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "127.45",
                     "cz": "7",
-                    "file": "0-25713",
+                    "file": "2-505640-EPW-CSWD-epw",
                     "lat": "50.25"
                   },
                   {
@@ -10063,7 +10063,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "78.45",
                     "cz": "6B",
-                    "file": "0-14607",
+                    "file": "2-517160-EPW-CSWD-epw",
                     "lat": "40.93"
                   },
                   {
@@ -10071,7 +10071,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "81.05",
                     "cz": "5B",
-                    "file": "0-14607",
+                    "file": "2-516280-EPW-CSWD-epw",
                     "lat": "40.5"
                   },
                   {
@@ -10079,7 +10079,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "88.08",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-510760-tm3",
                     "lat": "47.73"
                   },
                   {
@@ -10087,7 +10087,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "125.32",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-508540-EPW-CSWD-epw",
                     "lat": "46.38"
                   },
                   {
@@ -10095,7 +10095,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "83.65",
                     "cz": "5B",
-                    "file": "0-14607",
+                    "file": "2-518390-EPW-CSWD-epw",
                     "lat": "37.93"
                   },
                   {
@@ -10103,7 +10103,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "109.03",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-572450-tm3",
                     "lat": "32.72"
                   },
                   {
@@ -10111,7 +10111,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.05",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-584240-EPW-CSWD-epw",
                     "lat": "30.53"
                   },
                   {
@@ -10119,7 +10119,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.4",
                     "cz": "4B",
-                    "file": "0-41415",
+                    "file": "2-538980-EPW-CSWD-epw",
                     "lat": "36.05"
                   },
                   {
@@ -10127,7 +10127,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "119.93",
                     "cz": "8",
-                    "file": "0-41415",
+                    "file": "2-507270-EPW-CSWD-epw",
                     "lat": "47.17"
                   },
                   {
@@ -10135,7 +10135,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "78.57",
                     "cz": "4B",
-                    "file": "0-14607",
+                    "file": "2-517160-EPW-CSWD-epw",
                     "lat": "39.8"
                   },
                   {
@@ -10143,7 +10143,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "110.43",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-533520-tm3",
                     "lat": "41.7"
                   },
                   {
@@ -10151,7 +10151,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "90.02",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-555910-tm3",
                     "lat": "31.37"
                   },
                   {
@@ -10159,7 +10159,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "106.6",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-592110-EPW-CSWD-epw",
                     "lat": "23.9"
                   },
                   {
@@ -10167,7 +10167,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "86.33",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-515670-EPW-CSWD-epw",
                     "lat": "42.67"
                   },
                   {
@@ -10175,7 +10175,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "115.57",
                     "cz": "4B",
-                    "file": "0-41415",
+                    "file": "2-546060-EPW-CSWD-epw",
                     "lat": "38.85"
                   },
                   {
@@ -10183,7 +10183,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "107.13",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-570160-tm3",
                     "lat": "34.35"
                   },
                   {
@@ -10191,7 +10191,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "132.18",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-507880-EPW-CSWD-epw",
                     "lat": "46.32"
                   },
                   {
@@ -10199,7 +10199,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "99.18",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-567390-EPW-CSWD-epw",
                     "lat": "25.12"
                   },
                   {
@@ -10207,7 +10207,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "102.23",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-561720-EPW-CSWD-epw",
                     "lat": "31.9"
                   },
                   {
@@ -10215,7 +10215,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "99.1",
                     "cz": "4B",
-                    "file": "0-41415",
+                    "file": "2-562470-tm3",
                     "lat": "30"
                   },
                   {
@@ -10223,7 +10223,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "104.5",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-524950-EPW-CSWD-epw",
                     "lat": "40.75"
                   },
                   {
@@ -10231,7 +10231,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "84.15",
                     "cz": "8",
-                    "file": "0-41415",
+                    "file": "2-513460-EPW-CSWD-epw",
                     "lat": "43.03"
                   },
                   {
@@ -10239,7 +10239,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "90.53",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-510870-EPW-CSWD-epw",
                     "lat": "45.37"
                   },
                   {
@@ -10247,7 +10247,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "109.1",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-596320-EPW-CSWD-epw",
                     "lat": "21.48"
                   },
                   {
@@ -10255,7 +10255,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.28",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-545110-tm3",
                     "lat": "39.93"
                   },
                   {
@@ -10263,7 +10263,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.37",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-582210-EPW-CSWD-epw",
                     "lat": "32.95"
                   },
                   {
@@ -10271,7 +10271,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "123.78",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-543460-EPW-CSWD-epw",
                     "lat": "41.32"
                   },
                   {
@@ -10279,7 +10279,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "105.23",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-577070-EPW-CSWD-epw",
                     "lat": "27.3"
                   },
                   {
@@ -10287,7 +10287,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.33",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-545270-EPW-CSWD-epw",
                     "lat": "39.12"
                   },
                   {
@@ -10295,7 +10295,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "115.77",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-581020-EPW-CSWD-epw",
                     "lat": "33.88"
                   },
                   {
@@ -10303,7 +10303,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "121.92",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-506320-tm3",
                     "lat": "48.77"
                   },
                   {
@@ -10311,7 +10311,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "120.7",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-543370-EPW-CSWD-epw",
                     "lat": "42.33"
                   },
                   {
@@ -10319,7 +10319,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.83",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-545270-EPW-CSWD-epw",
                     "lat": "38.33"
                   },
                   {
@@ -10327,7 +10327,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "120.72",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-547530-EPW-CSWD-epw",
                     "lat": "37.93"
                   },
                   {
@@ -10335,7 +10335,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "128.17",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-542840-EPW-CSWD-epw",
                     "lat": "41.35"
                   },
                   {
@@ -10343,7 +10343,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "125.22",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-541610-EPW-CSWD-epw",
                     "lat": "43.9"
                   },
                   {
@@ -10351,7 +10351,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "111.68",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-576620-EPW-CSWD-epw",
                     "lat": "29.05"
                   },
                   {
@@ -10359,7 +10359,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "123.97",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-541610-EPW-CSWD-epw",
                     "lat": "44.25"
                   },
                   {
@@ -10367,7 +10367,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.87",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-576870-tm3",
                     "lat": "28.23"
                   },
                   {
@@ -10375,7 +10375,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.37",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-589180-EPW-CSWD-epw",
                     "lat": "25.85"
                   },
                   {
@@ -10383,7 +10383,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "120.45",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-543370-EPW-CSWD-epw",
                     "lat": "41.55"
                   },
                   {
@@ -10391,7 +10391,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.95",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-544230-EPW-CSWD-epw",
                     "lat": "40.98"
                   },
                   {
@@ -10399,7 +10399,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "104.02",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-562940-tm3",
                     "lat": "30.67"
                   },
                   {
@@ -10407,7 +10407,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "122.68",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-547760-EPW-CSWD-epw",
                     "lat": "37.4"
                   },
                   {
@@ -10415,7 +10415,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "113.03",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-578740-EPW-CSWD-epw",
                     "lat": "25.8"
                   },
                   {
@@ -10423,7 +10423,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118.97",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-542180-EPW-CSWD-epw",
                     "lat": "42.27"
                   },
                   {
@@ -10431,7 +10431,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "106.47",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-575160-EPW-CSWD-epw",
                     "lat": "29.58"
                   },
                   {
@@ -10439,7 +10439,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "101.52",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-567680-EPW-CSWD-epw",
                     "lat": "25.02"
                   },
                   {
@@ -10447,7 +10447,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "107.5",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-572370-EPW-CSWD-epw",
                     "lat": "31.2"
                   },
                   {
@@ -10455,7 +10455,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "121.88",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-586650-EPW-CSWD-epw",
                     "lat": "28.45"
                   },
                   {
@@ -10463,7 +10463,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "100.18",
                     "cz": "3C",
-                    "file": "0-41415",
+                    "file": "2-566510-EPW-CSWD-epw",
                     "lat": "25.7"
                   },
                   {
@@ -10471,7 +10471,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "121.63",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-546620-tm3",
                     "lat": "38.9"
                   },
                   {
@@ -10479,7 +10479,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "124.33",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-544970-EPW-CSWD-epw",
                     "lat": "40.05"
                   },
                   {
@@ -10487,7 +10487,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "109.58",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-597580-EPW-CSWD-epw",
                     "lat": "19.52"
                   },
                   {
@@ -10495,7 +10495,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "100.3",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-562570-EPW-CSWD-epw",
                     "lat": "29.05"
                   },
                   {
@@ -10503,7 +10503,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "95.37",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-527130-EPW-CSWD-epw",
                     "lat": "37.85"
                   },
                   {
@@ -10511,7 +10511,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "99.65",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-560460-EPW-CSWD-epw",
                     "lat": "33.75"
                   },
                   {
@@ -10519,7 +10519,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "113.33",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-534870-EPW-CSWD-epw",
                     "lat": "40.1"
                   },
                   {
@@ -10527,7 +10527,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "101.12",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-561460-tm3",
                     "lat": "30.98"
                   },
                   {
@@ -10535,7 +10535,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "98.57",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-561460-tm3",
                     "lat": "31.8"
                   },
                   {
@@ -10543,7 +10543,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "97.37",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-527370-tm3",
                     "lat": "37.37"
                   },
                   {
@@ -10551,7 +10551,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "95.6",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-561250-EPW-CSWD-epw",
                     "lat": "31.42"
                   },
                   {
@@ -10559,7 +10559,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "98.88",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-564440-EPW-CSWD-epw",
                     "lat": "28.45"
                   },
                   {
@@ -10567,7 +10567,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.32",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-546060-EPW-CSWD-epw",
                     "lat": "37.43"
                   },
                   {
@@ -10575,7 +10575,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "122.12",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-584770-EPW-CSWD-epw",
                     "lat": "30.03"
                   },
                   {
@@ -10583,7 +10583,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "115.57",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-580050-EPW-CSWD-epw",
                     "lat": "35.07"
                   },
                   {
@@ -10591,7 +10591,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "87.47",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-514630-tm3",
                     "lat": "43.9"
                   },
                   {
@@ -10599,7 +10599,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "108.62",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-598380-EPW-CSWD-epw",
                     "lat": "19.1"
                   },
                   {
@@ -10607,7 +10607,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "109.98",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-535430-EPW-CSWD-epw",
                     "lat": "39.83"
                   },
                   {
@@ -10615,7 +10615,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "120.28",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-582510-EPW-CSWD-epw",
                     "lat": "32.85"
                   },
                   {
@@ -10623,7 +10623,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "98.1",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-528360-EPW-CSWD-epw",
                     "lat": "36.3"
                   },
                   {
@@ -10631,7 +10631,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "128.2",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-541860-EPW-CSWD-epw",
                     "lat": "43.37"
                   },
                   {
@@ -10639,7 +10639,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "94.68",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-524180-EPW-CSWD-epw",
                     "lat": "40.15"
                   },
                   {
@@ -10647,7 +10647,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.47",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-542080-EPW-CSWD-epw",
                     "lat": "42.18"
                   },
                   {
@@ -10655,7 +10655,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "107.55",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-578160-tm3",
                     "lat": "25.83"
                   },
                   {
@@ -10663,7 +10663,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "101.07",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-522670-tm3",
                     "lat": "41.95"
                   },
                   {
@@ -10671,7 +10671,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "103.33",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-563860-EPW-CSWD-epw",
                     "lat": "29.52"
                   },
                   {
@@ -10679,7 +10679,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "109.47",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-574470-EPW-CSWD-epw",
                     "lat": "30.28"
                   },
                   {
@@ -10687,7 +10687,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-530680-EPW-CSWD-epw",
                     "lat": "43.65"
                   },
                   {
@@ -10695,7 +10695,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "110.77",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-572650-EPW-CSWD-epw",
                     "lat": "32.03"
                   },
                   {
@@ -10703,7 +10703,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "109.53",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-574470-EPW-CSWD-epw",
                     "lat": "31.02"
                   },
                   {
@@ -10711,7 +10711,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.63",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-543080-EPW-CSWD-epw",
                     "lat": "41.22"
                   },
                   {
@@ -10719,7 +10719,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.95",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-549360-EPW-CSWD-epw",
                     "lat": "35.25"
                   },
                   {
@@ -10727,7 +10727,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "113.53",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-592940-EPW-CSWD-epw",
                     "lat": "23.87"
                   },
                   {
@@ -10735,7 +10735,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "120.2",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-586590-EPW-CSWD-epw",
                     "lat": "27.33"
                   },
                   {
@@ -10743,7 +10743,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "131.98",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-507880-EPW-CSWD-epw",
                     "lat": "47.23"
                   },
                   {
@@ -10751,7 +10751,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "115.73",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-582150-EPW-CSWD-epw",
                     "lat": "32.87"
                   },
                   {
@@ -10759,7 +10759,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "89.52",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-510870-EPW-CSWD-epw",
                     "lat": "46.98"
                   },
                   {
@@ -10767,7 +10767,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "119.28",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-588470-EPW-CSWD-epw",
                     "lat": "26.08"
                   },
                   {
@@ -10775,7 +10775,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "100.13",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-527540-EPW-CSWD-epw",
                     "lat": "37.33"
                   },
                   {
@@ -10783,7 +10783,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "119.13",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-580400-EPW-CSWD-epw",
                     "lat": "34.83"
                   },
                   {
@@ -10791,7 +10791,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "115",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-579930-EPW-CSWD-epw",
                     "lat": "25.87"
                   },
                   {
@@ -10799,7 +10799,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.47",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-592650-EPW-CSWD-epw",
                     "lat": "23.05"
                   },
                   {
@@ -10807,7 +10807,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "100",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-561460-tm3",
                     "lat": "31.62"
                   },
                   {
@@ -10815,7 +10815,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "99.4",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-569510-EPW-CSWD-epw",
                     "lat": "23.55"
                   },
                   {
@@ -10823,7 +10823,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "94.9",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-528180-EPW-CSWD-epw",
                     "lat": "36.42"
                   },
                   {
@@ -10831,7 +10831,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "102.37",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-522670-tm3",
                     "lat": "41.37"
                   },
                   {
@@ -10839,7 +10839,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.33",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-587150-tm3",
                     "lat": "26.85"
                   },
                   {
@@ -10847,7 +10847,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "111.67",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-572650-EPW-CSWD-epw",
                     "lat": "32.38"
                   },
                   {
@@ -10855,7 +10855,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "105.07",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-579020-EPW-CSWD-epw",
                     "lat": "24.07"
                   },
                   {
@@ -10863,7 +10863,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "113.33",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-592940-EPW-CSWD-epw",
                     "lat": "23.17"
                   },
                   {
@@ -10871,7 +10871,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "110.3",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-579570-EPW-CSWD-epw",
                     "lat": "25.33"
                   },
                   {
@@ -10879,7 +10879,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "110.08",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-592540-EPW-CSWD-epw",
                     "lat": "23.4"
                   },
                   {
@@ -10887,7 +10887,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "106.73",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-578160-tm3",
                     "lat": "26.58"
                   },
                   {
@@ -10895,7 +10895,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "115.67",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-583140-EPW-CSWD-epw",
                     "lat": "32.17"
                   },
                   {
@@ -10903,7 +10903,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "110.35",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-597580-EPW-CSWD-epw",
                     "lat": "20.03"
                   },
                   {
@@ -10911,7 +10911,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "119.75",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-505270-EPW-CSWD-epw",
                     "lat": "49.22"
                   },
                   {
@@ -10919,7 +10919,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "106.38",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-532310-EPW-CSWD-epw",
                     "lat": "41.45"
                   },
                   {
@@ -10927,7 +10927,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "126.97",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-507560-EPW-CSWD-epw",
                     "lat": "47.43"
                   },
                   {
@@ -10935,7 +10935,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "121.17",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-547530-EPW-CSWD-epw",
                     "lat": "36.77"
                   },
                   {
@@ -10943,7 +10943,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "123.22",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-546620-tm3",
                     "lat": "39.05"
                   },
                   {
@@ -10951,7 +10951,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "108.52",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-533360-EPW-CSWD-epw",
                     "lat": "41.57"
                   },
                   {
@@ -10959,7 +10959,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "93.52",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-522030-EPW-CSWD-epw",
                     "lat": "42.82"
                   },
                   {
@@ -10967,7 +10967,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "120.17",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-584570-tm3",
                     "lat": "30.23"
                   },
                   {
@@ -10975,7 +10975,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "107.03",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-571270-EPW-CSWD-epw",
                     "lat": "33.07"
                   },
                   {
@@ -10983,7 +10983,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "126.77",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-509530-tm3",
                     "lat": "45.75"
                   },
                   {
@@ -10991,7 +10991,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "108.05",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-590230-EPW-CSWD-epw",
                     "lat": "24.7"
                   },
                   {
@@ -10999,7 +10999,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.23",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-583210-tm3",
                     "lat": "31.87"
                   },
                   {
@@ -11007,7 +11007,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "101.6",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-560800-EPW-CSWD-epw",
                     "lat": "34.73"
                   },
                   {
@@ -11015,7 +11015,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "111.15",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-535430-EPW-CSWD-epw",
                     "lat": "39.38"
                   },
                   {
@@ -11023,7 +11023,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.73",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-592930-EPW-CSWD-epw",
                     "lat": "23.8"
                   },
                   {
@@ -11031,7 +11031,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "115.43",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-580050-EPW-CSWD-epw",
                     "lat": "35.25"
                   },
                   {
@@ -11039,7 +11039,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "102.9",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-560800-EPW-CSWD-epw",
                     "lat": "35"
                   },
                   {
@@ -11047,7 +11047,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "85.72",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-511560-EPW-CSWD-epw",
                     "lat": "46.78"
                   },
                   {
@@ -11055,7 +11055,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "111.68",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-534630-EPW-CSWD-epw",
                     "lat": "40.82"
                   },
                   {
@@ -11063,7 +11063,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "113.92",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-450070-EPW-CityUHK-epw",
                     "lat": "22.32"
                   },
                   {
@@ -11071,7 +11071,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.17",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-450070-EPW-CityUHK-epw",
                     "lat": "22.3"
                   },
                   {
@@ -11079,7 +11079,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "79.93",
                     "cz": "4B",
-                    "file": "0-14607",
+                    "file": "2-518280-tm3",
                     "lat": "37.13"
                   },
                   {
@@ -11087,7 +11087,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "110.08",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-570670-EPW-CSWD-epw",
                     "lat": "34.48"
                   },
                   {
@@ -11095,7 +11095,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-533910-tm3",
                     "lat": "41.9"
                   },
                   {
@@ -11103,7 +11103,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "126.75",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-542840-EPW-CSWD-epw",
                     "lat": "42.98"
                   },
                   {
@@ -11111,7 +11111,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "115.5",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-544050-EPW-CSWD-epw",
                     "lat": "40.4"
                   },
                   {
@@ -11119,7 +11119,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "105",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-529830-EPW-CSWD-epw",
                     "lat": "35.38"
                   },
                   {
@@ -11127,7 +11127,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118.15",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-585310-EPW-CSWD-epw",
                     "lat": "30.13"
                   },
                   {
@@ -11135,7 +11135,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "102.25",
                     "cz": "3C",
-                    "file": "0-41415",
+                    "file": "2-566710-tm3",
                     "lat": "26.65"
                   },
                   {
@@ -11143,7 +11143,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.53",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-547250-EPW-CSWD-epw",
                     "lat": "37.5"
                   },
                   {
@@ -11151,7 +11151,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "103.28",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-566710-tm3",
                     "lat": "26.42"
                   },
                   {
@@ -11159,7 +11159,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "132.97",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-509780-EPW-CSWD-epw",
                     "lat": "45.77"
                   },
                   {
@@ -11167,7 +11167,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "126.65",
                     "cz": "7",
-                    "file": "0-25713",
+                    "file": "2-503530-EPW-CSWD-epw",
                     "lat": "51.72"
                   },
                   {
@@ -11175,7 +11175,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.33",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-583140-EPW-CSWD-epw",
                     "lat": "31.4"
                   },
                   {
@@ -11183,7 +11183,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "105.75",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-535020-tm3",
                     "lat": "39.78"
                   },
                   {
@@ -11191,7 +11191,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "120.9",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-540260-EPW-CSWD-epw",
                     "lat": "44.57"
                   },
                   {
@@ -11199,7 +11199,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "126.15",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-543740-EPW-CSWD-epw",
                     "lat": "41.1"
                   },
                   {
@@ -11207,7 +11207,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.97",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-577990-EPW-CSWD-epw",
                     "lat": "27.12"
                   },
                   {
@@ -11215,7 +11215,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "101.82",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-569640-EPW-CSWD-epw",
                     "lat": "22.62"
                   },
                   {
@@ -11223,7 +11223,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.18",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-574610-EPW-CSWD-epw",
                     "lat": "30.33"
                   },
                   {
@@ -11231,7 +11231,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "111.92",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-538630-EPW-CSWD-epw",
                     "lat": "37.03"
                   },
                   {
@@ -11239,7 +11239,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.05",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-548230-EPW-CSWD-epw",
                     "lat": "36.6"
                   },
                   {
@@ -11247,7 +11247,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.2",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-585270-EPW-CSWD-epw",
                     "lat": "29.3"
                   },
                   {
@@ -11255,7 +11255,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "82.9",
                     "cz": "6B",
-                    "file": "0-14607",
+                    "file": "2-513340-EPW-CSWD-epw",
                     "lat": "44.62"
                   },
                   {
@@ -11263,7 +11263,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "100.78",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-569640-EPW-CSWD-epw",
                     "lat": "22"
                   },
                   {
@@ -11271,7 +11271,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "113.07",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-534870-EPW-CSWD-epw",
                     "lat": "41.03"
                   },
                   {
@@ -11279,7 +11279,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "121.12",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-543370-EPW-CSWD-epw",
                     "lat": "41.13"
                   },
                   {
@@ -11287,7 +11287,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "101.5",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-564620-EPW-CSWD-epw",
                     "lat": "29"
                   },
                   {
@@ -11295,7 +11295,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "98.48",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-525330-EPW-CSWD-epw",
                     "lat": "39.77"
                   },
                   {
@@ -11303,7 +11303,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118.1",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-589210-EPW-CSWD-epw",
                     "lat": "25.72"
                   },
                   {
@@ -11311,7 +11311,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "130.95",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-509780-EPW-CSWD-epw",
                     "lat": "45.28"
                   },
                   {
@@ -11319,7 +11319,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.9",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-532760-EPW-CSWD-epw",
                     "lat": "42.4"
                   },
                   {
@@ -11327,7 +11327,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "86.35",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-510760-tm3",
                     "lat": "48.05"
                   },
                   {
@@ -11335,7 +11335,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "101.97",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-564620-EPW-CSWD-epw",
                     "lat": "30.05"
                   },
                   {
@@ -11343,7 +11343,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "84.85",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-512430-EPW-CSWD-epw",
                     "lat": "45.6"
                   },
                   {
@@ -11351,7 +11351,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "75.98",
                     "cz": "4B",
-                    "file": "0-14607",
+                    "file": "2-517090-tm3",
                     "lat": "39.47"
                   },
                   {
@@ -11359,7 +11359,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "125.88",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-506580-EPW-CSWD-epw",
                     "lat": "48.05"
                   },
                   {
@@ -11367,7 +11367,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "86.13",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-515670-EPW-CSWD-epw",
                     "lat": "41.75"
                   },
                   {
@@ -11375,7 +11375,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "124.78",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-544930-EPW-CSWD-epw",
                     "lat": "40.72"
                   },
                   {
@@ -11383,7 +11383,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "102.68",
                     "cz": "3C",
-                    "file": "0-41415",
+                    "file": "2-567780-tm3",
                     "lat": "25.02"
                   },
                   {
@@ -11391,7 +11391,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "120.92",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-586650-EPW-CSWD-epw",
                     "lat": "28.82"
                   },
                   {
@@ -11399,7 +11399,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "82.95",
                     "cz": "5B",
-                    "file": "0-14607",
+                    "file": "2-516440-tm3",
                     "lat": "41.72"
                   },
                   {
@@ -11407,7 +11407,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "99.93",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-569540-EPW-CSWD-epw",
                     "lat": "22.57"
                   },
                   {
@@ -11415,7 +11415,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "105.97",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-574110-EPW-CSWD-epw",
                     "lat": "31.58"
                   },
                   {
@@ -11423,7 +11423,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "103.88",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-528890-tm3",
                     "lat": "36.05"
                   },
                   {
@@ -11431,7 +11431,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "93.38",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-526020-EPW-CSWD-epw",
                     "lat": "38.83"
                   },
                   {
@@ -11439,7 +11439,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118.9",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-545390-EPW-CSWD-epw",
                     "lat": "39.43"
                   },
                   {
@@ -11447,7 +11447,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "91.13",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-555910-tm3",
                     "lat": "29.67"
                   },
                   {
@@ -11455,7 +11455,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "92.47",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-555910-tm3",
                     "lat": "28.42"
                   },
                   {
@@ -11463,7 +11463,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.38",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-590820-EPW-CSWD-epw",
                     "lat": "24.78"
                   },
                   {
@@ -11471,7 +11471,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "107.8",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-572370-EPW-CSWD-epw",
                     "lat": "30.68"
                   },
                   {
@@ -11479,7 +11479,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.48",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-592930-EPW-CSWD-epw",
                     "lat": "24.37"
                   },
                   {
@@ -11487,7 +11487,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "100.47",
                     "cz": "3C",
-                    "file": "0-41415",
+                    "file": "2-566510-EPW-CSWD-epw",
                     "lat": "26.83"
                   },
                   {
@@ -11495,7 +11495,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "100.22",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-569510-EPW-CSWD-epw",
                     "lat": "23.95"
                   },
                   {
@@ -11503,7 +11503,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "119.4",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-540270-EPW-CSWD-epw",
                     "lat": "43.98"
                   },
                   {
@@ -11511,7 +11511,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "111.62",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-578660-EPW-CSWD-epw",
                     "lat": "26.23"
                   },
                   {
@@ -11519,7 +11519,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.57",
                     "cz": "4B",
-                    "file": "0-41415",
+                    "file": "2-547250-EPW-CSWD-epw",
                     "lat": "37.33"
                   },
                   {
@@ -11527,7 +11527,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "121.13",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-586650-EPW-CSWD-epw",
                     "lat": "28.85"
                   },
                   {
@@ -11535,7 +11535,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "107.4",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-532310-EPW-CSWD-epw",
                     "lat": "40.77"
                   },
                   {
@@ -11543,7 +11543,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "126.92",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-542840-EPW-CSWD-epw",
                     "lat": "41.72"
                   },
                   {
@@ -11551,7 +11551,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118.07",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-541150-tm3",
                     "lat": "43.6"
                   },
                   {
@@ -11559,7 +11559,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118.35",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-549360-EPW-CSWD-epw",
                     "lat": "35.05"
                   },
                   {
@@ -11567,7 +11567,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "111.1",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-537540-EPW-CSWD-epw",
                     "lat": "37.5"
                   },
                   {
@@ -11575,7 +11575,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "119.92",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-586590-EPW-CSWD-epw",
                     "lat": "28.45"
                   },
                   {
@@ -11583,7 +11583,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "100.27",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-562570-EPW-CSWD-epw",
                     "lat": "30"
                   },
                   {
@@ -11591,7 +11591,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "109.4",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-592540-EPW-CSWD-epw",
                     "lat": "24.35"
                   },
                   {
@@ -11599,7 +11599,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "119.48",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-582380-tm3",
                     "lat": "31.43"
                   },
                   {
@@ -11607,7 +11607,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "120.32",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-547530-EPW-CSWD-epw",
                     "lat": "37.62"
                   },
                   {
@@ -11615,7 +11615,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.02",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-589180-EPW-CSWD-epw",
                     "lat": "25.1"
                   },
                   {
@@ -11623,7 +11623,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "106.75",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-594170-EPW-CSWD-epw",
                     "lat": "22.37"
                   },
                   {
@@ -11631,7 +11631,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "115.98",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-586060-EPW-CSWD-epw",
                     "lat": "29.58"
                   },
                   {
@@ -11639,7 +11639,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "106.77",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-578160-tm3",
                     "lat": "25.43"
                   },
                   {
@@ -11647,7 +11647,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "111.03",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-570670-EPW-CSWD-epw",
                     "lat": "34.05"
                   },
                   {
@@ -11655,7 +11655,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "121.6",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-582650-EPW-CSWD-epw",
                     "lat": "32.07"
                   },
                   {
@@ -11663,7 +11663,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "103.77",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-567780-tm3",
                     "lat": "24.53"
                   },
                   {
@@ -11671,7 +11671,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "105.43",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-576020-EPW-CSWD-epw",
                     "lat": "28.88"
                   },
                   {
@@ -11679,7 +11679,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.97",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-573990-EPW-CSWD-epw",
                     "lat": "31.18"
                   },
                   {
@@ -11687,7 +11687,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "98.22",
                     "cz": "8",
-                    "file": "0-41415",
+                    "file": "2-560330-tm3",
                     "lat": "34.92"
                   },
                   {
@@ -11695,7 +11695,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "110.13",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-533520-tm3",
                     "lat": "42.53"
                   },
                   {
@@ -11703,7 +11703,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "90.85",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-518860-tm3",
                     "lat": "38.25"
                   },
                   {
@@ -11711,7 +11711,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "97.03",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-524360-tm3",
                     "lat": "41.8"
                   },
                   {
@@ -11719,7 +11719,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.12",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-589180-EPW-CSWD-epw",
                     "lat": "24.3"
                   },
                   {
@@ -11727,7 +11727,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "99.08",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-569510-EPW-CSWD-epw",
                     "lat": "23.57"
                   },
                   {
@@ -11735,7 +11735,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.43",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-570830-EPW-CSWD-epw",
                     "lat": "34.82"
                   },
                   {
@@ -11743,7 +11743,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "101.58",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-569690-EPW-CSWD-epw",
                     "lat": "21.5"
                   },
                   {
@@ -11751,7 +11751,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "110.52",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-592540-EPW-CSWD-epw",
                     "lat": "24.2"
                   },
                   {
@@ -11759,7 +11759,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "103.38",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-569850-EPW-CSWD-epw",
                     "lat": "23.38"
                   },
                   {
@@ -11767,7 +11767,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "104.73",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-561960-EPW-CSWD-epw",
                     "lat": "31.45"
                   },
                   {
@@ -11775,7 +11775,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "82.72",
                     "cz": "5B",
-                    "file": "0-14607",
+                    "file": "2-518390-EPW-CSWD-epw",
                     "lat": "37.07"
                   },
                   {
@@ -11783,7 +11783,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "103.08",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-526810-tm3",
                     "lat": "38.63"
                   },
                   {
@@ -11791,7 +11791,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "122.52",
                     "cz": "8",
-                    "file": "0-25713",
+                    "file": "2-501360-EPW-CSWD-epw",
                     "lat": "52.13"
                   },
                   {
@@ -11799,7 +11799,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "129.6",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-540940-EPW-CSWD-epw",
                     "lat": "44.57"
                   },
                   {
@@ -11807,7 +11807,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "92.07",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-555910-tm3",
                     "lat": "31.48"
                   },
                   {
@@ -11815,7 +11815,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "115.92",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-586060-EPW-CSWD-epw",
                     "lat": "28.6"
                   },
                   {
@@ -11823,7 +11823,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.65",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-587150-tm3",
                     "lat": "27.58"
                   },
                   {
@@ -11831,7 +11831,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "106.08",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-574110-EPW-CSWD-epw",
                     "lat": "30.8"
                   },
                   {
@@ -11839,7 +11839,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118.8",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-582380-tm3",
                     "lat": "32"
                   },
                   {
@@ -11847,7 +11847,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "108.35",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-594310-EPW-CSWD-epw",
                     "lat": "22.82"
                   },
                   {
@@ -11855,7 +11855,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-588340-EPW-CSWD-epw",
                     "lat": "26.63"
                   },
                   {
@@ -11863,7 +11863,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.58",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-571780-EPW-CSWD-epw",
                     "lat": "33.03"
                   },
                   {
@@ -11871,7 +11871,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.7",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-577800-EPW-CSWD-epw",
                     "lat": "27.3"
                   },
                   {
@@ -11879,7 +11879,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "105.95",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-592110-EPW-CSWD-epw",
                     "lat": "23.3"
                   },
                   {
@@ -11887,7 +11887,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.15",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-531920-EPW-CSWD-epw",
                     "lat": "44.62"
                   },
                   {
@@ -11895,7 +11895,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "105.05",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-576020-EPW-CSWD-epw",
                     "lat": "29.58"
                   },
                   {
@@ -11903,7 +11903,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "125.23",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-505570-EPW-CSWD-epw",
                     "lat": "49.17"
                   },
                   {
@@ -11911,7 +11911,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "94.47",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-563120-tm3",
                     "lat": "29.57"
                   },
                   {
@@ -11919,7 +11919,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "107.98",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-535290-EPW-CSWD-epw",
                     "lat": "39.1"
                   },
                   {
@@ -11927,7 +11927,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "89.08",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-557730-tm3",
                     "lat": "27.73"
                   },
                   {
@@ -11935,7 +11935,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "106.67",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-539150-EPW-CSWD-epw",
                     "lat": "35.55"
                   },
                   {
@@ -11943,7 +11943,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "119.78",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-588470-EPW-CSWD-epw",
                     "lat": "25.52"
                   },
                   {
@@ -11951,7 +11951,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "104.52",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-561820-EPW-CSWD-epw",
                     "lat": "32.42"
                   },
                   {
@@ -11959,7 +11959,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "78.28",
                     "cz": "4B",
-                    "file": "0-14607",
+                    "file": "2-518110-EPW-CSWD-epw",
                     "lat": "37.62"
                   },
                   {
@@ -11967,7 +11967,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.55",
                     "cz": "4B",
-                    "file": "0-41415",
+                    "file": "2-546060-EPW-CSWD-epw",
                     "lat": "38.08"
                   },
                   {
@@ -11975,7 +11975,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118.53",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-586340-EPW-CSWD-epw",
                     "lat": "27.92"
                   },
                   {
@@ -11983,7 +11983,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "97.17",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-561370-EPW-CSWD-epw",
                     "lat": "31.15"
                   },
                   {
@@ -11991,7 +11991,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "124.87",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-509490-EPW-CSWD-epw",
                     "lat": "45.08"
                   },
                   {
@@ -11999,7 +11999,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "85.55",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-517770-EPW-CSWD-epw",
                     "lat": "38.15"
                   },
                   {
@@ -12007,7 +12007,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "120.33",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-548430-EPW-CSWD-epw",
                     "lat": "36.07"
                   },
                   {
@@ -12015,7 +12015,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "119.03",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-581440-EPW-CSWD-epw",
                     "lat": "33.6"
                   },
                   {
@@ -12023,7 +12023,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118.95",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-544230-EPW-CSWD-epw",
                     "lat": "40.4"
                   },
                   {
@@ -12031,7 +12031,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "124.95",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-541570-EPW-CSWD-epw",
                     "lat": "42.1"
                   },
                   {
@@ -12039,7 +12039,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "108.62",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-596320-EPW-CSWD-epw",
                     "lat": "21.95"
                   },
                   {
@@ -12047,7 +12047,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "110.47",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-598550-EPW-CSWD-epw",
                     "lat": "19.23"
                   },
                   {
@@ -12055,7 +12055,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "123.92",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-507450-EPW-CSWD-epw",
                     "lat": "47.38"
                   },
                   {
@@ -12063,7 +12063,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "89.57",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-515730-tm3",
                     "lat": "44.02"
                   },
                   {
@@ -12071,7 +12071,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.83",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-586340-EPW-CSWD-epw",
                     "lat": "27.95"
                   },
                   {
@@ -12079,7 +12079,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118.87",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-586330-EPW-CSWD-epw",
                     "lat": "28.97"
                   },
                   {
@@ -12087,7 +12087,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "95.78",
                     "cz": "8",
-                    "file": "0-41415",
+                    "file": "2-560210-EPW-CSWD-epw",
                     "lat": "34.13"
                   },
                   {
@@ -12095,7 +12095,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "119.53",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-549360-EPW-CSWD-epw",
                     "lat": "35.43"
                   },
                   {
@@ -12103,7 +12103,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "108.53",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-578320-EPW-CSWD-epw",
                     "lat": "25.97"
                   },
                   {
@@ -12111,7 +12111,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "97.83",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-567390-EPW-CSWD-epw",
                     "lat": "24.02"
                   },
                   {
@@ -12119,7 +12119,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "102.97",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-561730-EPW-CSWD-epw",
                     "lat": "33.58"
                   },
                   {
@@ -12127,7 +12127,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "88.17",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-517770-EPW-CSWD-epw",
                     "lat": "39.03"
                   },
                   {
@@ -12135,7 +12135,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "110.17",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-575620-EPW-CSWD-epw",
                     "lat": "29.4"
                   },
                   {
@@ -12143,7 +12143,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "111.62",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-598550-EPW-CSWD-epw",
                     "lat": "16.53"
                   },
                   {
@@ -12151,7 +12151,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "108.67",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-578320-EPW-CSWD-epw",
                     "lat": "26.97"
                   },
                   {
@@ -12159,7 +12159,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "100.33",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-561460-tm3",
                     "lat": "32.28"
                   },
                   {
@@ -12167,7 +12167,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "77.27",
                     "cz": "4B",
-                    "file": "0-14607",
+                    "file": "2-518110-EPW-CSWD-epw",
                     "lat": "38.43"
                   },
                   {
@@ -12175,7 +12175,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.77",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-596630-EPW-CSWD-epw",
                     "lat": "21.73"
                   },
                   {
@@ -12183,7 +12183,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "121.47",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-583670-tm3",
                     "lat": "31.4"
                   },
                   {
@@ -12191,7 +12191,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "121.43",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-583670-tm3",
                     "lat": "31.17"
                   },
                   {
@@ -12199,7 +12199,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "127.97",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-509680-EPW-CSWD-epw",
                     "lat": "45.22"
                   },
                   {
@@ -12207,7 +12207,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.68",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-593160-EPW-CSWD-epw",
                     "lat": "23.4"
                   },
                   {
@@ -12215,7 +12215,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "115.37",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-595010-EPW-CSWD-epw",
                     "lat": "22.78"
                   },
                   {
@@ -12223,7 +12223,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "113.58",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-590820-EPW-CSWD-epw",
                     "lat": "24.8"
                   },
                   {
@@ -12231,7 +12231,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.47",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-587150-tm3",
                     "lat": "27.33"
                   },
                   {
@@ -12239,7 +12239,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "111.47",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-578530-EPW-CSWD-epw",
                     "lat": "27.23"
                   },
                   {
@@ -12247,7 +12247,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "122.82",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-584770-EPW-CSWD-epw",
                     "lat": "30.72"
                   },
                   {
@@ -12255,7 +12255,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "122.45",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-584770-EPW-CSWD-epw",
                     "lat": "30.73"
                   },
                   {
@@ -12263,7 +12263,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "120.82",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-584570-tm3",
                     "lat": "29.6"
                   },
                   {
@@ -12271,7 +12271,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "123.52",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-543460-EPW-CSWD-epw",
                     "lat": "41.73"
                   },
                   {
@@ -12279,7 +12279,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.1",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-594930-tm3",
                     "lat": "22.55"
                   },
                   {
@@ -12287,7 +12287,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "120.25",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-582510-EPW-CSWD-epw",
                     "lat": "33.77"
                   },
                   {
@@ -12295,7 +12295,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.42",
                     "cz": "4B",
-                    "file": "0-41415",
+                    "file": "2-536980-EPW-CSWD-epw",
                     "lat": "38.03"
                   },
                   {
@@ -12303,7 +12303,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "121.95",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-586650-EPW-CSWD-epw",
                     "lat": "29.2"
                   },
                   {
@@ -12311,7 +12311,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "80.08",
                     "cz": "7",
-                    "file": "0-14607",
+                    "file": "2-444160-tm3",
                     "lat": "32.5"
                   },
                   {
@@ -12319,7 +12319,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "91.73",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-522030-EPW-CSWD-epw",
                     "lat": "43.22"
                   },
                   {
@@ -12327,7 +12327,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "100.98",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-569640-EPW-CSWD-epw",
                     "lat": "22.77"
                   },
                   {
@@ -12335,7 +12335,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "108.25",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-576330-EPW-CSWD-epw",
                     "lat": "27.95"
                   },
                   {
@@ -12343,7 +12343,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "124.33",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-541570-EPW-CSWD-epw",
                     "lat": "43.18"
                   },
                   {
@@ -12351,7 +12351,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "93.78",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-561250-EPW-CSWD-epw",
                     "lat": "31.88"
                   },
                   {
@@ -12359,7 +12359,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "103.57",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-561820-EPW-CSWD-epw",
                     "lat": "32.65"
                   },
                   {
@@ -12367,7 +12367,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "131.15",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-540960-EPW-CSWD-epw",
                     "lat": "44.38"
                   },
                   {
@@ -12375,7 +12375,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "127.35",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-505640-EPW-CSWD-epw",
                     "lat": "49.43"
                   },
                   {
@@ -12383,7 +12383,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "83",
                     "cz": "6B",
-                    "file": "0-14607",
+                    "file": "2-511330-EPW-CSWD-epw",
                     "lat": "46.73"
                   },
                   {
@@ -12391,7 +12391,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.1",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-548230-EPW-CSWD-epw",
                     "lat": "36.25"
                   },
                   {
@@ -12399,7 +12399,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "123.42",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-509360-EPW-CSWD-epw",
                     "lat": "46.4"
                   },
                   {
@@ -12407,7 +12407,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "120.7",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-586590-EPW-CSWD-epw",
                     "lat": "27"
                   },
                   {
@@ -12415,7 +12415,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.55",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-537720-EPW-CSWD-epw",
                     "lat": "37.78"
                   },
                   {
@@ -12423,7 +12423,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118.15",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-545390-EPW-CSWD-epw",
                     "lat": "39.67"
                   },
                   {
@@ -12431,7 +12431,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "123.48",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-543460-EPW-CSWD-epw",
                     "lat": "41.63"
                   },
                   {
@@ -12439,7 +12439,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "98.48",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-567390-EPW-CSWD-epw",
                     "lat": "25.12"
                   },
                   {
@@ -12447,7 +12447,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.17",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-545270-EPW-CSWD-epw",
                     "lat": "39.1"
                   },
                   {
@@ -12455,7 +12455,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "119.42",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-584570-tm3",
                     "lat": "30.35"
                   },
                   {
@@ -12463,7 +12463,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "105.75",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-570060-EPW-CSWD-epw",
                     "lat": "34.58"
                   },
                   {
@@ -12471,7 +12471,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "87.7",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-517650-EPW-CSWD-epw",
                     "lat": "40.63"
                   },
                   {
@@ -12479,7 +12479,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "87.08",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-444540-tm3",
                     "lat": "28.63"
                   },
                   {
@@ -12487,7 +12487,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "109.05",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-539420-EPW-CSWD-epw",
                     "lat": "35.17"
                   },
                   {
@@ -12495,7 +12495,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "109.78",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-578530-EPW-CSWD-epw",
                     "lat": "26.17"
                   },
                   {
@@ -12503,7 +12503,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "100.65",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-529430-EPW-CSWD-epw",
                     "lat": "35.27"
                   },
                   {
@@ -12511,7 +12511,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "128.73",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-509630-EPW-CSWD-epw",
                     "lat": "45.97"
                   },
                   {
@@ -12519,7 +12519,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "122.27",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-541350-tm3",
                     "lat": "43.6"
                   },
                   {
@@ -12527,7 +12527,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "111.92",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-963150-EPW-IWEC-epw",
                     "lat": "8.65"
                   },
                   {
@@ -12535,7 +12535,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "121.7",
                     "cz": "8",
-                    "file": "0-41415",
+                    "file": "2-504340-EPW-CSWD-epw",
                     "lat": "50.45"
                   },
                   {
@@ -12543,7 +12543,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "92.43",
                     "cz": "8",
-                    "file": "0-41415",
+                    "file": "2-560040-tm3",
                     "lat": "34.22"
                   },
                   {
@@ -12551,7 +12551,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "89.2",
                     "cz": "4B",
-                    "file": "0-41415",
+                    "file": "2-515730-tm3",
                     "lat": "42.93"
                   },
                   {
@@ -12559,7 +12559,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.97",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-509150-EPW-CSWD-epw",
                     "lat": "45.52"
                   },
                   {
@@ -12567,7 +12567,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "108.03",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-572370-EPW-CSWD-epw",
                     "lat": "32.07"
                   },
                   {
@@ -12575,7 +12575,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.75",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-542180-EPW-CSWD-epw",
                     "lat": "41.93"
                   },
                   {
@@ -12583,7 +12583,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "119.18",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-548430-EPW-CSWD-epw",
                     "lat": "36.77"
                   },
                   {
@@ -12591,7 +12591,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "104.28",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-566910-EPW-CSWD-epw",
                     "lat": "26.87"
                   },
                   {
@@ -12599,7 +12599,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "120.67",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-586590-EPW-CSWD-epw",
                     "lat": "28.02"
                   },
                   {
@@ -12607,7 +12607,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "87.65",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-514630-tm3",
                     "lat": "43.8"
                   },
                   {
@@ -12615,7 +12615,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "93.08",
                     "cz": "8",
-                    "file": "0-41415",
+                    "file": "2-560040-tm3",
                     "lat": "35.22"
                   },
                   {
@@ -12623,7 +12623,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "104.92",
                     "cz": "3B",
-                    "file": "0-41415",
+                    "file": "2-560960-tm3",
                     "lat": "33.4"
                   },
                   {
@@ -12631,7 +12631,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "110.63",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-578530-EPW-CSWD-epw",
                     "lat": "26.73"
                   },
                   {
@@ -12639,7 +12639,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.13",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-574940-tm3",
                     "lat": "30.62"
                   },
                   {
@@ -12647,7 +12647,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118.35",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-582380-tm3",
                     "lat": "31.33"
                   },
                   {
@@ -12655,7 +12655,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "102.87",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-527870-EPW-CSWD-epw",
                     "lat": "37.2"
                   },
                   {
@@ -12663,7 +12663,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "113.52",
                     "cz": "8",
-                    "file": "0-41415",
+                    "file": "2-536730-EPW-CSWD-epw",
                     "lat": "38.95"
                   },
                   {
@@ -12671,7 +12671,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118.03",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-587370-EPW-CSWD-epw",
                     "lat": "27.77"
                   },
                   {
@@ -12679,7 +12679,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "111.3",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-592650-EPW-CSWD-epw",
                     "lat": "23.48"
                   },
                   {
@@ -12687,7 +12687,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "88.63",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-555910-tm3",
                     "lat": "30.95"
                   },
                   {
@@ -12695,7 +12695,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.6",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-540120-EPW-CSWD-epw",
                     "lat": "44.58"
                   },
                   {
@@ -12703,7 +12703,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118.08",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-591340-EPW-CSWD-epw",
                     "lat": "24.48"
                   },
                   {
@@ -12711,7 +12711,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "108.93",
                     "cz": "4B",
-                    "file": "0-41415",
+                    "file": "2-570360-EPW-CSWD-epw",
                     "lat": "34.3"
                   },
                   {
@@ -12719,7 +12719,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "123.72",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-505570-EPW-CSWD-epw",
                     "lat": "49.2"
                   },
                   {
@@ -12727,7 +12727,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "102.27",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-565710-EPW-CSWD-epw",
                     "lat": "27.9"
                   },
                   {
@@ -12735,7 +12735,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "107.63",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-539230-EPW-CSWD-epw",
                     "lat": "35.73"
                   },
                   {
@@ -12743,7 +12743,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "88.88",
                     "cz": "6C",
-                    "file": "0-41415",
+                    "file": "2-557730-tm3",
                     "lat": "29.25"
                   },
                   {
@@ -12751,7 +12751,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.52",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-572900-EPW-CSWD-epw",
                     "lat": "33.78"
                   },
                   {
@@ -12759,7 +12759,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.12",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-541020-EPW-CSWD-epw",
                     "lat": "43.95"
                   },
                   {
@@ -12767,7 +12767,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.82",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-505140-EPW-CSWD-epw",
                     "lat": "48.67"
                   },
                   {
@@ -12775,7 +12775,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "105.18",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-579020-EPW-CSWD-epw",
                     "lat": "25.43"
                   },
                   {
@@ -12783,7 +12783,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.5",
                     "cz": "4B",
-                    "file": "0-41415",
+                    "file": "2-537980-EPW-CSWD-epw",
                     "lat": "37.07"
                   },
                   {
@@ -12791,7 +12791,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "101.77",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-528660-EPW-CSWD-epw",
                     "lat": "36.62"
                   },
                   {
@@ -12799,7 +12799,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "115.67",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-538980-EPW-CSWD-epw",
                     "lat": "36.23"
                   },
                   {
@@ -12807,7 +12807,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.05",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-572970-EPW-CSWD-epw",
                     "lat": "32.13"
                   },
                   {
@@ -12815,7 +12815,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "110.93",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-596640-EPW-CSWD-epw",
                     "lat": "22.35"
                   },
                   {
@@ -12823,7 +12823,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.33",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-598550-EPW-CSWD-epw",
                     "lat": "16.83"
                   },
                   {
@@ -12831,7 +12831,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.58",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-577930-EPW-CSWD-epw",
                     "lat": "29.03"
                   },
                   {
@@ -12839,7 +12839,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "115.65",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-589180-EPW-CSWD-epw",
                     "lat": "24.95"
                   },
                   {
@@ -12847,7 +12847,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.15",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-580270-EPW-CSWD-epw",
                     "lat": "34.28"
                   },
                   {
@@ -12855,7 +12855,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "103",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-563860-EPW-CSWD-epw",
                     "lat": "29.98"
                   },
                   {
@@ -12863,7 +12863,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "109.5",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-538450-EPW-CSWD-epw",
                     "lat": "36.6"
                   },
                   {
@@ -12871,7 +12871,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "107.38",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-537230-EPW-CSWD-epw",
                     "lat": "37.8"
                   },
                   {
@@ -12879,7 +12879,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.4",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-539630-EPW-CSWD-epw",
                     "lat": "35.48"
                   },
                   {
@@ -12887,7 +12887,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "111.97",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-596630-EPW-CSWD-epw",
                     "lat": "21.87"
                   },
                   {
@@ -12895,7 +12895,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "129.5",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-542920-EPW-CSWD-epw",
                     "lat": "42.87"
                   },
                   {
@@ -12903,7 +12903,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "116.85",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-549160-EPW-CSWD-epw",
                     "lat": "35.57"
                   },
                   {
@@ -12911,7 +12911,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "109.52",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-598380-EPW-CSWD-epw",
                     "lat": "18.23"
                   },
                   {
@@ -12919,7 +12919,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "104.6",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-564920-EPW-CSWD-epw",
                     "lat": "28.8"
                   },
                   {
@@ -12927,7 +12927,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "111.3",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-574610-EPW-CSWD-epw",
                     "lat": "30.7"
                   },
                   {
@@ -12935,7 +12935,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "128.9",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-508730-EPW-CSWD-epw",
                     "lat": "47.72"
                   },
                   {
@@ -12943,7 +12943,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.38",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-577930-EPW-CSWD-epw",
                     "lat": "27.8"
                   },
                   {
@@ -12951,7 +12951,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "106.2",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-536140-EPW-CSWD-epw",
                     "lat": "38.47"
                   },
                   {
@@ -12959,7 +12959,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "122.2",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-544710-EPW-CSWD-epw",
                     "lat": "40.67"
                   },
                   {
@@ -12967,7 +12967,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "81.33",
                     "cz": "5B",
-                    "file": "0-14607",
+                    "file": "2-514310-tm3",
                     "lat": "43.95"
                   },
                   {
@@ -12975,7 +12975,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "94.7",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-522030-EPW-CSWD-epw",
                     "lat": "43.27"
                   },
                   {
@@ -12983,7 +12983,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "118.15",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-549360-EPW-CSWD-epw",
                     "lat": "36.18"
                   },
                   {
@@ -12991,7 +12991,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.35",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-589210-EPW-CSWD-epw",
                     "lat": "25.97"
                   },
                   {
@@ -12999,7 +12999,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "108.77",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-576330-EPW-CSWD-epw",
                     "lat": "28.83"
                   },
                   {
@@ -13007,7 +13007,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.57",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-544050-EPW-CSWD-epw",
                     "lat": "39.83"
                   },
                   {
@@ -13015,7 +13015,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "101.98",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-569660-EPW-CSWD-epw",
                     "lat": "23.6"
                   },
                   {
@@ -13023,7 +13023,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "110.4",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-576490-EPW-CSWD-epw",
                     "lat": "28.47"
                   },
                   {
@@ -13031,7 +13031,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "101.87",
                     "cz": "2B",
-                    "file": "0-41415",
+                    "file": "2-567680-EPW-CSWD-epw",
                     "lat": "25.73"
                   },
                   {
@@ -13039,7 +13039,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.7",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-536730-EPW-CSWD-epw",
                     "lat": "38.75"
                   },
                   {
@@ -13047,7 +13047,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "113.08",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-575740-EPW-CSWD-epw",
                     "lat": "29.38"
                   },
                   {
@@ -13055,7 +13055,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "109.7",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-536460-tm3",
                     "lat": "38.23"
                   },
                   {
@@ -13063,7 +13063,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "97.03",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-524360-tm3",
                     "lat": "40.27"
                   },
                   {
@@ -13071,7 +13071,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "97.03",
                     "cz": "6B",
-                    "file": "0-41415",
+                    "file": "2-524360-tm3",
                     "lat": "40.27"
                   },
                   {
@@ -13079,7 +13079,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "111.05",
                     "cz": "4B",
-                    "file": "0-41415",
+                    "file": "2-539590-EPW-CSWD-epw",
                     "lat": "35.05"
                   },
                   {
@@ -13087,7 +13087,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.98",
                     "cz": "5A",
-                    "file": "0-41415",
+                    "file": "2-537870-EPW-CSWD-epw",
                     "lat": "37.07"
                   },
                   {
@@ -13095,7 +13095,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "97.02",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-560290-EPW-CSWD-epw",
                     "lat": "33.02"
                   },
                   {
@@ -13103,7 +13103,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "81.7",
                     "cz": "5B",
-                    "file": "0-14607",
+                    "file": "2-518390-EPW-CSWD-epw",
                     "lat": "36.87"
                   },
                   {
@@ -13111,7 +13111,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "95.3",
                     "cz": "7",
-                    "file": "0-41415",
+                    "file": "2-561250-EPW-CSWD-epw",
                     "lat": "32.9"
                   },
                   {
@@ -13119,7 +13119,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.67",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-572650-EPW-CSWD-epw",
                     "lat": "32.15"
                   },
                   {
@@ -13127,7 +13127,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "117.4",
                     "cz": "2A",
-                    "file": "0-41415",
+                    "file": "2-589210-EPW-CSWD-epw",
                     "lat": "25.3"
                   },
                   {
@@ -13135,7 +13135,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.88",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-533990-EPW-CSWD-epw",
                     "lat": "40.78"
                   },
                   {
@@ -13143,7 +13143,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "122.53",
                     "cz": "6A",
-                    "file": "0-41415",
+                    "file": "2-542360-EPW-CSWD-epw",
                     "lat": "42.42"
                   },
                   {
@@ -13151,7 +13151,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "100.43",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-527540-EPW-CSWD-epw",
                     "lat": "38.93"
                   },
                   {
@@ -13159,7 +13159,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "110.4",
                     "cz": "1A",
-                    "file": "0-41415",
+                    "file": "2-596640-EPW-CSWD-epw",
                     "lat": "21.22"
                   },
                   {
@@ -13167,7 +13167,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "103.83",
                     "cz": "3C",
-                    "file": "0-41415",
+                    "file": "2-567780-tm3",
                     "lat": "25.58"
                   },
                   {
@@ -13175,7 +13175,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "103.75",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-566910-EPW-CSWD-epw",
                     "lat": "27.33"
                   },
                   {
@@ -13183,7 +13183,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "113.65",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-570830-EPW-CSWD-epw",
                     "lat": "34.72"
                   },
                   {
@@ -13191,7 +13191,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "109.68",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-577450-EPW-CSWD-epw",
                     "lat": "27.45"
                   },
                   {
@@ -13199,7 +13199,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "105.68",
                     "cz": "5B",
-                    "file": "0-41415",
+                    "file": "2-536140-EPW-CSWD-epw",
                     "lat": "37.48"
                   },
                   {
@@ -13207,7 +13207,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "112.57",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-573780-EPW-CSWD-epw",
                     "lat": "31.17"
                   },
                   {
@@ -13215,7 +13215,7 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "114.02",
                     "cz": "4A",
-                    "file": "0-41415",
+                    "file": "2-572900-EPW-CSWD-epw",
                     "lat": "33"
                   },
                   {
@@ -13223,12 +13223,9 @@ define(['angular'], function() {
                     "country": "China",
                     "lon": "106.88",
                     "cz": "3A",
-                    "file": "0-41415",
+                    "file": "2-577130-EPW-CSWD-epw",
                     "lat": "27.7"
                   }
-
-
-
                 ]
 
             };
