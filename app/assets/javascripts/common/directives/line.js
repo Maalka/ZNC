@@ -38,7 +38,7 @@ define(['angular','highcharts', './main'], function(angular) {
                   chart: {
                       spacingTop: 20,
                       spacingRight: 10,
-                      spacingBottom: 30,
+                      spacingBottom: 50,
                       spacingLeft: 10,
                   },
                   title: {
@@ -66,6 +66,7 @@ define(['angular','highcharts', './main'], function(angular) {
                           enabled:true,
                           align: 'center',
                           verticalAlign: 'bottom',
+                          y: 40
                       },
 
                       plotOptions: {
@@ -81,12 +82,14 @@ define(['angular','highcharts', './main'], function(angular) {
                           name: 'DC',
                           color: '#359BB4',
                           showInLegend: true,
-                          data:  $scope.solarMonthly.dc_monthly
+                          data:  $scope.solarMonthly.dc_monthly,
+                          legendID: 0
                       }, {
                           name: 'AC',
                           color: '#1f2c5c',
                           showInLegend: true,
-                          data: $scope.solarMonthly.ac_monthly
+                          data: $scope.solarMonthly.ac_monthly,
+                          legendID: 0
                       }],
 
                       responsive: {
@@ -98,7 +101,8 @@ define(['angular','highcharts', './main'], function(angular) {
                                   legend: {
                                       layout: 'horizontal',
                                       align: 'center',
-                                      verticalAlign: 'bottom'
+                                      verticalAlign: 'bottom',
+                                      y: 40
                                   }
                               }
                           }]
