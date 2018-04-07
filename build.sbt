@@ -14,8 +14,8 @@ scalaVersion in ThisBuild := "2.11.6"
 maintainer in Linux := "Clay Teeter <clay.teeter@maalka.com>"
 maintainer in Docker := "Clay Teeter <clay.teeter@maalka.com>"
 
-packageSummary in Linux := "Benchmark tool"
-packageDescription := "Benchmark tool"
+packageSummary in Linux := "ZNC Tool"
+packageDescription := "ZNC Tool"
 
 dockerRepository := Some("maalka")
 dockerBaseImage := "maalka/oracle8"
