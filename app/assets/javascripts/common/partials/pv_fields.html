@@ -11,7 +11,7 @@
         <div class="right floated right aligned seven wide column"
              ng-class="{'disabled': !pvModel.estimated_area || !pvModel.areaUnits}">
             <div checkbox class="ui checkbox checked">
-                <input type="checkbox" id="cb-default" ng-model="defaultValues" ng-init="defaultValues=true"
+                <input type="checkbox" id="cb-default" ng-model="defaultValues" ng-init="defaultValues=false"
                        ng-true-value=true ng-false-value=false>
                 <label for="cb-default">Use Default Values?</label>
             </div>

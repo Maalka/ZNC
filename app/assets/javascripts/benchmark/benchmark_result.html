@@ -28,7 +28,7 @@
 
 	<div class="ui padded sixteen column grid" style="margin-bottom:10px;">
 
-        <div class="ui basic sixteen wide column" ng-if="endUses">
+        <div class="ui basic sixteen wide column" ng-if="endUses && prescriptiveRequirements">
             <div class="ui sixteen wide grid">
                 <div class="sixteen wide column left aligned">
                     <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;">
@@ -38,11 +38,11 @@
             </div>
         </div>
 
-        <div class="sixteen wide column" ng-if="endUses && showBar===true"  >
+        <div class="sixteen wide column" ng-if="prescriptiveRequirements && endUses && showBar===true"  >
             <div bar prescriptive-requirements="prescriptiveRequirements" end-uses="endUses" units="tableEUIUnits" style="width: 100%;"></div>
         </div>
 
-		<div class=" teal sixteen wide column" ng-if="endUses && showBar===true">
+		<div class=" teal sixteen wide column" ng-if="prescriptiveRequirements && endUses && showBar===true">
 			<div ng-include src="'javascripts/benchmark/prescriptive_result.html'">Not Defined</div>
 		</div>
 
@@ -76,22 +76,22 @@
             </div>
         </div>
 
-        <div class=" sixteen wide column page-break-after" ng-if="buildingRequirements && solarMonthly  && showSolar===true"  >
+        <div class=" sixteen wide column page-break-after" ng-if="solarResults && solarMonthly  && showSolar===true"  >
             <div line solar-monthly="solarMonthly" units="graphEnergyUnits"></div>
         </div>
 
 		<div class=" teal sixteen wide column" ng-if="solarResults && showSolar===true">
 			<div solar-result result="solarResults" units="tableEnergyUnits">Not Defined</div>
 		</div>
-	    <div class="one wide column" ng-if="!buildingRequirements">
+	    <div class="one wide column" ng-if="!buildingRequirements && !solarResults">
 	    	<i class="arrow left icon" style="padding-top: 1px;"></i>
 	    </div>
-	    <div class="fifteen wide column" ng-if="!buildingRequirements">
+	    <div class="fifteen wide column" ng-if="!buildingRequirements && !solarResults">
     		<h3 class="ui header">ENTER BUILDING AND PV INFORMATION TO THE LEFT TO GENERATE
 				REQUIREMENTS FOR REACHING ZERO NET CARBON</h3>
 	    </div>
 	</div>
-	<div ng-if="buildingRequirements">
+	<div ng-if="buildingRequirements ||  solarResults">
 		<div class="ui basic horizontal segments">
 			<div class="ui basic segment right aligned">
 				<a href ng-click="print()">print <i class="print icon"></i></a>

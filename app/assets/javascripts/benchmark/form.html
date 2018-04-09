@@ -55,6 +55,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="five wide column" ng-if="auxModel.country==='USA'">
+                        <label class="design-label">State</label>
+                    </div>
+                    <div class="eleven wide column" ng-if="auxModel.country==='USA'">
+                        <div class="inline fields">
+                            <div class="eight wide field">
+                                <select class="ui dropdown search"
+                                        ng-model="auxModel.state"
+                                        ng-options="item.id as item.name for item in geographicProperties.state"
+                                        name="state">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="five wide column">
                         <label class="design-label">City
                             <div class="tooltip">
@@ -63,13 +79,24 @@
                             </div>
                         </label>
                     </div>
-                    <div class="eleven wide column">
+                    <div class="eleven wide column" ng-if="auxModel.country==='USA'">
                         <div class="inline fields required">
                             <div class="sixteen wide field">
                                 <select class="ui dropdown search"
-                                        ng-model="auxModel.city"
-                                        ng-options="item.id as item.name for item in geographicProperties.city | filter: {filter_id: auxModel.country}"
-                                        required
+                                        ng-model="temp.city"
+                                        ng-options="item.city as item.city for item in geographicProperties.city | filter: {state: auxModel.state}"
+                                        name="city">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="eleven wide column" ng-if="auxModel.country!=='USA'">
+                        <div class="inline fields required">
+                            <div class="sixteen wide field">
+                                <select class="ui dropdown search"
+                                        ng-model="temp.city"
+                                        ng-options="item.city as item.city for item in geographicProperties.city | filter: {country: auxModel.country}"
                                         name="city">
                                     <option value="">Select</option>
                                 </select>
