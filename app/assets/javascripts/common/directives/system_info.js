@@ -45,6 +45,11 @@ define(['angular','./main'], function(angular) {
                     $scope.pvModel.estimated_area=null;
                 };
 
+                $scope.round = function(number, precision) {
+                  var factor = Math.pow(10, precision);
+                  return Math.round(number * factor) / factor;
+                };
+
                 $scope.$watch("defaultValues", function () {
                     if($scope.defaultValues){
                         $scope.setDefaults();
@@ -166,6 +171,7 @@ define(['angular','./main'], function(angular) {
                     });
 
                     var floor_area = 0.0;
+                    var floor_area_units = "ftSQ";
 
                     for (var i =0; i < $scope.benchmark.propTypes.length; i ++) {
                         var units = $scope.benchmark.propTypes[i].propertyModel.floor_area_units;
@@ -178,14 +184,26 @@ define(['angular','./main'], function(angular) {
 
                     }
 
-                    console.log(floor_area);
+                    if ($scope.benchmark.propTypes[0].propertyModel.floor_area_units === "mSQ"){
+                        floor_area_units = "mSQ";
+                    }
+
 
                     var stories = $scope.benchmark.auxModel.stories;
 
-                    if (stories !== undefined && stories !== null && floor_area !== undefined && floor_area !== null)
-                    {
-                        $scope.pvModel.estimated_area = (floor_area / stories) - 8 * (Math.sqrt(floor_area / stories) - 2);
-                        $scope.pvModel.pv_area_units = "mSQ";
+                    if (stories !== undefined && stories !== null && floor_area !== undefined && floor_area !== null){
+                        console.log(floor_area_units);
+                        var estimated_area = (floor_area / stories) - 8 * (Math.sqrt(floor_area / stories) - 2);
+                        if (floor_area_units === "mSQ"){
+                            console.log(estimated_area);
+                            $scope.pvModel.estimated_area = $scope.round(estimated_area,1);
+                            $scope.pvModel.pv_area_units = "mSQ";
+                        } else {
+                            console.log(estimated_area);
+                            $scope.pvModel.estimated_area = $scope.round(estimated_area * 10.7639,1);
+                            $scope.pvModel.pv_area_units = "ftSQ";
+                        }
+
                     } else {
                         $scope.pvModel.estimated_area = null;
                         $scope.pvModel.pv_area_units = "mSQ";

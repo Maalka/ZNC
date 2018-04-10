@@ -37,9 +37,9 @@ define(['angular'], function() {
     $scope.mainColumnWidth = "";
     $scope.propText = "Primary Building Use";
 
-    $scope.showBar = true;
     $scope.showEnergy = true;
-    $scope.showSolar = true;
+    $scope.showBar = false;
+    $scope.showSolar = false;
 
 
     if (window.matchMedia) {

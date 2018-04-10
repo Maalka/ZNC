@@ -62,6 +62,9 @@ define(['angular','highcharts', './main'], function(angular) {
                           categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                               'Jul', 'Aug', 'Oct', 'Sep', 'Nov', 'Dec']
                       }],
+                      tooltip: {
+                          pointFormat: "{point.y:.2f}"
+                      },
                       legend: {
                           enabled:true,
                           align: 'center',

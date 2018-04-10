@@ -28,7 +28,26 @@
 
 	<div class="ui padded sixteen column grid" style="margin-bottom:10px;">
 
-        <div class="ui basic sixteen wide column" ng-if="endUses && prescriptiveRequirements">
+		<div class="ui basic sixteen wide column" ng-if="buildingRequirements">
+			<div class="ui sixteen wide grid">
+				<div class="sixteen wide column left aligned">
+					<h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;">
+						<a href class="drop" ng-click="showEnergyRequirement()"><i class="dropdown icon"></i>RENEWABLE ENERGY REQUIREMENTS</a>
+					</h3>
+				</div>
+			</div>
+		</div>
+
+		<div class=" teal sixteen wide column"  style="padding-bottom:10px;"
+			 ng-if="buildingRequirements && auxModel.approach === 'performance' && showEnergy===true">
+			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
+		</div>
+		<div class=" teal sixteen wide column" style="padding-bottom:10px;"
+			 ng-if="buildingRequirements && auxModel.approach === 'prescriptive' && showEnergy===true">
+			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
+		</div>
+
+        <div class="ui basic sixteen wide column" ng-if="endUses && prescriptiveRequirements && auxModel.approach === 'prescriptive'">
             <div class="ui sixteen wide grid">
                 <div class="sixteen wide column left aligned">
                     <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;">
@@ -38,31 +57,14 @@
             </div>
         </div>
 
-        <div class="sixteen wide column" ng-if="prescriptiveRequirements && endUses && showBar===true"  >
+        <div class="sixteen wide column" style="padding-left:20px; padding-right:20px; padding-bottom:10px; background-color:white;" ng-if="prescriptiveRequirements && endUses && showBar===true  && auxModel.approach === 'prescriptive'">
             <div bar prescriptive-requirements="prescriptiveRequirements" end-uses="endUses" units="tableEUIUnits" style="width: 100%;"></div>
-        </div>
+        	<p style="font-size:10px;">Building Energy Consumption and End Uses are based on a code compliant prototype building
+				modeled by Pacific Northwest National Laboratory. Actual building energy consumption will vary from modeled results.</p>
+		</div>
 
-		<div class=" teal sixteen wide column" ng-if="prescriptiveRequirements && endUses && showBar===true">
+		<div class=" teal sixteen wide column" ng-if="prescriptiveRequirements && endUses && showBar===true && auxModel.approach === 'prescriptive'">
 			<div ng-include src="'javascripts/benchmark/prescriptive_result.html'">Not Defined</div>
-		</div>
-
-        <div class="ui basic sixteen wide column" ng-if="buildingRequirements">
-            <div class="ui sixteen wide grid">
-                <div class="sixteen wide column left aligned">
-                    <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;">
-                        <a href class="drop" ng-click="showEnergyRequirement()"><i class="dropdown icon"></i>RENEWABLE ENERGY REQUIREMENTS</a>
-                    </h3>
-                </div>
-            </div>
-        </div>
-
-		<div class=" teal sixteen wide column"  style="padding-bottom:10px;"
-             ng-if="buildingRequirements && auxModel.approach === 'performance' && showEnergy===true">
-			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
-		</div>
-		<div class=" teal sixteen wide column" style="padding-bottom:10px;"
-             ng-if="buildingRequirements && auxModel.approach === 'prescriptive' && showEnergy===true">
-			<div ng-include src="'javascripts/benchmark/energy_result.html'">Not Defined</div>
 		</div>
 
 
