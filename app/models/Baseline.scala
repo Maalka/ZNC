@@ -41,10 +41,7 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
     for {
       propList <- prescriptiveEUI.getValidatedPropList
       convertedProps <- Future.sequence(propList.map(convertPropType(_)))
-    } yield {
-      println(convertedProps)
-      convertedProps
-    }
+    } yield convertedProps
   }
   val metricType: String = {
     (result.head \ "metric" \ "metric_type").validate[String] match {

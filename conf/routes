@@ -17,8 +17,6 @@ GET           /jsroutes.js         @controllers.Application.jsRoutes()
 # Baselining
 POST          /baseline             @controllers.BaselineController.getZNCMetrics()
 OPTIONS       /baseline             @controllers.Application.options()
-#POST          /normalize            controllers.ParseController.normalize()
-
 
 
 # Authentication

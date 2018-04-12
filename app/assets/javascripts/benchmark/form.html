@@ -47,7 +47,7 @@
                             <div class="sixteen wide field required">
                                 <select class="ui dropdown search"
                                         ng-model="auxModel.country"
-                                        ng-options="item.id as item.name for item in geographicProperties.country"
+                                        ng-options="item as item for item in geographicProperties.country"
                                         required
                                         name="country">
                                     <option value="">Select</option>
@@ -58,12 +58,15 @@
                     <div class="five wide column" ng-if="auxModel.country==='USA'">
                         <label class="design-label">State</label>
                     </div>
-                    <div class="eleven wide column" ng-if="auxModel.country==='USA'">
+                    <div class="five wide column" ng-if="auxModel.country==='Canada'">
+                        <label class="design-label">Province</label>
+                    </div>
+                    <div class="eleven wide column" ng-if="auxModel.country==='USA' || auxModel.country==='Canada'">
                         <div class="inline fields">
                             <div class="eight wide field">
                                 <select class="ui dropdown search"
                                         ng-model="auxModel.state"
-                                        ng-options="item.id as item.name for item in geographicProperties.state"
+                                        ng-options="item.id as item.name for item in geographicProperties.state | filter: {filter_id: auxModel.country}"
                                         name="state">
                                     <option value="">Select</option>
                                 </select>
@@ -79,24 +82,24 @@
                             </div>
                         </label>
                     </div>
-                    <div class="eleven wide column" ng-if="auxModel.country==='USA'">
+                    <div class="eleven wide column" ng-if="auxModel.country==='USA' || auxModel.country==='Canada'">
                         <div class="inline fields required">
                             <div class="sixteen wide field">
                                 <select class="ui dropdown search"
                                         ng-model="temp.city"
-                                        ng-options="item.city as item.city for item in geographicProperties.city | filter: {state: auxModel.state}"
+                                        ng-options="item as item.city for item in geographicProperties.city"
                                         name="city">
                                     <option value="">Select</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="eleven wide column" ng-if="auxModel.country!=='USA'">
+                    <div class="eleven wide column" ng-if="auxModel.country!=='USA' && auxModel.country!=='Canada'">
                         <div class="inline fields required">
                             <div class="sixteen wide field">
                                 <select class="ui dropdown search"
                                         ng-model="temp.city"
-                                        ng-options="item.city as item.city for item in geographicProperties.city | filter: {country: auxModel.country}"
+                                        ng-options="item as item.city for item in geographicProperties.city"
                                         name="city">
                                     <option value="">Select</option>
                                 </select>
