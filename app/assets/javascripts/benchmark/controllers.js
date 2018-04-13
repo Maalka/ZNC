@@ -5,7 +5,7 @@
  * Dashboard controllers.
  */
 //define(["./test/sample_response_test_data"], function(sampleTestData) {
-define(['angular','json!../../files/cities.json'], function(angular, cities) {
+define(['angular','json!../../data/cities.json'], function(angular, cities) {
   'use strict';
   var RootCtrl = function($rootScope) { 
     $rootScope.includeHeader = maalkaIncludeHeader;
