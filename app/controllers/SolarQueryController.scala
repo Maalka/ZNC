@@ -20,7 +20,7 @@ import scala.util.control.NonFatal
 class SolarQueryController @Inject() (val cache: AsyncCacheApi, cc: ControllerComponents, solar_query_client: SolarQueryClient) extends AbstractController(cc) with Logging {
 
   def getStations(r:JsValue):JsValue = {
-    println(r)
+    
     val us_station = (r \ "outputs" \ "tmy2").get
     val intl_station = (r \ "outputs" \ "intl").get
 
