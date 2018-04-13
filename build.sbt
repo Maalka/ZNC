@@ -7,7 +7,7 @@ name := "znc"
 organization in ThisBuild := "com.maalka"
 
 // TODO Set your version here
-version := "1.0.3.0"
+version := "1.0.4.0"
 
 scalaVersion in ThisBuild := "2.11.6"
 
@@ -128,6 +128,24 @@ RjsKeys.paths := Map("jsRoutes" -> ("/jsroutes" -> "empty:"),
                   "jquery" -> ("../lib/jquery/" -> "empty:"))
 
 //RjsKeys.mainModule := "main"
+
+RjsKeys.optimize := "none"
+RjsKeys.webJarCdns := Map.empty // disable cdn
+
+excludeFilter in (Assets, LessKeys.less) := {
+  val public = (baseDirectory.value / "public").getCanonicalPath
+    new SimpleFileFilter({ f =>
+        println("%s - %s".format(f.getCanonicalPath, (webJarsDirectory in Assets).value.getCanonicalPath))
+        (f.getCanonicalPath startsWith public) ||
+            (f.getCanonicalPath startsWith (webModuleDirectory in Assets).value.getCanonicalPath) ||
+	    (f.getCanonicalPath startsWith (webJarsDirectory in Assets).value.getCanonicalPath) ||
+            f.isHidden
+    })
+}
+
+includeFilter in rjs := GlobFilter("*.json") | GlobFilter("*.js") | GlobFilter("*.css") | GlobFilter("*.map")
+excludeFilter in uglify := (excludeFilter in uglify).value || GlobFilter("*.min.js")
+
 
 JsEngineKeys.engineType := JsEngineKeys.EngineType.Node
 
