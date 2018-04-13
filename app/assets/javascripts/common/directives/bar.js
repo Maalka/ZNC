@@ -61,7 +61,7 @@ define(['angular','highcharts', './main'], function(angular) {
                       marginRight: 190,
                       spacingTop: 20,
                       //spacingRight: 10,
-                      spacingBottom: 30,
+                      spacingBottom: 15,
                       spacingLeft: 10,
                   },
                   legend: {
@@ -69,32 +69,34 @@ define(['angular','highcharts', './main'], function(angular) {
                             font: '9pt',
                             fontWeight: 100
                         },
-                    verticalAlign: 'middle',
+                    verticalAlign: 'top',
                     width: 150,
                     align: 'right'
                   },
                   firstLegend: {
                     itemWidth: 100,
+                    itemMarginBottom: 7,
                     title: {
-                        text: 'End Uses',
+                        text: '<span style="margin-bottom: 5px;">End Uses</span>',
                     style: {
                             fontStyle: 'bold'
                       }
                   },
-                    y: -20
+                    y: 10
                   },
                   secondLegend: {
                     itemWidth: 100,
-                     title: {
-                            text: 'Renewable Energy',
-                        style: {
-                                fontStyle: 'bold'
-                          }
-                      },
-                    y: 120
+                    itemMarginBottom: 7,
+                    title: {
+                        text: '<span style="margin-bottom: 5px;">Renewable Energy</span>',
+                    style: {
+                            fontStyle: 'bold'
+                      }
+},
+                    y: 200
                   },
                   title: {
-                      text: 'ESTIMATED ENERGY CONSUMPTION',
+                      text: null,//'ESTIMATED ENERGY CONSUMPTION',
                       align: 'left',
                       margin: 20,
                       x:15,
@@ -119,6 +121,7 @@ define(['angular','highcharts', './main'], function(angular) {
                   },
                   tooltip: {
                       shared: false,
+                      pointFormat: "{point.y:.2f}"
                   },
                   credits: {
                       enabled: false

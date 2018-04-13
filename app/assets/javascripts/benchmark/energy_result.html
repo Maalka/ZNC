@@ -1,3 +1,57 @@
+<table class="ui basic inverted white table unstackable" style="padding-left: 0.5em; margin-top:-8px;">
+
+    <tbody>
+
+    <tr class="bottom aligned">
+        <td class="twelve wide"></td>
+        <td class = "center aligned three wide"></td>
+        <td class = "center aligned two wide"></td>
+    </tr>
+
+    <tr>
+        <td colspan="2"><b style="font-size: 15px">Energy Consumption & Generation</b></td>
+
+    </tr>
+    </tbody>
+</table>
+
+<table class="rimas" style="margin-top:-15px;">
+
+    <tbody>
+    <tr>
+        <td class="onespace" style="width:60%"></td>
+        <td class = "center" style="width:15%;">{{tableEUIUnits}}</td>
+        <td class = "center" style="width:15%;">{{tableBigEnergyUnits}}</td>
+        <td style="width:2%"></td>
+    </tr>
+
+    <tr class="top aligned">
+        <td class="onespace"><b>  Estimated Building Energy Consumption  </b></td>
+        <td class = "center"><b> {{buildingRequirements.building_energy_norm | number: 1}} </b></td>
+        <td class = "center "><b>{{buildingRequirements.building_energy | number: 1}}</b></td>
+    </tr>
+
+    <tr class="top aligned">
+        <td class="onespace"><b>Total Renewable Energy Required </b> </td>
+        <td class = "center "><b> {{buildingRequirements.required_norm | number: 1}}</b> </td>
+        <td class = "center "><b>{{buildingRequirements.required | number: 1}}</b></td>
+    </tr>
+    <tr class="top aligned">
+        <td class="twospace" style="font-size:13px;">  On-Site PV Generation Potential   </td>
+        <td class = "center" style="font-size:13px;"> {{buildingRequirements.pv_potential_norm | number: 1}} </td>
+        <td class = "center" style="font-size:13px;">{{buildingRequirements.pv_potential | number: 1}}</td>
+    </tr>
+    <tr class="top aligned">
+        <td class="twospace" style="font-size:13px;">  Remaining Off-Site Procured Renewable Energy  </td>
+        <td class = "center " style="font-size:13px;"> {{buildingRequirements.procured_norm | number: 1}} </td>
+        <td class = "center " style="font-size:13px;">{{buildingRequirements.procured | number: 1}}</td>
+    </tr>
+
+
+    </tbody>
+
+</table>
+
 <table class="ui basic inverted white table unstackable" style="padding-left: 0.5em; margin-top:-5px;">
 
     <tbody>
@@ -34,56 +88,3 @@
 
 
 
-<table class="ui basic inverted white table unstackable" style="padding-left: 0.5em; margin-top:-8px;">
-
-    <tbody>
-
-    <tr class="bottom aligned">
-        <td class="twelve wide"></td>
-        <td class = "center aligned three wide"></td>
-        <td class = "center aligned two wide"></td>
-    </tr>
-
-        <tr>
-            <td colspan="2"><b style="font-size: 15px">Annual Energy Consumption & Generation</b></td>
-
-        </tr>
-    </tbody>
-</table>
-
-<table class="rimas" style="margin-top:-10px;">
-
-    <tbody>
-        <tr>
-            <td class="onespace" style="width:60%"></td>
-            <td class = "center" style="width:15%;">{{tableEUIUnits}}</td>
-            <td class = "center" style="width:15%;">{{tableBigEnergyUnits}}</td>
-            <td style="width:2%"></td>
-        </tr>
-
-        <tr class="top aligned">
-            <td class="onespace">  Building Energy Consumption  </td>
-            <td class = "center"> {{buildingRequirements.building_energy_norm | number: 1}} </td>
-            <td class = "center ">{{buildingRequirements.building_energy | number: 1}}</td>
-        </tr>
-
-        <tr class="top aligned">
-            <td class="onespace">  Total Renewable Energy Required  </td>
-            <td class = "center "> {{buildingRequirements.required_norm | number: 1}} </td>
-            <td class = "center ">{{buildingRequirements.required | number: 1}}</td>
-        </tr>
-        <tr class="top aligned">
-            <td class="twospace" style="font-size:13px;">  On-Site PV Generation Potential   </td>
-            <td class = "center" style="font-size:13px;"> {{buildingRequirements.pv_potential_norm | number: 1}} </td>
-            <td class = "center" style="font-size:13px;">{{buildingRequirements.pv_potential | number: 1}}</td>
-        </tr>
-        <tr class="top aligned">
-            <td class="twospace" style="font-size:13px;">  Remaining Off-Site Procured Renewable Energy  </td>
-            <td class = "center " style="font-size:13px;"> {{buildingRequirements.procured_norm | number: 1}} </td>
-            <td class = "center " style="font-size:13px;">{{buildingRequirements.procured | number: 1}}</td>
-        </tr>
-
-
-    </tbody>
-
-</table>

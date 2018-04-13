@@ -52,6 +52,8 @@
     },
     paths: {
       'requirejs': '../lib/requirejs/require',
+      'json': './requirejs-plugins/json',
+      'text': './requirejs-plugins/text',
       'jquery': '../lib/jquery/jquery',
       'angular': '../lib/angularjs/angular',
       'angular-route': '../lib/angularjs/angular-route',

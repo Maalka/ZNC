@@ -2,17 +2,18 @@ package models
 
 import javax.inject._
 
+import play.api.libs.json.{JsDefined, JsValue}
+import play.api.libs.ws.WSClient
 import play.api.{Configuration, Logger}
-import play.api.libs.json.{JsDefined, JsValue, Json}
-import play.api.libs.ws.{WSClient, WSResponse}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @Singleton
-class NREL_Client @Inject()(ws: WSClient, config: Configuration) {
+class SolarQueryClient @Inject()(ws: WSClient, config: Configuration) {
 
-  val url = config.get[String]("pv_system_details.pvwatts_url")
+
+  val url = config.get[String]("pv_system_details.solar_query_url")
 
   def makeWsRequest(queryParameters: Seq[(String, String)]): Future[JsValue]  = {
 
@@ -22,7 +23,7 @@ class NREL_Client @Inject()(ws: WSClient, config: Configuration) {
       .addQueryStringParameters(
         Seq(
           ("api_key", config.get[String]("pv_system_details.api_key")),
-          ("format", config.get[String]("pv_system_details.format"))
+          ("radius", config.get[String]("pv_system_details.radius"))
         ) ++ queryParameters: _*
       )
       .get().map(_.json)
