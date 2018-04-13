@@ -16,6 +16,7 @@ GET           /jsroutes.js         @controllers.Application.jsRoutes()
 
 # Baselining
 POST          /baseline             @controllers.BaselineController.getZNCMetrics()
+POST          /solarQuery           @controllers.SolarQueryController.getFile()
 OPTIONS       /baseline             @controllers.Application.options()
 
 

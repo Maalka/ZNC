@@ -332,8 +332,13 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
               "required": true
             },
             "file_id": {
-              "type": "string",
-              "required": true
+              "type": "string"
+            },
+            "lat": {
+              "type": "string"
+            },
+            "lon": {
+              "type": "string"
             },
             "pv_data": {
               "id": "/items/properties/pv_data",
@@ -425,8 +430,7 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
                   ]
               }
             }
-          },
-          "required": ["file_id"]
+          }
           }
         ]
       }""".stripMargin)).get

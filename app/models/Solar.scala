@@ -166,6 +166,7 @@ case class SolarProperties(parameters: JsValue) {
     }
   }
 
+
   def setPVDefaults: Future[List[ValidatedSolarMetrics]] = {
     for {
       validatedPropList <- prescriptiveEUI.getValidatedPropList

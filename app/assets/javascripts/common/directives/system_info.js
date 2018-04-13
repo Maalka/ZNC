@@ -96,16 +96,16 @@ define(['angular','./main'], function(angular) {
                     ],
 
                     arrayType: [
-                            {id:0,name:"0 Fixed - Open Rack"},
-                            {id:1,name:"1 Fixed - Roof Mounted"},
-                            {id:2,name:"2 1-Axis"},
-                            {id:3,name:"3 1-Axis Backtracking"},
-                            {id:4,name:"4 2-Axis"}
+                            {id:0,name:"Fixed - Open Rack"},
+                            {id:1,name:"Fixed - Roof Mounted"},
+                            {id:2,name:"1-Axis"},
+                            {id:3,name:"1-Axis Backtracking"},
+                            {id:4,name:"2-Axis"}
                    ],
                    moduleType: [
-                            {id:0,name:"0 Standard"},
-                            {id:1,name:"1 Premium"},
-                            {id:2,name:"2 Thin Film)"}
+                            {id:0,name:"Standard"},
+                            {id:1,name:"Premium"},
+                            {id:2,name:"Thin Film)"}
                            ]
                };
 
@@ -192,14 +192,12 @@ define(['angular','./main'], function(angular) {
                     var stories = $scope.benchmark.auxModel.stories;
 
                     if (stories !== undefined && stories !== null && floor_area !== undefined && floor_area !== null){
-                        console.log(floor_area_units);
+
                         var estimated_area = (floor_area / stories) - 8 * (Math.sqrt(floor_area / stories) - 2);
                         if (floor_area_units === "mSQ"){
-                            console.log(estimated_area);
                             $scope.pvModel.estimated_area = $scope.round(estimated_area,1);
                             $scope.pvModel.pv_area_units = "mSQ";
                         } else {
-                            console.log(estimated_area);
                             $scope.pvModel.estimated_area = $scope.round(estimated_area * 10.7639,1);
                             $scope.pvModel.pv_area_units = "ftSQ";
                         }

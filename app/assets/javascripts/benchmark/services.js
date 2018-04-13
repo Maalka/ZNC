@@ -8,7 +8,13 @@ define(['angular', 'common'], function(angular) {
 					/// handle errors (500 etc)
 					return response.data;
 				});
-			}
+			},
+            'getSolarFile': function(model) {
+                return playRoutes.controllers.SolarQueryController.getFile().post(model).then(function (response)  {
+                    /// handle errors (500 etc)
+                    return response.data;
+                });
+            }
 		};
 		return services;
 	}]);

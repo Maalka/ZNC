@@ -231,75 +231,23 @@ define(['angular','json!/assets/files/cities.json'], function(angular, cities) {
             }
     };
 
-    /*$scope.sample = [
-      {
-        "prescriptive_resource": 0,
-        "pv_defaults_resource": 0,
-        "approach": "performance",
-        "metric":
-          {
-            "conversion_resource": 0,
-            "source_natural_gas": 2.1,
-            "carbon_natural_gas": 0.61
-          },
-        "climate_zone": "1A",
-        "file_id": "0-93738",
-        "reporting_units": "imperial",
-        "prop_types": [
-            {
-            "building_type": "OfficeLarge",
-            "floor_area": 100000,
-            "floor_area_units": "ftSQ"
-            }
-        ],
-        "stories": 6.0,
-        "pv_data": [
-          {
-            "estimated_area": 100,
-            "module_type": 0,
-            "losses": 20.0,
-            "array_type": 0,
-            "tilt": 20,
-            "azimuth": 45,
-            "inv_eff": 93.0,
-            "access_perimeter": 6,
-            "pv_area_units": "mSQ"
-          },
-          {
-            "module_type": 0,
-            "losses": 20.0,
-            "array_type": 0,
-            "tilt": 20,
-            "azimuth": 45,
-            "inv_eff": 93.0,
-            "access_perimeter": 6,
-            "pv_area_units": "mSQ"
-          },
-          {
-            "w_per_meter2": 150,
-            "module_type": 0,
-            "losses": 2.0,
-            "inv_eff": 91.0
-            }
-          ],
-        "energies": [
-          {
-            "energy_name": "Electric (Grid)",
-            "energy_type": "electricity",
-            "energy_units": "kWh",
-            "energy_use": 1500000
-          },
-          {
-            "energy_name": "Natural Gas",
-            "energy_type": "natural_gas",
-            "energy_units": "therms",
-            "energy_use": 20000
-          }
-        ]
-      }
-    ];*/
 
+    $scope.getFile = function(city){
 
+            var getStation = function(stations){
+                if ($scope.auxModel.country === 'USA'){
+                    return stations.us_station.id;
+                } else {
+                    return stations.intl_station.id;
+                }
+            };
+
+            var location = {"lat":city.lat, "lon":city.lon};
+            $scope.futures = benchmarkServices.getSolarFile(location);
+            $q.resolve($scope.futures).then(function (results) {
+                $scope.auxModel.file_id = (typeof results === 'undefined') ? null : getStation(results);
+            });
+        };
 
     $scope.computeBenchmarkResult = function(){
 
@@ -310,11 +258,11 @@ define(['angular','json!/assets/files/cities.json'], function(angular, cities) {
 
         $q.resolve($scope.futures).then(function (results) {
 
-
             $scope.buildingRequirements = $scope.setBuildingRequirements(results);
 
             $scope.solarResults = $scope.getPropResponseField(results,"pvwatts_system_details");
-            $scope.solarMonthly = $scope.solarResults.outputs;
+            $scope.solarMonthly = (typeof $scope.solarResults === 'undefined') ? undefined : $scope.solarResults.outputs;
+
             $scope.prescriptiveRequirements = $scope.computePrescriptiveRequirements(results);
 
             $scope.endUses = $scope.computeEndUses(results);
@@ -482,7 +430,6 @@ define(['angular','json!/assets/files/cities.json'], function(angular, cities) {
         if($scope.forms.baselineForm.$error.required){
             for (var i = 0; i < $scope.forms.baselineForm.$error.required.length; i++){
                 $log.info($scope.forms.baselineForm.$error.required[i].$name);
-                console.log($scope.forms.baselineForm.$error.required[i].$name);
             }
             $scope.performanceError = false;
         } else {
@@ -577,7 +524,7 @@ define(['angular','json!/assets/files/cities.json'], function(angular, cities) {
             $scope.submitArray = [];
 
 
-            $scope.auxModel.cz = $scope.temp.city.cz;
+            $scope.auxModel.climate_zone = $scope.temp.city.cz;
             $scope.auxModel.lat = $scope.temp.city.lat;
             $scope.auxModel.lon = $scope.temp.city.lon;
 
@@ -741,7 +688,7 @@ define(['angular','json!/assets/files/cities.json'], function(angular, cities) {
                 {id:"AK",name:"Alaska",filter_id:"USA"},
                 {id:"AZ",name:"Arizona",filter_id:"USA"},
                 {id:"AR",name:"Arkansas",filter_id:"USA"},
-                {id:"CA",name:"California",filter_id:"USA"},
+                //{id:"CA",name:"California",filter_id:"USA"},
                 {id:"CO",name:"Colorado",filter_id:"USA"},
                 {id:"CT",name:"Connecticut",filter_id:"USA"},
                 {id:"DE",name:"Delaware",filter_id:"USA"},

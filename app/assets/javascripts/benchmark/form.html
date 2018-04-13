@@ -87,6 +87,7 @@
                             <div class="sixteen wide field">
                                 <select class="ui dropdown search"
                                         ng-model="temp.city"
+                                        ng-change="getFile(temp.city)"
                                         ng-options="item as item.city for item in geographicProperties.city"
                                         name="city">
                                     <option value="">Select</option>
@@ -99,6 +100,7 @@
                             <div class="sixteen wide field">
                                 <select class="ui dropdown search"
                                         ng-model="temp.city"
+                                        ng-change="getFile(temp.city)"
                                         ng-options="item as item.city for item in geographicProperties.city"
                                         name="city">
                                     <option value="">Select</option>
