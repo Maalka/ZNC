@@ -245,6 +245,7 @@ define(['angular','json!/assets/files/cities.json'], function(angular, cities) {
             var location = {"lat":city.lat, "lon":city.lon};
             $scope.futures = benchmarkServices.getSolarFile(location);
             $q.resolve($scope.futures).then(function (results) {
+                console.log(results);
                 $scope.auxModel.file_id = (typeof results === 'undefined') ? null : getStation(results);
             });
         };
@@ -267,11 +268,13 @@ define(['angular','json!/assets/files/cities.json'], function(angular, cities) {
 
             $scope.endUses = $scope.computeEndUses(results);
 
+            $scope.showSolar = false;
+            $scope.showBar = false;
+
         });
     };
 
     $scope.setBuildingRequirements = function(results){
-
 
         if($scope.auxModel.approach === "performance"){
                 return $scope.computePerformanceRequirements(results);
