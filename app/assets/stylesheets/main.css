@@ -33,10 +33,23 @@ table.rimas td.onespace {
     padding-left: 30px !important;
 }
 
+
+table.rimas td.onespacenudge {
+    padding-left: 45px !important;
+}
+
 table.rimas td.twospace {
     padding-left: 65px !important;
     height: 15px;
 }
+
+
+table.rimas td.threespace {
+    padding-left: 72px !important;
+    height: 15px;
+}
+
+
 table.rimas td.smallheight {
     height: 10px !important;
 }
