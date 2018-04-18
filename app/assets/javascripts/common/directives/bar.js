@@ -75,7 +75,7 @@ define(['angular','highcharts', './main'], function(angular) {
                   },
                   firstLegend: {
                     itemWidth: 100,
-                    itemMarginBottom: 7,
+                    itemMarginBottom: 4,
                     title: {
                         text: '<span style="margin-bottom: 5px;">End Uses</span>',
                     style: {
@@ -86,7 +86,7 @@ define(['angular','highcharts', './main'], function(angular) {
                   },
                   secondLegend: {
                     itemWidth: 100,
-                    itemMarginBottom: 7,
+                    itemMarginBottom: 4,
                     title: {
                         text: '<span style="margin-bottom: 5px;">Renewable Energy</span>',
                     style: {
