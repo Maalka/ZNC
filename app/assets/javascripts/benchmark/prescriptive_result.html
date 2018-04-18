@@ -2,10 +2,10 @@
 <table class="rimas" style="margin-top:5px; margin-bottom:10px; font-size: 15px;">
 
     <tr>
-        <td class="halfspace">Site EUI: <b>{{endUses.eui | number: 2}}</b>&nbsp;&nbsp;{{tableEUIUnits}}</td>
+        <td class="halfspace">Estimated Site EUI: <b>{{endUses.eui | number: 2}}</b>&nbsp;&nbsp;{{tableEUIUnits}}</td>
     </tr>
     <tr>
-        <td class="halfspace">Energy Consumption: <b>{{endUses.energy | number: 2}}&nbsp;&nbsp;</b>{{tableBigEnergyUnits}}</td></td>
+        <td class="halfspace">Estimated Energy Consumption: <b>{{endUses.energy | number: 2}}&nbsp;&nbsp;</b>{{tableBigEnergyUnits}}</td></td>
     </tr>
     </tbody>
 </table>
@@ -15,34 +15,27 @@
     <tbody>
 
         <tr>
-            <td></td>
-            <td colspan="3" class = "center smallheight"> <i>{{tableEUIUnits}}</i>
-                <hr>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="halfspace" style="width:35%"></td>
-            <td class = "center" style="width:15%;"><b>Electricity</b></td>
-            <td class = "center" style="width:15%;"><b>Gas</b></td>
-            <td class = "center" style="width:15%;"><b>Total</b></td>
+            <td class = "onespace" style="width:25%;"><b>End Use</b></td>
+            <td class = "center" style="width:25%;"><b>Subtotal</b></td>
             <td class = "center" style="width:25%;"><b>Percent</b></td>
+            <td style="width:2%"></td>
+        </tr>
+        <tr>
+            <td class = "onespace" style="width:25%;"></td>
+            <td class = "center" style="width:25%;"><i>({{tableEUIUnits}})</i></td>
+            <td class = "center" style="width:25%;"></td>
             <td style="width:2%"></td>
         </tr>
 
 
         <tr  class="top aligned" ng-repeat="entry in endUses.endUses">
-            <td class="halfspace">{{entry[0]}}</td>
-            <td class = "center">{{entry[1] | number : 2}}</td>
-            <td class = "center">{{entry[2] | number : 2}}</td>
+            <td class="onespace">{{entry[0]}}</td>
             <td class = "center"><b>{{entry[3] | number : 2}}</b></td>
             <td class = "center" append = "'%'">{{entry[4] | number : 2}}%</td>
         </tr>
 
         <tr  class="top aligned">
-            <td class="halfspace">Other</td>
-            <td class = "center"></td>
-            <td class = "center"></td>
+            <td class="onespace">Other</td>
             <td class = "center"></td>
             <td class = "center"></td>
         </tr>
@@ -50,9 +43,7 @@
 
 
         <tr  class="top aligned" ng-repeat="entry in endUses.endUsesOther" ng-if="entry[4] > 0.0" style="font-size: 11.5px">
-                <td class ="smallheight" style="padding-left:20px;">{{entry[0]}}</td>
-                <td class = "center smallheight">{{entry[1] | number : 2}}</td>
-                <td class = "center smallheight">{{entry[2] | number : 2}}</td>
+                <td class ="smallheight onespacenudge" style="padding-left:20px;">{{entry[0]}}</td>
                 <td class = "center smallheight"><b>{{entry[3] | number : 2}}</b></td>
                 <td class = "center smallheight" append = "'%'">{{entry[4] | number : 2}}%</td>
         </tr>
@@ -62,9 +53,7 @@
         </tr>
 
         <tr  class="top aligned" ng-repeat="entry in endUses.endUsesTotal" style="font-size: 15px">
-            <td class="halfspace"><b>{{entry[0]}}</b></td>
-            <td class = "center aligned"><b>{{entry[1] | number : 2}}</b></td>
-            <td class = "center aligned"><b>{{entry[2] | number : 2}}</b></td>
+            <td class="onespace"><b>{{entry[0]}}</b></td>
             <td class = "center aligned"><b>{{entry[3] | number : 2}}</b></td>
             <td class = "center aligned" append = "'%'"><b>{{entry[4] | number : 2}}%</b></td>
         </tr>
