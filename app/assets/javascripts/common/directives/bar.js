@@ -93,7 +93,7 @@ define(['angular','highcharts', './main'], function(angular) {
                             fontStyle: 'bold'
                       }
 },
-                    y: 200
+                    y: 220
                   },
                   title: {
                       text: null,//'ESTIMATED ENERGY CONSUMPTION',

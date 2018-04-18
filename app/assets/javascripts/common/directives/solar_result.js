@@ -17,7 +17,8 @@ define(['angular','./main'], function(angular) {
       restrict: 'A',
       scope: {
         'result': "=",
-        'units' : "="
+        'units' : "=",
+        'capacity' : "="
       },
       templateUrl: 'javascripts/common/partials/solar_result.html',
       link: function(scope) {
@@ -48,9 +49,18 @@ define(['angular','./main'], function(angular) {
                         solarTable.monthly.push([months[i],solarResults.ac_monthly[i],solarResults.dc_monthly[i]]);
                     }
 
-
+                    console.log(scope.units, scope.capacity);
                     solarTable.total = ["Total",solarTable.ac_hours,solarTable.dc_hours];
+
+                    if(scope.units === "(kBtu)"){
+                        solarTable.solar_hours = solarTable.total[1] / 3.412 / scope.capacity;
+                    } else {
+                        solarTable.solar_hours = solarTable.total[1] / scope.capacity;
+                    }
+
+
                     scope.solarResults = solarTable;
+
 
           }
           scope.tableEnergyUnits = scope.units;

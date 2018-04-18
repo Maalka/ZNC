@@ -31,8 +31,11 @@
 		<div class="ui basic sixteen wide column" ng-if="buildingRequirements">
 			<div class="ui sixteen wide grid">
 				<div class="sixteen wide column left aligned">
-					<h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;">
-						<a href class="drop" ng-click="showEnergyRequirement()"><i class="dropdown icon"></i>RENEWABLE ENERGY REQUIREMENTS</a>
+					<h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;"  ng-if="showEnergy">
+						<a href class="drop" ng-click="showEnergyRequirement()"><i class="caret down icon"></i>RENEWABLE ENERGY REQUIREMENTS</a>
+					</h3>
+					<h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;" ng-if="!showEnergy">
+						<a href class="drop" ng-click="showEnergyRequirement()"><i class="caret right icon"></i>RENEWABLE ENERGY REQUIREMENTS</a>
 					</h3>
 				</div>
 			</div>
@@ -50,8 +53,11 @@
         <div class="ui basic sixteen wide column" ng-if="endUses && prescriptiveRequirements && auxModel.approach === 'prescriptive'">
             <div class="ui sixteen wide grid">
                 <div class="sixteen wide column left aligned">
-                    <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;">
-                        <a href class="drop" ng-click="showPrescriptive()"><i class="dropdown icon"></i>ESTIMATED BUILDING ENERGY CONSUMPTION</a>
+                    <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;" ng-if="showBar">
+                        <a href class="drop" ng-click="showPrescriptive()"><i class="caret down icon"></i>ESTIMATED BUILDING ENERGY CONSUMPTION</a>
+                    </h3>
+                    <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;" ng-if="!showBar">
+                        <a href class="drop" ng-click="showPrescriptive()"><i class="caret right icon"></i>ESTIMATED BUILDING ENERGY CONSUMPTION</a>
                     </h3>
                 </div>
             </div>
@@ -71,8 +77,11 @@
         <div class="ui basic sixteen wide column" ng-if="buildingRequirements && solarMonthly">
             <div class="ui sixteen wide grid">
                 <div class="sixteen wide column left aligned">
-                    <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;">
-                        <a href class="drop" ng-click="showSolarPlot()"><i class="dropdown icon"></i>PVWATTS RESULTS</a>
+                    <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;" ng-if="showSolar">
+                        <a href class="drop" ng-click="showSolarPlot()"><i class="caret down icon"></i>PVWATTS RESULTS</a>
+                    </h3>
+                    <h3 class="ui header" style="padding-top: 10px;padding-bottom: 10px;" ng-if="!showSolar">
+                        <a href class="drop" ng-click="showSolarPlot()"><i class="caret right icon"></i>PVWATTS RESULTS</a>
                     </h3>
                 </div>
             </div>
@@ -83,7 +92,7 @@
         </div>
 
 		<div class=" teal sixteen wide column" ng-if="solarResults && showSolar===true">
-			<div solar-result result="solarResults" units="tableEnergyUnits">Not Defined</div>
+			<div solar-result result="solarResults" capacity="pv_capacity" units="tableEnergyUnits">Not Defined</div>
 		</div>
 	    <div class="one wide column" ng-if="!buildingRequirements && !solarResults">
 	    	<i class="arrow left icon" style="padding-top: 1px;"></i>

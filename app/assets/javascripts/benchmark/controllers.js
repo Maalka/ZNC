@@ -245,13 +245,11 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
             var location = {"lat":city.lat, "lon":city.lon};
             $scope.futures = benchmarkServices.getSolarFile(location);
             $q.resolve($scope.futures).then(function (results) {
-                console.log(results);
                 $scope.auxModel.file_id = (typeof results === 'undefined') ? null : getStation(results);
             });
         };
 
     $scope.computeBenchmarkResult = function(){
-
 
         $log.info($scope.submitArray);
 
@@ -261,7 +259,10 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
 
             $scope.buildingRequirements = $scope.setBuildingRequirements(results);
 
+
             $scope.solarResults = $scope.getPropResponseField(results,"pvwatts_system_details");
+            $scope.pv_capacity = $scope.buildingRequirements.pv_capacity;
+
             $scope.solarMonthly = (typeof $scope.solarResults === 'undefined') ? undefined : $scope.solarResults.outputs;
 
             $scope.prescriptiveRequirements = $scope.computePrescriptiveRequirements(results);
