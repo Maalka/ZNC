@@ -54,6 +54,7 @@ libraryDependencies ++= Seq(
   ws,
   ehcache,
   // WebJars (i.e. client-side) dependencies
+  "net.kaliber" %% "play-s3" % "9.0.0",
   "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
   "org.mockito" % "mockito-all" % "1.10.19",
   "org.webjars" % "requirejs" % "2.1.22",
