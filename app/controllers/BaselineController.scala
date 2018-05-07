@@ -4,15 +4,21 @@
 
 
 package controllers
+import java.io.{ByteArrayOutputStream, File, ObjectOutputStream, PrintWriter}
+import java.time.format.DateTimeFormatter
+
 import com.eclipsesource.schema._
 import com.eclipsesource.schema.internal.validation.VA
 import models._
 import com.google.inject.Inject
-import play.api.Logger
+import fly.play.s3.{BucketFile, S3, S3Exception}
+import org.joda.time.DateTime
+import play.api.{Configuration, Logger}
 import play.api.cache.{AsyncCacheApi, SyncCacheApi}
 import play.api.libs.json.Json.JsValueWrapper
 import play.api.libs.json.Reads.min
 import play.api.libs.json._
+import play.api.libs.ws.WSClient
 import play.api.mvc._
 
 import scala.concurrent.{Await, Future}
@@ -23,7 +29,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.language.implicitConversions
 import scala.concurrent.duration._
 
-class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComponents, nrel_client: NREL_Client) extends AbstractController(cc) with Logging {
+class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComponents, nrel_client: NREL_Client, ws: WSClient, config: Configuration) extends AbstractController(cc) with Logging {
 
   implicit def doubleToJSValue(d: Double): JsValue = Json.toJson(d)
 
@@ -651,10 +657,42 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
           val results = r.collect {
             case (n, Right(s)) => Json.obj(n -> s)
           }
-          Ok(Json.obj(
+          val jsonResult = Json.obj(
             "values" -> results,
             "errors" -> errors
-          ))
+          )
+
+          val filename = "ZNCexport_" + DateTime.now().toString("yyyyMMdd-HHmmss") + ".json"
+
+          val stream = new ByteArrayOutputStream()
+          val oos = new ObjectOutputStream(stream)
+          oos.writeObject(jsonResult)
+          oos.close
+          val byteArray = stream.toByteArray
+
+          val pw = new PrintWriter(new File(config.get[String]("export.dir") + filename), "UTF-8")
+          pw.write(jsonResult.toString())
+          pw.close()
+
+          (jsonResult, filename, byteArray)
+        }.flatMap { f =>
+
+          if (config.get[Boolean]("aws.enabled")) {
+            val s3 = S3.fromConfiguration(ws, config)
+            val bucket = s3.getBucket(config.get[String]("s3.bucketName"))
+            val result: Future[Unit] = bucket + BucketFile(f._2, "application/json", f._3, None, None)
+
+            result
+              .map { unit =>
+                Logger.info("Saved file to AWS S3")
+              }
+              .recover {
+                case S3Exception(status, code, message, originalXml) => Logger.info("Error: " + message)
+              }
+          }
+          Future { f._1 }
+        }.map { jsonResult: JsObject =>
+            Ok(jsonResult)
         }
       }
     )
