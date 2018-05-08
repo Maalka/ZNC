@@ -121,7 +121,7 @@ define(['angular','highcharts', './main'], function(angular) {
                   },
                   tooltip: {
                       shared: false,
-                      pointFormat: "{point.y:.2f}"
+                      pointFormat: "{series.name}: <b>{point.y:.2f}</b>"
                   },
                   credits: {
                       enabled: false
