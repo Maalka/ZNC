@@ -98,7 +98,7 @@ define(['angular','./main'], function(angular) {
                    moduleType: [
                             {id:0,name:"Standard"},
                             {id:1,name:"Premium"},
-                            {id:2,name:"Thin Film)"}
+                            {id:2,name:"Thin Film"}
                            ]
                };
 
