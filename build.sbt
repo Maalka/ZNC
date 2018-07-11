@@ -1,5 +1,5 @@
 import WebKeys._
-0;95;0c
+
 // TODO Replace with your project's/module's name
 name := "znc"
 
