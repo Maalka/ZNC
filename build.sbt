@@ -1,5 +1,5 @@
 import WebKeys._
-0;95;0c
+
 // TODO Replace with your project's/module's name
 name := "znc"
 
@@ -7,7 +7,7 @@ name := "znc"
 organization in ThisBuild := "com.maalka"
 
 // TODO Set your version here
-version := "1.0.8.0"
+version := "1.0.9.0"
 
 scalaVersion in ThisBuild := "2.11.6"
 
