@@ -55,13 +55,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="five wide column" ng-if="auxModel.country==='USA'">
+                    <div class="five wide column" ng-if="auxModel.country==='United States'">
                         <label class="design-label">State</label>
                     </div>
                     <div class="five wide column" ng-if="auxModel.country==='Canada'">
                         <label class="design-label">Province</label>
                     </div>
-                    <div class="eleven wide column" ng-if="auxModel.country==='USA' || auxModel.country==='Canada'">
+                    <div class="eleven wide column" ng-if="auxModel.country==='United States' || auxModel.country==='Canada'">
                         <div class="inline fields">
                             <div class="eight wide field">
                                 <select class="ui dropdown search"
@@ -82,26 +82,26 @@
                             </div>
                         </label>
                     </div>
-                    <div class="eleven wide column" ng-if="auxModel.country==='USA' || auxModel.country==='Canada'">
+                    <div class="eleven wide column" ng-if="auxModel.country==='United States' || auxModel.country==='Canada'">
                         <div class="inline fields required">
                             <div class="sixteen wide field">
                                 <select class="ui dropdown search"
                                         ng-model="temp.city"
                                         ng-change="getFile(temp.city)"
-                                        ng-options="item as item.city for item in geographicProperties.city"
+                                        ng-options="item as item.city for item in geographicProperties.city  | orderBy:'city'"
                                         name="city">
                                     <option value="">Select</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="eleven wide column" ng-if="auxModel.country!=='USA' && auxModel.country!=='Canada'">
+                    <div class="eleven wide column" ng-if="auxModel.country!=='United States' && auxModel.country!=='Canada'">
                         <div class="inline fields required">
                             <div class="sixteen wide field">
                                 <select class="ui dropdown search"
                                         ng-model="temp.city"
                                         ng-change="getFile(temp.city)"
-                                        ng-options="item as item.city for item in geographicProperties.city"
+                                        ng-options="item as item.city for item in geographicProperties.city  | orderBy:'city'"
                                         name="city">
                                     <option value="">Select</option>
                                 </select>

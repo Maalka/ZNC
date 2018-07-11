@@ -29,6 +29,7 @@ define(['angular','./main'], function(angular) {
                 $scope.model.valid = false;
                 $scope.name = $scope.model.name;
                 $scope.showDivider = $scope.model.showDivider;
+                $scope.defaultValues = false;
 
                 $scope.$watch("forms.baselineForm.$valid", function (validity) {
                     $scope.model.valid = validity;
@@ -49,14 +50,6 @@ define(['angular','./main'], function(angular) {
                   var factor = Math.pow(10, precision);
                   return Math.round(number * factor) / factor;
                 };
-
-                $scope.$watch("defaultValues", function () {
-                    if($scope.defaultValues){
-                        $scope.setDefaults();
-                    } else {
-                        $scope.clearParams();
-                    }
-                });
 
                 $scope.removePV = function() {
                     $scope.$parent.removePV(this);
@@ -170,42 +163,49 @@ define(['angular','./main'], function(angular) {
                         $scope.pvModel[v.name] = v.default;
                     });
 
-                    var floor_area = 0.0;
-                    var floor_area_units = "ftSQ";
+                    if(typeof $scope.benchmark.propTypes[0] !== 'undefined'){
 
-                    for (var i =0; i < $scope.benchmark.propTypes.length; i ++) {
-                        var units = $scope.benchmark.propTypes[i].propertyModel.floor_area_units;
+                        var floor_area = 0.0;
+                        var floor_area_units = "ftSQ";
 
-                        if(units === "mSQ"){
-                            floor_area = floor_area + $scope.benchmark.propTypes[i].propertyModel.floor_area;
-                        } else {
-                             floor_area = floor_area + $scope.benchmark.propTypes[i].propertyModel.floor_area / 10.7639;
+                        for (var i =0; i < $scope.benchmark.propTypes.length; i ++) {
+                            var units = $scope.benchmark.propTypes[i].propertyModel.floor_area_units;
+
+                            if(units === "mSQ"){
+                                floor_area = floor_area + $scope.benchmark.propTypes[i].propertyModel.floor_area;
+                            } else {
+                                 floor_area = floor_area + $scope.benchmark.propTypes[i].propertyModel.floor_area / 10.7639;
+                            }
+
                         }
 
-                    }
-
-                    if ($scope.benchmark.propTypes[0].propertyModel.floor_area_units === "mSQ"){
-                        floor_area_units = "mSQ";
-                    }
+                        if ($scope.benchmark.propTypes[0].propertyModel.floor_area_units === "mSQ"){
+                            floor_area_units = "mSQ";
+                        }
 
 
-                    var stories = $scope.benchmark.auxModel.stories;
+                        var stories = $scope.benchmark.auxModel.stories;
 
-                    if (stories !== undefined && stories !== null && floor_area !== undefined && floor_area !== null){
+                        if (stories !== undefined && stories !== null && floor_area !== undefined && floor_area !== null){
 
-                        var estimated_area = (floor_area / stories) - 8 * (Math.sqrt(floor_area / stories) - 2);
-                        if (floor_area_units === "mSQ"){
-                            $scope.pvModel.estimated_area = $scope.round(estimated_area,1);
-                            $scope.pvModel.pv_area_units = "mSQ";
+                            var estimated_area = (floor_area / stories) - 8 * (Math.sqrt(floor_area / stories) - 2);
+                            if (floor_area_units === "mSQ"){
+                                $scope.pvModel.estimated_area = $scope.round(estimated_area,1);
+                                $scope.pvModel.pv_area_units = "mSQ";
+                            } else {
+                                $scope.pvModel.estimated_area = $scope.round(estimated_area * 10.7639,1);
+                                $scope.pvModel.pv_area_units = "ftSQ";
+                            }
+
                         } else {
-                            $scope.pvModel.estimated_area = $scope.round(estimated_area * 10.7639,1);
-                            $scope.pvModel.pv_area_units = "ftSQ";
+                            $scope.pvModel.estimated_area = null;
+                            $scope.pvModel.pv_area_units = "mSQ";
                         }
 
                     } else {
-                        $scope.pvModel.estimated_area = null;
-                        $scope.pvModel.pv_area_units = "mSQ";
+                        return;
                     }
+
                 };
 
 
