@@ -696,7 +696,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
                 {id:"CO",name:"Colorado",filter_id:"United States"},
                 {id:"CT",name:"Connecticut",filter_id:"United States"},
                 {id:"DE",name:"Delaware",filter_id:"United States"},
-                {id:"DC",name:"District Of Columbia",filter_id:"United States"},
+                //{id:"DC",name:"District Of Columbia",filter_id:"United States"},
                 {id:"FL",name:"Florida",filter_id:"United States"},
                 {id:"GA",name:"Georgia",filter_id:"United States"},
                 {id:"HI",name:"Hawaii",filter_id:"United States"},
