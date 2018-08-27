@@ -547,28 +547,32 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
             cc_energy <- Baseline.solarConversionEnergy
             totalSite <- Baseline.getTotalSiteEnergy
             pvTotal <- solarTotal
-          } yield {
-            Map(
-              "re_rec_onsite_pv" -> pvTotal / 1000 * cc_energy,
-              "building_energy" -> MegawattHours(totalSite to MegawattHours).value * cc_energy,
-              "re_total_needed" -> MegawattHours(totalSite to MegawattHours).value * cc_energy,
-              "re_procured" -> Math.max(MegawattHours(totalSite to MegawattHours).value - (pvTotal/1000),0.0) * cc_energy
-            )
-          }
+            requirementsMap <- Future {
+              Map(
+                "re_rec_onsite_pv" -> pvTotal / 1000 * cc_energy,
+                "building_energy" -> MegawattHours(totalSite to MegawattHours).value * cc_energy,
+                "re_total_needed" -> MegawattHours(totalSite to MegawattHours).value * cc_energy,
+                "re_procured" -> Math.max(MegawattHours(totalSite to MegawattHours).value - (pvTotal / 1000), 0.0) * cc_energy
+              )
+            }
+          } yield requirementsMap
         }
-        val prescriptiveRequirements: Future[Map[String,Any]] = {
+
+
+    val prescriptiveRequirements: Future[Map[String,Any]] = {
           for {
             cc_energy <- Baseline.solarConversionEnergy
             totalPrescriptive <- Baseline.getPrescriptiveTotalSite
             pvTotal <- solarTotal
-          } yield {
-            Map(
-              "re_rec_onsite_pv" -> pvTotal / 1000 * cc_energy,
-              "prescriptive_building_energy" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
-              "prescriptive_re_total_needed" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
-              "prescriptive_re_procured" -> Math.max(MegawattHours(totalPrescriptive to MegawattHours).value - (pvTotal/1000),0.0) * cc_energy
+            requirementsMap <- Future {
+              Map(
+                "re_rec_onsite_pv" -> pvTotal / 1000 * cc_energy,
+                "prescriptive_building_energy" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
+                "prescriptive_re_total_needed" -> MegawattHours(totalPrescriptive to MegawattHours).value * cc_energy,
+                "prescriptive_re_procured" -> Math.max(MegawattHours(totalPrescriptive to MegawattHours).value - (pvTotal/1000),0.0) * cc_energy
               )
-          }
+            }
+          } yield requirementsMap
         }
 
         val solar_inputs = multipleFutures.map { r =>
