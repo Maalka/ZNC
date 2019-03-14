@@ -8,6 +8,7 @@ define(['angular', './services/helper', './services/playRoutes', './filters', '.
 	'./directives/energy_result',
 	'./directives/building_info',
 	'./directives/system_info',
+	'./directives/user_system_info',
 	'./directives/line',
 	'./directives/bar',
 	'./directives/required',

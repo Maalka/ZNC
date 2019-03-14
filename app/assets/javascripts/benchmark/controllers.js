@@ -27,8 +27,11 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
     $scope.auxModel.state = "";
     $scope.tempModel = {};
     $scope.energies = [{}, {}];
-    $scope.pvList = [{id:0,name:"PV SYSTEM",showDivider:false}];
+    $scope.pvList = [];
     $scope.pvCounter = 1;
+
+    $scope.userSystemList = [];
+    $scope.userSystemCounter = 1;
 
     $scope.benchmarkResult = null;
 
@@ -123,6 +126,26 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         $scope.clearGeography();
     });
 
+    $scope.$watch("auxModel.pv_method", function (v) {
+        if(v === "pvWatts"){
+            $scope.userSystemList = [];
+            $scope.pvList.push({id:0,name:"",showDivider:false});
+        } else {
+            $scope.pvList = [];
+            $scope.userSystemList.push({id:0,name:"",showDivider:false});
+        }
+
+        $scope.buildingRequirements = null;
+        $scope.solarResults =null;
+        $scope.pv_capacity = null;
+        $scope.solarMonthly = null;
+        $scope.prescriptiveRequirements = null;
+        $scope.endUses = null;
+        $scope.showSolar = false;
+        $scope.showBar = false;
+
+    });
+
     $scope.clearGeography = function () {
         $scope.temp.city = undefined;
         $scope.auxModel.state = undefined;
@@ -172,7 +195,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         if ($scope.pvList.length ===  0) {
             divider = false;
         }
-        $scope.pvList.push({id:$scope.pvCounter,name:"PV SYSTEM",showDivider:divider});
+        $scope.pvList.push({id:$scope.pvCounter,name:"",showDivider:divider});
         $scope.pvCounter = $scope.pvCounter + 1;
     };
 
@@ -193,7 +216,33 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
     };
 
 
-    $scope.clearProp = function(prop){
+      $scope.addUserSystem = function(){
+          var divider = true;
+          if ($scope.userSystemList.length ===  0) {
+              divider = false;
+          }
+          $scope.userSystemList.push({id:$scope.userSystemCounter,name:"",showDivider:divider});
+          $scope.userSystemCounter = $scope.userSystemCounter + 1;
+      };
+
+      $scope.removeUserSystem = function(pv){
+          var index;
+          for(var i = 0; i < $scope.userSystemList.length; i++ ) {
+              if($scope.userSystemList[i].id === pv.model.id) {
+                  index = i;
+                  break;
+              }
+          }
+
+          $scope.userSystemList.splice(index, 1);
+
+          if ($scope.userSystemList.length ===  0) {
+              $scope.addUserSystem();
+          }
+      };
+
+
+      $scope.clearProp = function(prop){
         var index;
 
         for(var i = 0; i < $scope.propTypes.length; i++ ) {
@@ -277,11 +326,12 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
 
     $scope.setBuildingRequirements = function(results){
 
-        if($scope.auxModel.approach === "performance"){
-                return $scope.computePerformanceRequirements(results);
-            } else {
-                return $scope.computePrescriptiveRequirements(results);
-            }
+
+        if ($scope.auxModel.approach === "performance") {
+            return $scope.computePerformanceRequirements(results);
+        } else {
+            return $scope.computePrescriptiveRequirements(results);
+        }
 
     };
 
@@ -307,6 +357,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
 
         return size.reduce(add, 0);
     };
+
 
     $scope.computePerformanceRequirements = function(results){
 
@@ -522,6 +573,15 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
             return pv_data;
         };
 
+        var getUserSystemData = function () {
+
+            var user_data = [];
+            for (var i =0; i < $scope.userSystemList.length; i ++) {
+                user_data.push($scope.userSystemList[i].userCapacity);
+                }
+            return user_data;
+        };
+
 
         if($scope.forms.baselineForm.$valid){
 
@@ -542,6 +602,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
             if($scope.auxModel.approach === 'performance' && $scope.auxModel.energies!==null || $scope.auxModel.approach === 'prescriptive'){
                 $scope.auxModel.prop_types = getPropTypes();
                 $scope.auxModel.pv_data = getPVData();
+                $scope.auxModel.user_system_data = getUserSystemData();
 
                 $scope.submitArray.push($scope.auxModel);
                 $scope.computeBenchmarkResult();

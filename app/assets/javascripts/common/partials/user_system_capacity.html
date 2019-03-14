@@ -1,0 +1,58 @@
+<div>
+    <div class="sixteen wide column" ng-show="showDivider">
+        <div class="ui divider"></div>
+    </div>
+    <div class="ui left aligned grid" style="padding-bottom:5px;">
+
+        <div class="five wide field" style="padding-top:5px;">
+            <h3 class="ui header">{{name}}</h3>
+        </div>
+
+        <div class="left floated right aligned seven wide column">
+
+        </div>
+
+        <div class="right floated right aligned two wide column">
+            delete
+        </div>
+        <div class="right floated left aligned one wide column">
+            <div class="ui large labeled button" ng-click="removeUserSystem()" style="margin-top:.1em;">
+                <i class="minus red circle icon"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="ui left aligned grid">
+
+
+        <div class="six wide column">
+            <label>Estimated Annual On-Site PV Generation Potential</label>
+        </div>
+
+        <div class="ten wide column">
+            <div class="inline fields">
+
+                    <div class="eleven wide field required" ng-class="{error: !userCapacity.estimated_capacity && forms.hasValidated}">
+                      <input type="number" ng-model="userCapacity.estimated_capacity"
+                           required
+                           min="0"
+                           placeholder="Enter Number">
+                    </div>
+                    <div class="four wide field required" ng-class="{error: !userCapacity.power_units && forms.hasValidated}">
+                      <select class="ui dropdown"
+                          dropdown
+                          ng-model="userCapacity.power_units"
+                          ng-options="item.id as item.name for item in systemProperties.power_units"
+                          required>
+                        <option value="">Select</option>
+                      </select>
+                    </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

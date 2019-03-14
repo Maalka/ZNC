@@ -4,19 +4,32 @@
     </div>
     <div class="ui left aligned grid" style="padding-bottom:5px;">
 
-        <div class="five wide field" style="padding-top:5px;">
-            <h3 class="ui header">{{name}}</h3>
-        </div>
-
-        <div class="right floated right aligned seven wide column"
+        <div class="left floated left aligned seven wide column"
              ng-class="{'disabled': !pvModel.estimated_area || !pvModel.areaUnits}">
-            <a href class="drop" ng-click="setDefaults()">Set Default Values</a>
+            <div class ="field">
+                <a href class="drop" ng-click="setDefaults()">Set Default Values</a>
+                <div class="tooltip">
+                    <sup><i class="blue circle info icon"></i></sup>
+                    <span class="tooltiptext">
+                        Uncheck Use Default Values to enter custom inputs.
+                                <br />
+                                <br />
+                        Acceptable PV parameter ranges:
+                                <br />          Losses (%): -5 to 99
+                                <br />      Tilt (Degrees):  0 to 90
+                                <br />   Azimuth (Degrees):  0 to 360
+                                <br /> Inverter Efficiency:  90 to 99.5
+                            </span>
+                </div>
+            </div>
             <!--<div checkbox class="ui checkbox checked">
                 <input type="checkbox" id="cb-default" ng-model="defaultValues" ng-init="defaultValues=false"
                        ng-true-value=true ng-false-value=false>
                 <label for="cb-default">Set Default Values</label>
             </div>-->
         </div>
+
+        <div class="five wide field" style="padding-top:5px;"></div>
 
         <div class="right floated right aligned two wide column">
             delete
