@@ -275,7 +275,7 @@
 
                 <div ng-if="auxModel.pv_method == 'userInput'">
 
-                    <div ng-repeat="userSystem in userSystemList" ng-class="{'page-break-after': ($index + 1) % 3 == 0}">
+                    <div ng-repeat="userSystem in userSystemList" ng-class="{'page-break-after': ($index + 1) % 3 == 0}" style="margin-bottom:20px;">
                         <div user-System-Info forms='forms' idx="$index" model="userSystem"></div>
 
                     </div>
