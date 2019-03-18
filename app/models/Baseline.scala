@@ -31,7 +31,17 @@ case class EUIMetrics(parameters: JsValue, nrel_client: NREL_Client) {
   val prescriptiveEUI = PrescriptiveValues(result.head)
 
   def getPV = pvSystems.setPVDefaults
+
+  def getUserPotential = {
+    for {
+      userPotential <- pvSystems.getUserPotential
+    } yield userPotential.value
+
+  }
+
+
   def pVWattsResponse: Future[JsValue] = nrel_client.makeWsRequest(Seq.empty[(String, String)])
+
 
   def getBuildingEnergyList: Future[EnergyList] = submittedEnergy.getSiteEnergyList
   def getMetrics: Future[ValidatedConversionDetails] = metricConversion.getConversionMetrics(None)

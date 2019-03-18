@@ -52,39 +52,40 @@
 
 </table>
 
-<table class="ui basic inverted white table unstackable" style="padding-left: 0.5em; margin-top:-5px;">
+<div ng-if="auxModel.pv_method =='pvWatts'">
+    <table class="ui basic inverted white table unstackable" style="padding-left: 0.5em; margin-top:-5px;">
 
-    <tbody>
+        <tbody>
 
-        <tr class="bottom aligned">
-            <td class="twelve wide"></td>
-            <td class = "center aligned three wide"></td>
-            <td class = "center aligned two wide"></td>
-        </tr>
+            <tr class="bottom aligned">
+                <td class="twelve wide"></td>
+                <td class = "center aligned three wide"></td>
+                <td class = "center aligned two wide"></td>
+            </tr>
 
+            <tr>
+                <td colspan="2"><b style="font-size: 15px">On-Site PV System</b></td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <table class="rimas" style="margin-top:-12px;">
+
+        <tbody>
         <tr>
-            <td colspan="2"><b style="font-size: 15px">On-Site PV System</b></td>
+            <td class="onespace" style="width:70%">Rated Capacity (kW)</td>
+            <td class="center" style="width:10%">{{buildingRequirements.pv_capacity | number: 0}}</td>
+            <td style="width:15%"></td>
+        </tr>
+        <tr>
+            <td class="onespace" style="width:40%">Estimated Area for Collectors {{tableAreaUnits}}</td>
+            <td class="center" style="width:30%">{{buildingRequirements.pv_area | number: 0}}</td>
         </tr>
 
-    </tbody>
-
-</table>
-
-<table class="rimas" style="margin-top:-12px;">
-
-    <tbody>
-    <tr>
-        <td class="onespace" style="width:70%">Rated Capacity (kW)</td>
-        <td class="center" style="width:10%">{{buildingRequirements.pv_capacity | number: 0}}</td>
-        <td style="width:15%"></td>
-    </tr>
-    <tr>
-        <td class="onespace" style="width:40%">Estimated Area for Collectors {{tableAreaUnits}}</td>
-        <td class="center" style="width:30%">{{buildingRequirements.pv_area | number: 0}}</td>
-    </tr>
-
-    </tbody>
-</table>
-
+        </tbody>
+    </table>
+</div>
 
 

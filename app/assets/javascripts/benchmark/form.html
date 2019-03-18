@@ -26,7 +26,7 @@
                         <div class="ui radio checkbox">
                             <input type="radio" id="prescriptive" ng-model="auxModel.approach" ng-init="auxModel.approach='prescriptive'"
                                    value='prescriptive'>
-                            <label for='prescriptive'>Prescriptive</label>
+                            <label for='prescriptive' style="margin-right: 10px">Prescriptive</label>
                         </div>
                         <div class="ui radio checkbox">
                             <input type="radio" id="performance" ng-model="auxModel.approach"
@@ -231,34 +231,69 @@
             </i>ON-SITE PV SYSTEMS</h3>
 
             <div class="ui segment">
-                <div class ="field">
-                    Default Values estimate on-site building PV system potential.
-                    Uncheck Use Default Values to enter custom inputs. If
-                    your building has multiple PV systems, add them below.
-                    <div class="tooltip">
-                        <sup><i class="blue circle info icon"></i></sup>
-                        <span class="tooltiptext">Acceptable PV parameter ranges:
-                            <br />          Losses (%): -5 to 99
-                            <br />      Tilt (Degrees):  0 to 90
-                            <br />   Azimuth (Degrees):  0 to 360
-                            <br /> Inverter Efficiency:  90 to 99.5
-                        </span>
-                    </div>
+                <div class ="field" style="margin-bottom: 10px">
+                    Enter the on-site PV system rated capacity below,
+                    or estimate on-site PV system potential using PVWatts.
+                    If your building has multiple PV systems enter them below.
                 </div>
-                <div ng-repeat="pvSystem in pvList" ng-class="{'page-break-after': ($index + 1) % 3 == 0}">
-                    <div system-Info forms='forms' idx="$index" model="pvSystem"></div>
+
+                <div class="ui left aligned"   style="margin-bottom: 10px">
+
+                    <div class="ui radio checkbox">
+                        <input type="radio" id="pvWatts" ng-model="auxModel.pv_method" ng-init="auxModel.pv_method='pvWatts'"
+                               value='pvWatts'>
+                        <label for='pvWatts' style="margin-right: 10px">Use PVWatts</label>
+                    </div>
+
+                    <div class="ui radio checkbox">
+                        <input type="radio" id="userInput" ng-model="auxModel.pv_method"
+                               value='userInput'>
+                        <label for='userInput'>Enter System Capacity</label>
+                    </div>
 
                 </div>
-                <div class="inline fields" style="margin-top:10px;">
-                    <div class="field">
-                        <div class="ui large labeled button" ng-click="addPV()">
-                            <i class="add green circle icon"></i>
+
+                <div ng-if="auxModel.pv_method == 'pvWatts'">
+
+
+                    <div ng-repeat="pvSystem in pvList" ng-class="{'page-break-after': ($index + 1) % 3 == 0}">
+                        <div system-Info forms='forms' idx="$index" model="pvSystem"></div>
+
+                    </div>
+                    <div class="inline fields" style="margin-top:10px;">
+                        <div class="field">
+                            <div class="ui large labeled button" ng-click="addPV()">
+                                <i class="add green circle icon"></i>
+                            </div>
+                        </div>
+                        <div class="field" style="margin-left:-18px;">
+                            <label class="design-label">Add another PV System</label>
                         </div>
                     </div>
-                    <div class="field" style="margin-left:-18px;">
-                        <label class="design-label">Add another PV System</label>
-                    </div>
+
                 </div>
+
+                <div ng-if="auxModel.pv_method == 'userInput'">
+
+                    <div ng-repeat="userSystem in userSystemList" ng-class="{'page-break-after': ($index + 1) % 3 == 0}" style="margin-bottom:20px;">
+                        <div user-System-Info forms='forms' idx="$index" model="userSystem"></div>
+
+                    </div>
+                    <div class="inline fields" style="margin-top:10px;">
+                        <div class="field">
+                            <div class="ui large labeled button" ng-click="addUserSystem()">
+                                <i class="add green circle icon"></i>
+                            </div>
+                        </div>
+                        <div class="field" style="margin-left:-18px;">
+                            <label class="design-label">Add another PV System</label>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
             </div>
         </div>
     </form>

@@ -11,6 +11,7 @@ import play.api.libs.json._
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads.min
+import squants.energy
 
 case class SolarProperties(parameters: JsValue) {
 
@@ -178,6 +179,37 @@ case class SolarProperties(parameters: JsValue) {
       arrayListDefaults <- Future.sequence(arrayList.pv_data.map(setArrayDefaults(_, solarResourcesDefaults)))
     } yield arrayListDefaults
   }
+
+
+  def getUserInputList: Future[List[UserInputs]] = Future {
+    parameters.asOpt[UserInputList] match {
+      case Some(a) => a.user_system_data
+      case _ => throw new Exception("Could not retrieve list of User System Inputs")
+    }
+  }
+
+  def mapEnergy(units:String,value:Double):Energy = {
+    units match {
+      case "kBtu" => KBtus(value) in KilowattHours
+      case "kWh" => KilowattHours(value)
+    }
+  }
+
+  def getUserPotential: Future[Energy] = {
+    for {
+      userInputList:List[UserInputs] <- getUserInputList
+      energyList:List[Energy] <- Future{
+        userInputList.map{
+          case a: UserInputs => mapEnergy(a.power_units, a.estimated_capacity)
+        }
+      }
+      potentialSum <- Future{KBtus(energyList.map(_.value).sum)}
+
+    } yield potentialSum
+  }
+
+
+
 }
 
 
@@ -245,4 +277,16 @@ case class ValidatedSolarResources(
 
 
 
+case class UserInputList(user_system_data: List[UserInputs])
+
+object UserInputList {
+  implicit val listReads: Reads[UserInputList] = Json.reads[UserInputList]
+}
+
+case class UserInputs(
+                       estimated_capacity: Double,
+                       power_units: String)
+object UserInputs {
+  implicit val solarResourcesReads: Reads[UserInputs] = Json.reads[UserInputs]
+}
 
