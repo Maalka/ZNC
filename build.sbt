@@ -7,7 +7,7 @@ name := "znc"
 organization in ThisBuild := "com.maalka"
 
 // TODO Set your version here
-version := "1.0.12.0"
+version := "1.0.12.1"
 
 scalaVersion in ThisBuild := "2.11.6"
 
