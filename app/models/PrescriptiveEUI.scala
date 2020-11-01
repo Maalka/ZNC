@@ -54,8 +54,6 @@ case class PrescriptiveValues(parameters:JsValue) {
 
   def lookupPrescriptiveElectricityWeighted(metric:Option[String]): Future[ElectricityDistribution] = {
     for {
-      lookupParams <- getPrescriptiveParams
-      lookupTableName <- chooseLookupTable(lookupParams)
       validatedPropList <- getValidatedPropList
       areaWeights <- getAreaWeights(validatedPropList)
       elecDistList:List[ElectricityDistribution] <- Future.sequence(validatedPropList.map(lookupPrescriptiveElectricity(_)))
@@ -68,8 +66,6 @@ case class PrescriptiveValues(parameters:JsValue) {
 
   def lookupPrescriptiveNGWeighted(metric:Option[String]): Future[NaturalGasDistribution] = {
     for {
-      lookupParams <- getPrescriptiveParams
-      lookupTableName <- chooseLookupTable(lookupParams)
       validatedPropList <- getValidatedPropList
       areaWeights <- getAreaWeights(validatedPropList)
       ngDistList: List[NaturalGasDistribution] <- Future.sequence(validatedPropList.map(lookupPrescriptiveNG(_)))
@@ -298,6 +294,7 @@ case class PrescriptiveValues(parameters:JsValue) {
   def chooseLookupTable(validatedPrescriptiveParams: ValidatedPrescriptiveParams): Future[String] =  Future{
     validatedPrescriptiveParams.prescriptive_resource match {
           case 0 => "prescriptive_0.json"
+          case 1 => "prescriptive_901_2019.json"
           case _ => throw new Exception("Cannot Identify Appropriate Lookup Table: Check prescriptive_resource value!")
         }
   }

@@ -7,7 +7,7 @@
 //define(["./test/sample_response_test_data"], function(sampleTestData) {
 define(['angular','json!../../data/cities.json'], function(angular, cities) {
   'use strict';
-  var RootCtrl = function($rootScope) { 
+  var RootCtrl = function($rootScope) {
     $rootScope.includeHeader = maalkaIncludeHeader;
   };
 
@@ -25,6 +25,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
     $scope.auxModel = {};
     $scope.temp = {};
     $scope.auxModel.state = "";
+    $scope.auxModel.prescriptive_resource = null;
     $scope.tempModel = {};
     $scope.energies = [{}, {}];
     $scope.pvList = [];
@@ -51,22 +52,22 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
     if (window.matchMedia) {
 
         var printQueryList = window.matchMedia('print');
-        var phoneQueryList = window.matchMedia('(max-width: 767px)');      
-        var tabletQueryList = window.matchMedia('(min-width: 768px) and (max-width: 1200px)');            
-        var desktopQueryList = window.matchMedia('(min-width: 1200px) and (max-width: 1919px');                  
-        var largeQueryList = window.matchMedia('(min-width: 1919px)');                  
+        var phoneQueryList = window.matchMedia('(max-width: 767px)');
+        var tabletQueryList = window.matchMedia('(min-width: 768px) and (max-width: 1200px)');
+        var desktopQueryList = window.matchMedia('(min-width: 1200px) and (max-width: 1919px');
+        var largeQueryList = window.matchMedia('(min-width: 1919px)');
 
-        var updateMatchMedia= function (q) { 
+        var updateMatchMedia= function (q) {
             console.log(q);
             if (printQueryList.matches) {
-                $scope.media = "print";                                    
+                $scope.media = "print";
             } else if (phoneQueryList.matches) {
-                $scope.media = "phone";                        
-            } else if (tabletQueryList.matches) { 
-                $scope.media = "tablet";            
-            } else if (desktopQueryList.matches) { 
+                $scope.media = "phone";
+            } else if (tabletQueryList.matches) {
+                $scope.media = "tablet";
+            } else if (desktopQueryList.matches) {
                 $scope.media = "desktop";
-            } 
+            }
 
             if (largeQueryList.matches) {
                 $scope.largeScreen = true;
@@ -95,7 +96,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
 
     $scope.$watch("tempModel.buildingType", function (v) {
         if (v === undefined || v === null) {
-            return; 
+            return;
         }
 
         if(v){
@@ -125,6 +126,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         $scope.benchmarkResult = null;
         $scope.clearGeography();
     });
+
 
     $scope.$watch("auxModel.pv_method", function (v) {
         if(v === "pvWatts"){
@@ -625,6 +627,11 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
 
 
 
+        $scope.endUseRef = [
+            {id:0,name:"ZERO Code / 2021 IECC Zero Code"},
+            {id:1,name:"ZERO Code 2.0"}
+        ];
+
         $scope.buildingProperties = {
 
             buildingType: {
@@ -864,7 +871,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
   DashboardCtrl.$inject = ['$rootScope', '$scope', '$window','$sce','$timeout', '$q', '$log', 'benchmarkServices'];
   return {
     DashboardCtrl: DashboardCtrl,
-    RootCtrl: RootCtrl    
+    RootCtrl: RootCtrl
 
   };
 });

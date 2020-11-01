@@ -24,12 +24,17 @@
                     </div>
                     <div class="right aligned eleven wide column">
                         <div class="ui radio checkbox">
-                            <input type="radio" id="prescriptive" ng-model="auxModel.approach" ng-init="auxModel.approach='prescriptive'"
+                            <input type="radio"
+                                   id="prescriptive"
+                                   ng-model="auxModel.approach"
+                                   ng-init="auxModel.approach='prescriptive'"
                                    value='prescriptive'>
                             <label for='prescriptive' style="margin-right: 10px">Prescriptive</label>
                         </div>
                         <div class="ui radio checkbox">
-                            <input type="radio" id="performance" ng-model="auxModel.approach"
+                            <input type="radio"
+                                   id="performance"
+                                   ng-model="auxModel.approach"
                                    value='performance'>
                             <label for='performance'>Performance</label>
                         </div>
@@ -39,9 +44,35 @@
                     <div class="sixteen wide column" style="margin-top:-10px;">
                         <div class="ui divider"></div>
                     </div>
+
+
+                    <div class="five wide column" ng-show="auxModel.approach==='prescriptive'">
+                        <label class="design-label">Standard
+                            <div class="tooltip">
+                                <sup><i class="blue circle info icon"></i></sup>
+                                <span class="tooltiptext">Source: 2021 IECC Zero Code Renewable Energy Appendix.</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="eleven wide column" ng-show="auxModel.approach==='prescriptive'">
+                        <div class="inline fields">
+                            <div class="sixteen wide field required">
+                                <select class="ui dropdown search"
+                                        ng-model="auxModel.prescriptive_resource"
+                                        ng-options="item.id as item.name for item in endUseRef"
+                                        required
+                                        name="prescriptive_resource">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="five wide column">
                         <label class="design-label">Country</label>
                     </div>
+
                     <div class="eleven wide column">
                         <div class="inline fields">
                             <div class="sixteen wide field required">
@@ -55,6 +86,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="five wide column" ng-if="auxModel.country==='United States'">
                         <label class="design-label">State</label>
                     </div>
