@@ -628,7 +628,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
 
 
         $scope.endUseRef = [
-            {id:0,name:"ZERO Code / 2021 IECC Zero Code"},
+            {id:0,name:"ZERO Code / 2021 IECC Appendix"},
             {id:1,name:"ZERO Code 2.0"}
         ];
 
