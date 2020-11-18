@@ -18,7 +18,7 @@ packageSummary in Linux := "ZNC Tool"
 packageDescription := "ZNC Tool"
 
 dockerRepository := Some("maalka")
-dockerBaseImage := "maalka/oracle8"
+dockerBaseImage := "openjdk:11-jre-slim"
 dockerUpdateLatest := true
 
 /*
