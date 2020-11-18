@@ -7,7 +7,7 @@ name := "znc"
 organization in ThisBuild := "com.maalka"
 
 // TODO Set your version here
-version := "1.0.12.2"
+version := "1.0.13.0"
 
 scalaVersion in ThisBuild := "2.11.6"
 
@@ -18,7 +18,7 @@ packageSummary in Linux := "ZNC Tool"
 packageDescription := "ZNC Tool"
 
 dockerRepository := Some("maalka")
-dockerBaseImage := "maalka/oracle8"
+dockerBaseImage := "openjdk:11-jre-slim"
 dockerUpdateLatest := true
 
 /*
