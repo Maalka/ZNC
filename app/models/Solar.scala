@@ -132,14 +132,11 @@ case class SolarProperties(parameters: JsValue) {
       case Some(a: String) => a
       case _ => throw new Exception("No Solar File ID Found! ")
     }
-    val climateZone = prescriptive_resource match {
-      case 0 => {
-        solarResources.climate_zone match {
-          case Some(a) if List("0A", "0B", "1A", "1B", "2A", "2B", "3A", "3B", "3C", "4A", "4B", "4C", "5A", "5B", "5C", "6A", "6B", "7", "8").contains(a) => a
-          case _ => throw new Exception("Not a valid Climate Zone for given Prescriptive Resource! ")
-        }
+    val climateZone = {
+      solarResources.climate_zone match {
+        case Some(a) if List("0A", "0B", "1A", "1B", "2A", "2B", "3A", "3B", "3C", "4A", "4B", "4C", "5A", "5B", "5C", "6A", "6B", "7", "8").contains(a) => a
+        case _ => throw new Exception("Not a valid Climate Zone for given Prescriptive Resource! ")
       }
-      case _ => throw new Exception("Prescriptive Resouce not Supported! ")
     }
 
     val floorArea = SquareFeet(building_size) to SquareMeters
