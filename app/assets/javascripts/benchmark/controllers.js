@@ -25,6 +25,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
     $scope.auxModel = {};
     $scope.temp = {};
     $scope.auxModel.state = "";
+    $scope.auxModel.approach = null;
     $scope.auxModel.prescriptive_resource = null;
     $scope.tempModel = {};
     $scope.energies = [{}, {}];

@@ -46,7 +46,7 @@
                     </div>
 
 
-                    <div class="five wide column" ng-show="auxModel.approach==='prescriptive'">
+                    <div class="five wide column" ng-if="auxModel.approach==='prescriptive'">
                         <label class="design-label">Standard
                             <div class="tooltip">
                                 <sup><i class="blue circle info icon"></i></sup>
@@ -54,13 +54,12 @@
                             </div>
                         </label>
                     </div>
-                    <div class="eleven wide column" ng-show="auxModel.approach==='prescriptive'">
+                    <div class="eleven wide column" ng-if="auxModel.approach==='prescriptive'">
                         <div class="inline fields">
                             <div class="sixteen wide field required">
                                 <select class="ui dropdown search"
                                         ng-model="auxModel.prescriptive_resource"
                                         ng-options="item.id as item.name for item in endUseRef"
-                                        required
                                         name="prescriptive_resource">
                                     <option value="">Select</option>
                                 </select>
@@ -236,7 +235,7 @@
                         </div>
                         <div class="five wide column">
                             <div class="ui input">
-                                <input type="number" ng-model="energyEntry.energy_use" value ="{{energyEntry.energyUse}}">
+                                <input type="number" ng-model="energyEntry.energy_use">
                             </div>
                         </div>
                         <div ng-repeat-end class="one wide column">
