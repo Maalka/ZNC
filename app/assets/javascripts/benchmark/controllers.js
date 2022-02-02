@@ -309,8 +309,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
 
         $q.resolve($scope.futures).then(function (results) {
 
-            $scope.buildingRequirements = $scope.setBuildingRequirements(results);
-
+            $scope.buildingRequirements = $scope.setBuildingRequirements(results);            
 
             $scope.solarResults = $scope.getPropResponseField(results,"pvwatts_system_details");
             $scope.pv_capacity = $scope.buildingRequirements.pv_capacity;
@@ -387,7 +386,7 @@ define(['angular','json!../../data/cities.json'], function(angular, cities) {
         return performanceTable;
     };
 
-    $scope.computePrescriptiveRequirements = function(results){
+    $scope.computePrescriptiveRequirements = function(results){    
 
         var prescriptive_requirements = $scope.getPropResponseField(results,"prescriptive_requirements");
 
