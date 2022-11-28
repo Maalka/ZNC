@@ -1,4 +1,4 @@
-import WebKeys._
+import com.typesafe.sbt.web.Import.WebKeys._
 
 // TODO Replace with your project's/module's name
 name := "znc"
@@ -7,9 +7,9 @@ name := "znc"
 organization in ThisBuild := "com.maalka"
 
 // TODO Set your version here
-version := "1.16.0"
+version := "1.17.0"
 
-scalaVersion in ThisBuild := "2.11.6"
+scalaVersion in ThisBuild := "2.12.17"
 
 maintainer in Linux := "Clay Teeter <clay.teeter@maalka.com>"
 maintainer in Docker := "Clay Teeter <clay.teeter@maalka.com>"
@@ -44,7 +44,7 @@ javaOptions in Universal ++= Seq(
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala, JavaAppPackaging)
 
-resolvers += "emueller-bintray" at "http://dl.bintray.com/emueller/maven"
+resolvers += "emueller-bintray" at "https://dl.bintray.com/emueller/maven"
 resolvers += "Artifactory Realm" at "https://jfrog.maalka.com/artifactory/libs-release-local/"
 
 // Dependencies
@@ -66,7 +66,7 @@ libraryDependencies ++= Seq(
   "org.webjars.bower" % "filesaver" % "1.3.3",
   "org.webjars.npm" % "ng-file-upload" % "12.2.13",
 
-  "org.typelevel" %% "squants" % "1.3.1-maalka-1.0",
+  "org.typelevel" %% "squants" % "1.3.1-maalka-1.23",
 
   "com.typesafe.akka" %% "akka-slf4j" % "2.5.9",
   "com.typesafe.akka" %% "akka-stream" % "2.5.9",
@@ -74,7 +74,7 @@ libraryDependencies ++= Seq(
   "org.joda" % "joda-convert" % "1.9.2",
   "com.typesafe.play" %% "play-json" % "2.6.8",
 
-  "com.eclipsesource" %% "play-json-schema-validator" % "0.9.4",
+  "com.eclipsesource" %% "play-json-schema-validator" % "0.9.5",
 
   "com.typesafe.play" %% "play-iteratees" % "2.6.1",
   "com.typesafe.play" %% "play-iteratees-reactive-streams" % "2.6.1"
@@ -166,4 +166,4 @@ JsEngineKeys.engineType := JsEngineKeys.EngineType.Node
 // JshintKeys.config := ".jshintrc"
 
 // All work and no play...
-emojiLogs
+

@@ -8,14 +8,12 @@ import com.eclipsesource.schema._
 import com.eclipsesource.schema.internal.validation.VA
 import models._
 import com.google.inject.Inject
-import play.api.Logger
-import play.api.cache.{AsyncCacheApi, SyncCacheApi}
-import play.api.libs.json.Json.JsValueWrapper
-import play.api.libs.json.Reads.min
+import com.osinka.i18n.Lang
+import play.api.cache.AsyncCacheApi
 import play.api.libs.json._
 import play.api.mvc._
 
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 import squants.energy.{Energy, MegawattHours}
 
 import scala.util.control.NonFatal
@@ -23,7 +21,11 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.language.implicitConversions
 import scala.concurrent.duration._
 
-class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComponents, nrel_client: NREL_Client) extends AbstractController(cc) with Logging {
+class BaselineController @Inject() (
+                                     val cache: AsyncCacheApi,
+                                     cc: ControllerComponents,
+                                     nrel_client: NREL_Client
+                                   ) extends AbstractController(cc) with Logging {
 
   implicit def doubleToJSValue(d: Double): JsValue = Json.toJson(d)
 
@@ -186,9 +188,11 @@ class BaselineController @Inject() (val cache: AsyncCacheApi, cc: ControllerComp
 
 
 
-  val validator = new SchemaValidator()
+  val validator = new SchemaValidator()(Lang("en"))
 
-  val schema = Json.fromJson[SchemaType](Json.parse(
+  import com.eclipsesource.schema.drafts.Version7._ // since 0.9.5 necessary
+
+  val schema: SchemaType = Json.fromJson[SchemaType](Json.parse(
     """{
         "type": "array",
         "id": "http://znc.maalka.com/znc",
